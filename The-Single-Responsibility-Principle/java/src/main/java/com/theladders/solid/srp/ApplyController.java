@@ -20,6 +20,11 @@ import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.Resume;
 import com.theladders.solid.srp.resume.ResumeManager;
+import com.theladders.solid.srp.view.ProvideApplySuccessView;
+import com.theladders.solid.srp.view.ProvideErrorView;
+import com.theladders.solid.srp.view.ProvideInvalidJobView;
+import com.theladders.solid.srp.view.ProvideErrorView;
+import com.theladders.solid.srp.view.ProvideResumeCompletionView;
 
 public class ApplyController
 {
@@ -56,8 +61,8 @@ public class ApplyController
 
     if (job == null)
     {
-      provideInvalidJobView(response, jobId);
-      return response;
+      ProvideInvalidJobView invalidJobView = new ProvideInvalidJobView(response, jobId);
+      return invalidJobView.response;
     }
 
     Map<String, Object> model = new HashMap<>();
@@ -71,8 +76,8 @@ public class ApplyController
     catch (Exception e)
     {
       errList.add("We could not process your application.");
-      provideErrorView(response, errList, model);
-      return response;
+      ProvideErrorView errorView = new ProvideErrorView(response, errList, model);
+      return errorView.response;
     }
 
     model.put("jobId", job.getJobId());
@@ -82,31 +87,13 @@ public class ApplyController
                                    profile.getStatus().equals(ProfileStatus.NO_PROFILE) ||
                                    profile.getStatus().equals(ProfileStatus.REMOVED)))
     {
-      provideResumeCompletionView(response, model);
-      return response;
+      ProvideResumeCompletionView resumeCompletionView = new ProvideResumeCompletionView(response, model);
+      return resumeCompletionView.response;
     }
 
-    provideApplySuccessView(response, model);
+    ProvideApplySuccessView applySuccessView = new ProvideApplySuccessView(response, model);
 
-    return response;
-  }
-
-  private static void provideApplySuccessView(HttpResponse response, Map<String, Object> model)
-  {
-    Result result = new Result("success", model);
-    response.setResult(result);
-  }
-
-  private static void provideResumeCompletionView(HttpResponse response, Map<String, Object> model)
-  {
-    Result result = new Result("completeResumePlease", model);
-    response.setResult(result);
-  }
-
-  private static void provideErrorView(HttpResponse response, List<String> errList, Map<String, Object> model)
-  {
-   Result result = new Result("error", model, errList);
-   response.setResult(result);
+    return applySuccessView .response;
   }
 
   private void apply(HttpRequest request,
@@ -147,12 +134,4 @@ public class ApplyController
     return resume;
   }
 
-  private static void provideInvalidJobView(HttpResponse response, int jobId)
-  {
-    Map<String, Object> model = new HashMap<>();
-    model.put("jobId", jobId);
-
-    Result result = new Result("invalidJob", model);
-    response.setResult(result);
-  }
 }
