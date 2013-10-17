@@ -9,6 +9,8 @@ import com.theladders.solid.srp.http.HttpResponse;
 public class ProvideInvalidJobView
 {
   
+  public HttpResponse response;
+  
   public ProvideInvalidJobView(HttpResponse response, int jobId)
   {
     Map<String, Object> model = new HashMap<>();

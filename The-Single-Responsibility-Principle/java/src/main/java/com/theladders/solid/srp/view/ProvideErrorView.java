@@ -8,7 +8,7 @@ import com.theladders.solid.srp.http.HttpResponse;
 
 public class ProvideErrorView
 {
-
+  public HttpResponse response;
 
   public ProvideErrorView(HttpResponse response,
                                List<String> errList,

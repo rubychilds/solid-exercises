@@ -7,6 +7,7 @@ import com.theladders.solid.srp.http.HttpResponse;
 
 public class ProvideApplySuccessView
 {
+  public HttpResponse response;
   
   public ProvideApplySuccessView(HttpResponse response, Map<String, Object> model)
   {
