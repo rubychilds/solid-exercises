@@ -1,24 +1,18 @@
 package com.theladders.solid.srp;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.theladders.solid.srp.http.HttpRequest;
 import com.theladders.solid.srp.http.HttpResponse;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobSearchService;
-import com.theladders.solid.srp.job.application.ApplicationFailureException;
-import com.theladders.solid.srp.job.application.JobApplicationResult;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
-import com.theladders.solid.srp.job.application.UnprocessedApplication;
+import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.jobseeker.JobseekerProfile;
 import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
 import com.theladders.solid.srp.jobseeker.ProfileStatus;
-import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.resume.MyResumeManager;
-import com.theladders.solid.srp.resume.Resume;
 import com.theladders.solid.srp.resume.ResumeManager;
 import com.theladders.solid.srp.view.ProvideApplySuccessView;
 import com.theladders.solid.srp.view.ProvideErrorView;
@@ -52,14 +46,16 @@ public class ApplyController
                              HttpResponse response,
                              String origFileName)
   {
-    Jobseeker jobseeker = getJobSeeker(request);
+    RequestManager requestManager = new RequestManager(request);
+    
+    Jobseeker jobseeker = requestManager.getJobSeeker();
     JobseekerProfile profile = jobseekerProfileManager.getJobSeekerProfile(jobseeker);
 
-    Job job = getJob(request);
+    Job job = requestManager.getJob(jobSearchService);
     
     if (job == null)
     {
-      int jobId = getJobId(request);
+      int jobId = requestManager.getJobId();
       model.put("jobId", jobId);
       
       ProvideInvalidJobView invalidJobView = new ProvideInvalidJobView();
@@ -70,8 +66,10 @@ public class ApplyController
     {
       ApplicationHandler applicationHandler = new ApplicationHandler(resumeManager,
                                                                      jobApplicationSystem, 
-                                                                     myResumeManager);
-      applicationHandler.apply(request, jobseeker, job, origFileName);
+                                                                     myResumeManager, requestManager
+                                                                     );
+      
+      applicationHandler.apply(jobseeker, job, origFileName);
     }
     catch (Exception e)
     {
@@ -96,26 +94,7 @@ public class ApplyController
     ProvideApplySuccessView applySuccessView = new ProvideApplySuccessView();
     return getResponse(applySuccessView, response);
   }
-  
-  private int getJobId(HttpRequest request)
-  {
-
-    String jobIdString = request.getParameter("jobId");
-    int jobId = Integer.parseInt(jobIdString);
-    
-    return jobId;
-  }
-  
-  private Job getJob(HttpRequest request)
-  {
-    return jobSearchService.getJob(getJobId(request));
-  }
-  
-  private Jobseeker getJobSeeker(HttpRequest request)
-  {
-    return request.getSession().getJobseeker();
-  }
-  
+ 
   private HttpResponse getResponse(View view, HttpResponse response){
     Result result = view.view(model);
     response.setResult(result);
