@@ -1,6 +1,5 @@
 package com.theladders.solid.srp;
 
-import com.theladders.solid.srp.http.HttpRequest;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.application.ApplicationFailureException;
 import com.theladders.solid.srp.job.application.JobApplicationResult;
@@ -17,22 +16,25 @@ public class ApplicationHandler
   private ResumeManager resumeManager;
   private JobApplicationSystem jobApplicationSystem;
   private MyResumeManager myResumeManager;
+  private RequestManager requestManager;
   
-  public ApplicationHandler(ResumeManager resumeManager, JobApplicationSystem jobApplicationSystem, MyResumeManager myResumeManager)
+  public ApplicationHandler(ResumeManager resumeManager, 
+                            JobApplicationSystem jobApplicationSystem, 
+                            MyResumeManager myResumeManager, 
+                            RequestManager requestManager)
   {
     this.resumeManager = resumeManager;
     this.jobApplicationSystem = jobApplicationSystem;
     this.myResumeManager = myResumeManager;
-    
+    this.requestManager = requestManager;
   }
 
 
-  public void apply(HttpRequest request,
-                     Jobseeker jobseeker,
+  public void apply(Jobseeker jobseeker,
                      Job job,
                      String fileName)
   {
-    Resume resume = saveNewOrRetrieveExistingResume(fileName,jobseeker, request);
+    Resume resume = saveNewOrRetrieveExistingResume(fileName,jobseeker);
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
     JobApplicationResult applicationResult = jobApplicationSystem.apply(application);
 
@@ -43,18 +45,16 @@ public class ApplicationHandler
   }
   
 
-
   private Resume saveNewOrRetrieveExistingResume(String newResumeFileName,
-                                                 Jobseeker jobseeker,
-                                                 HttpRequest request)
+                                                 Jobseeker jobseeker)
   {
     Resume resume;
 
-    if (resumeExists(request))
+    if (!"existing".equals(requestManager.whichResume()))
     {
       resume = resumeManager.saveResume(jobseeker, newResumeFileName);
 
-      if (makeResumeActive( resume, request))
+      if (resume != null && "yes".equals(requestManager.makeResumeActive()))
       {
         myResumeManager.saveAsActive(jobseeker, resume);
       }
@@ -67,14 +67,7 @@ public class ApplicationHandler
     return resume;
   }
   
-  private boolean resumeExists(HttpRequest request)
-  {
-    return !"existing".equals(request.getParameter("whichResume"));
-  }
-  
-  private boolean makeResumeActive(Resume resume, HttpRequest request)
-  {
-    return resume != null && "yes".equals(request.getParameter("makeResumeActive"));
-  }
-  
 }
+  
+
+
