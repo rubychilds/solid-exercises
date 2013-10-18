@@ -12,7 +12,6 @@ public class ProvideErrorView implements View
 
   public ProvideErrorView()
   {
-
     this.errList = new  ArrayList<String>();
   }
 
