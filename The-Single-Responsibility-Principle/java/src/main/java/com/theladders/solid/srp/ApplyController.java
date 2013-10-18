@@ -24,6 +24,7 @@ import com.theladders.solid.srp.view.ProvideApplySuccessView;
 import com.theladders.solid.srp.view.ProvideErrorView;
 import com.theladders.solid.srp.view.ProvideInvalidJobView;
 import com.theladders.solid.srp.view.ProvideResumeCompletionView;
+import com.theladders.solid.srp.view.View;
 
 public class ApplyController
 {
@@ -32,6 +33,7 @@ public class ApplyController
   private final JobApplicationSystem    jobApplicationSystem;
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
+  private final Map<String,Object> model = new HashMap<String,Object>();
 
   public ApplyController(JobseekerProfileManager jobseekerProfileManager,
                          JobSearchService jobSearchService,
@@ -50,23 +52,19 @@ public class ApplyController
                              HttpResponse response,
                              String origFileName)
   {
-    Jobseeker jobseeker = request.getSession().getJobseeker();
+    Jobseeker jobseeker = getJobSeeker(request);
     JobseekerProfile profile = jobseekerProfileManager.getJobSeekerProfile(jobseeker);
 
-    String jobIdString = request.getParameter("jobId");
-    int jobId = Integer.parseInt(jobIdString);
-
-    Job job = jobSearchService.getJob(jobId);
-
+    Job job = getJob(request);
+    
     if (job == null)
     {
-      ProvideInvalidJobView invalidJobView = new ProvideInvalidJobView(response, jobId);
-      return invalidJobView.response;
+      int jobId = getJobId(request);
+      model.put("jobId", jobId);
+      
+      ProvideInvalidJobView invalidJobView = new ProvideInvalidJobView();
+      return getResponse(invalidJobView, response);
     }
-
-    Map<String, Object> model = new HashMap<>();
-
-    List<String> errList = new ArrayList<>();
 
     try
     {
@@ -77,9 +75,10 @@ public class ApplyController
     }
     catch (Exception e)
     {
-      errList.add("We could not process your application.");
-      ProvideErrorView errorView = new ProvideErrorView(response, errList, model);
-      return errorView.response;
+  
+      ProvideErrorView errorView = new ProvideErrorView();
+      errorView.addError("We could not process your application.");
+      return getResponse(errorView, response);
     }
 
     model.put("jobId", job.getJobId());
@@ -89,14 +88,38 @@ public class ApplyController
                                    profile.getStatus().equals(ProfileStatus.NO_PROFILE) ||
                                    profile.getStatus().equals(ProfileStatus.REMOVED)))
     {
-      ProvideResumeCompletionView resumeCompletionView = new ProvideResumeCompletionView(response, model);
-      return resumeCompletionView.response;
+      
+      ProvideResumeCompletionView resumeCompletionView = new ProvideResumeCompletionView();
+      return getResponse(resumeCompletionView, response);
     }
 
-    ProvideApplySuccessView applySuccessView = new ProvideApplySuccessView(response, model);
-
-    return applySuccessView .response;
+    ProvideApplySuccessView applySuccessView = new ProvideApplySuccessView();
+    return getResponse(applySuccessView, response);
   }
+  
+  private int getJobId(HttpRequest request)
+  {
 
-
+    String jobIdString = request.getParameter("jobId");
+    int jobId = Integer.parseInt(jobIdString);
+    
+    return jobId;
+  }
+  
+  private Job getJob(HttpRequest request)
+  {
+    return jobSearchService.getJob(getJobId(request));
+  }
+  
+  private Jobseeker getJobSeeker(HttpRequest request)
+  {
+    return request.getSession().getJobseeker();
+  }
+  
+  private HttpResponse getResponse(View view, HttpResponse response){
+    Result result = view.view(model);
+    response.setResult(result);
+    return response;
+  }
+ 
 }
