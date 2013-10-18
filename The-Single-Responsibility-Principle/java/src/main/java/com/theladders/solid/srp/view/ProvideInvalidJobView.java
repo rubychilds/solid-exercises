@@ -11,7 +11,8 @@ public class ProvideInvalidJobView
   
   public HttpResponse response;
   
-  public ProvideInvalidJobView(HttpResponse response, int jobId)
+  public ProvideInvalidJobView(HttpResponse response, 
+                               int jobId)
   {
     Map<String, Object> model = new HashMap<>();
     model.put("jobId", jobId);

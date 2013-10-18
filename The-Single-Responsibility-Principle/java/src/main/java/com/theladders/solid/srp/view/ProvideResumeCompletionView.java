@@ -9,7 +9,8 @@ public class ProvideResumeCompletionView
 {
   public HttpResponse response;
   
-  public ProvideResumeCompletionView(HttpResponse response, Map<String, Object> model)
+  public ProvideResumeCompletionView(HttpResponse response, 
+                                     Map<String, Object> model)
   {
     Result result = new Result("completeResumePlease", model);
     response.setResult(result);

@@ -23,7 +23,6 @@ import com.theladders.solid.srp.resume.ResumeManager;
 import com.theladders.solid.srp.view.ProvideApplySuccessView;
 import com.theladders.solid.srp.view.ProvideErrorView;
 import com.theladders.solid.srp.view.ProvideInvalidJobView;
-import com.theladders.solid.srp.view.ProvideErrorView;
 import com.theladders.solid.srp.view.ProvideResumeCompletionView;
 
 public class ApplyController
@@ -71,7 +70,10 @@ public class ApplyController
 
     try
     {
-      apply(request, jobseeker, job, origFileName);
+      ApplicationHandler applicationHandler = new ApplicationHandler(resumeManager,
+                                                                     jobApplicationSystem, 
+                                                                     myResumeManager);
+      applicationHandler.apply(request, jobseeker, job, origFileName);
     }
     catch (Exception e)
     {
@@ -96,42 +98,5 @@ public class ApplyController
     return applySuccessView .response;
   }
 
-  private void apply(HttpRequest request,
-                     Jobseeker jobseeker,
-                     Job job,
-                     String fileName)
-  {
-    Resume resume = saveNewOrRetrieveExistingResume(fileName,jobseeker, request);
-    UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
-    JobApplicationResult applicationResult = jobApplicationSystem.apply(application);
-
-    if (applicationResult.failure())
-    {
-      throw new ApplicationFailureException(applicationResult.toString());
-    }
-  }
-
-  private Resume saveNewOrRetrieveExistingResume(String newResumeFileName,
-                                                 Jobseeker jobseeker,
-                                                 HttpRequest request)
-  {
-    Resume resume;
-
-    if (!"existing".equals(request.getParameter("whichResume")))
-    {
-      resume = resumeManager.saveResume(jobseeker, newResumeFileName);
-
-      if (resume != null && "yes".equals(request.getParameter("makeResumeActive")))
-      {
-        myResumeManager.saveAsActive(jobseeker, resume);
-      }
-    }
-    else
-    {
-      resume = myResumeManager.getActiveResume(jobseeker.getId());
-    }
-
-    return resume;
-  }
 
 }
