@@ -1,24 +1,18 @@
 package com.theladders.solid.srp.view;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.theladders.solid.srp.Result;
-import com.theladders.solid.srp.http.HttpResponse;
 
-public class ProvideInvalidJobView
+public class ProvideInvalidJobView implements View
 {
   
-  public HttpResponse response;
-  
-  public ProvideInvalidJobView(HttpResponse response, 
-                               int jobId)
+  @Override
+  public Result view(Map<String, Object> model)
   {
-    Map<String, Object> model = new HashMap<>();
-    model.put("jobId", jobId);
-
-    Result result = new Result("invalidJob", model);
-    response.setResult(result);
+    return new Result("invalidJob", model);  
   }
 
+  
 }
+  

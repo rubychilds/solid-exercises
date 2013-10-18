@@ -3,18 +3,12 @@ package com.theladders.solid.srp.view;
 import java.util.Map;
 
 import com.theladders.solid.srp.Result;
-import com.theladders.solid.srp.http.HttpResponse;
 
-public class ProvideResumeCompletionView
+public class ProvideResumeCompletionView implements View
 {
-  public HttpResponse response;
-  
-  public ProvideResumeCompletionView(HttpResponse response, 
-                                     Map<String, Object> model)
+  public Result view(Map<String, Object> model)
   {
-    Result result = new Result("completeResumePlease", model);
-    response.setResult(result);
+    return new Result("completeResumePlease", model);
   }
-  
   
 }

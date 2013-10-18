@@ -3,18 +3,16 @@ package com.theladders.solid.srp.view;
 import java.util.Map;
 
 import com.theladders.solid.srp.Result;
-import com.theladders.solid.srp.http.HttpResponse;
 
-public class ProvideApplySuccessView
+public class ProvideApplySuccessView implements View
 {
-  public HttpResponse response;
-  // shouldn't be in contructor
-  public ProvideApplySuccessView(HttpResponse response, 
-                                 Map<String, Object> model)
-  {
-    Result result = new Result("success", model);
-    response.setResult(result);
-  }
-  
 
+  
+  @Override
+  public Result view(Map<String, Object> model)
+  {
+    return new Result("success", model);
+    
+
+  }
 }

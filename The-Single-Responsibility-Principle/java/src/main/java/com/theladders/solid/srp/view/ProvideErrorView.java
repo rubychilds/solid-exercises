@@ -1,22 +1,31 @@
 package com.theladders.solid.srp.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.theladders.solid.srp.Result;
-import com.theladders.solid.srp.http.HttpResponse;
 
-public class ProvideErrorView
+public class ProvideErrorView implements View
 {
-  public HttpResponse response;
+  private List<String>errList;
 
-  public ProvideErrorView(HttpResponse response,
-                               List<String> errList,
-                               Map<String, Object> model)
+  public ProvideErrorView()
   {
-    Result result = new Result("error", model, errList);
-    response.setResult(result);
-    
+
+    this.errList = new  ArrayList<String>();
+  }
+
+  @Override
+  public Result view(Map<String, Object> model)
+  {
+    return new Result("error", model, errList);
+  }
+
+  
+  public void addError(String errorMessage)
+  {
+    errList.add(errorMessage);
   }
   
 }
