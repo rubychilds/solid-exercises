@@ -10,7 +10,10 @@ public class ResumeHandler
   private RequestManager requestManager;
   private ResumeManager resumeManager;
   private MyResumeManager myResumeManager;
-
+  
+  private String EXISTING = "existing";
+  private String ACTIVATE_RESUME = "yes";
+  
   public ResumeHandler(RequestManager requestManager, ResumeManager resumeManager, MyResumeManager myResumeManager) 
   {
     this.requestManager = requestManager;
@@ -42,12 +45,12 @@ public class ResumeHandler
   
   public boolean useExistingResume()
   {
-    return "existing".equals(requestManager.whichResume());
+    return RequestManager.EXISTING.equals(requestManager.whichResume());
   }
   
   public boolean makeResumeActive()
   {
-    return "yes".equals(requestManager.makeResumeActive());
+    return RequestManager.ACTIVATE_RESUME.equals(requestManager.makeResumeActive());
   }
 
   
