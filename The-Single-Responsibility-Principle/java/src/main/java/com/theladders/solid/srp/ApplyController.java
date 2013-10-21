@@ -14,10 +14,6 @@ import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
 import com.theladders.solid.srp.jobseeker.ProfileStatus;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.ResumeManager;
-import com.theladders.solid.srp.view.ProvideApplySuccessView;
-import com.theladders.solid.srp.view.ProvideErrorView;
-import com.theladders.solid.srp.view.ProvideInvalidJobView;
-import com.theladders.solid.srp.view.ProvideResumeCompletionView;
 import com.theladders.solid.srp.view.View;
 
 public class ApplyController
@@ -27,9 +23,11 @@ public class ApplyController
   private final JobApplicationSystem    jobApplicationSystem;
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
+  
   private final Map<String,Object> model = new HashMap<String,Object>();
-  private String JOB_ID = "jobId";
-  private String JOB_TITLE = "jobTitle";
+  
+  private static String JOB_ID = "jobId";
+  private static String JOB_TITLE = "jobTitle";
 
   public ApplyController(JobseekerProfileManager jobseekerProfileManager,
                          JobSearchService jobSearchService,
@@ -54,13 +52,14 @@ public class ApplyController
 
     Job job = requestManager.getJob(jobSearchService);
     
+    View view = new View();
+    
     if (job == null)
     {
       int jobId = requestManager.getJobId();
       model.put(JOB_ID, jobId);
       
-      ProvideInvalidJobView invalidJobView = new ProvideInvalidJobView();
-      return getResponse(invalidJobView, response);
+      return getResponse(view.provideInvalidJobView(model), response);
     }
 
     try
@@ -74,32 +73,27 @@ public class ApplyController
     }
     catch (Exception e)
     {
-  
-      ProvideErrorView errorView = new ProvideErrorView();
-      errorView.addError("We could not process your application.");
-      return getResponse(errorView, response);
+      view.addError("We could not process your application.");
+      return getResponse(view.provideErrorView(model), response);
     }
 
     model.put(JOB_ID, job.getJobId());
     model.put(JOB_TITLE, job.getTitle());
     
-    if (isJobSeekerFromOutsideOrHasIncompleteProfile(jobseeker)) 
+    if (needsToCompleteProfile(jobseeker)) 
     {
-      ProvideResumeCompletionView resumeCompletionView = new ProvideResumeCompletionView();
-      return getResponse(resumeCompletionView, response);
+      return getResponse(view.provideResumeCompletionView(model), response);
     }
 
-    ProvideApplySuccessView applySuccessView = new ProvideApplySuccessView();
-    return getResponse(applySuccessView, response);
+    return getResponse(view.provideSuccessView(model), response);
   }
  
-  private HttpResponse getResponse(View view, HttpResponse response){
-    Result result = view.viewResult(model);
+  private HttpResponse getResponse(Result result, HttpResponse response){
     response.setResult(result);
     return response;
   }
   
-  private boolean isJobSeekerFromOutsideOrHasIncompleteProfile(Jobseeker jobseeker)
+  private boolean needsToCompleteProfile(Jobseeker jobseeker)
   {
     JobseekerProfile profile = jobseekerProfileManager.getJobSeekerProfile(jobseeker);
     return  !jobseeker.isPremium() && incompleteJobSeekerProfile(profile);
