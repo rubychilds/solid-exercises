@@ -8,7 +8,7 @@ public class ProvideInvalidJobView implements View
 {
   
   @Override
-  public Result view(Map<String, Object> model)
+  public Result viewResult(Map<String, Object> model)
   {
     return new Result("invalidJob", model);  
   }

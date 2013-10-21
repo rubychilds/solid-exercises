@@ -34,7 +34,9 @@ public class ApplicationHandler
                      Job job,
                      String fileName)
   {
-    Resume resume = saveNewOrRetrieveExistingResume(fileName,jobseeker);
+    
+    ResumeHandler resumeHandler = new ResumeHandler(requestManager, resumeManager, myResumeManager);
+    Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(fileName,jobseeker);
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
     JobApplicationResult applicationResult = jobApplicationSystem.apply(application);
 
@@ -43,30 +45,7 @@ public class ApplicationHandler
       throw new ApplicationFailureException(applicationResult.toString());
     }
   }
-  
-
-  private Resume saveNewOrRetrieveExistingResume(String newResumeFileName,
-                                                 Jobseeker jobseeker)
-  {
-    Resume resume;
-
-    if (!"existing".equals(requestManager.whichResume()))
-    {
-      resume = resumeManager.saveResume(jobseeker, newResumeFileName);
-
-      if (resume != null && "yes".equals(requestManager.makeResumeActive()))
-      {
-        myResumeManager.saveAsActive(jobseeker, resume);
-      }
-    }
-    else
-    {
-      resume = myResumeManager.getActiveResume(jobseeker.getId());
-    }
-
-    return resume;
-  }
-  
+    
 }
   
 

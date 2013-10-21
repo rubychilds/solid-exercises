@@ -6,7 +6,7 @@ import com.theladders.solid.srp.Result;
 
 public class ProvideResumeCompletionView implements View
 {
-  public Result view(Map<String, Object> model)
+  public Result viewResult(Map<String, Object> model)
   {
     return new Result("completeResumePlease", model);
   }

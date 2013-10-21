@@ -9,7 +9,7 @@ public class ProvideApplySuccessView implements View
 
   
   @Override
-  public Result view(Map<String, Object> model)
+  public Result viewResult(Map<String, Object> model)
   {
     return new Result("success", model);
     

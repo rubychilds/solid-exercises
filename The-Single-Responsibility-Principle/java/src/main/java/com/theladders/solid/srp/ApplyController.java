@@ -28,6 +28,8 @@ public class ApplyController
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
   private final Map<String,Object> model = new HashMap<String,Object>();
+  private String JOB_ID = "jobId";
+  private String JOB_TITLE = "jobTitle";
 
   public ApplyController(JobseekerProfileManager jobseekerProfileManager,
                          JobSearchService jobSearchService,
@@ -49,14 +51,13 @@ public class ApplyController
     RequestManager requestManager = new RequestManager(request);
     
     Jobseeker jobseeker = requestManager.getJobSeeker();
-    JobseekerProfile profile = jobseekerProfileManager.getJobSeekerProfile(jobseeker);
 
     Job job = requestManager.getJob(jobSearchService);
     
     if (job == null)
     {
       int jobId = requestManager.getJobId();
-      model.put("jobId", jobId);
+      model.put(JOB_ID, jobId);
       
       ProvideInvalidJobView invalidJobView = new ProvideInvalidJobView();
       return getResponse(invalidJobView, response);
@@ -79,14 +80,11 @@ public class ApplyController
       return getResponse(errorView, response);
     }
 
-    model.put("jobId", job.getJobId());
-    model.put("jobTitle", job.getTitle());
-
-    if (!jobseeker.isPremium() && (profile.getStatus().equals(ProfileStatus.INCOMPLETE) ||
-                                   profile.getStatus().equals(ProfileStatus.NO_PROFILE) ||
-                                   profile.getStatus().equals(ProfileStatus.REMOVED)))
+    model.put(JOB_ID, job.getJobId());
+    model.put(JOB_TITLE, job.getTitle());
+    
+    if (isJobSeekerFromOutsideOrHasIncompleteProfile(jobseeker)) 
     {
-      
       ProvideResumeCompletionView resumeCompletionView = new ProvideResumeCompletionView();
       return getResponse(resumeCompletionView, response);
     }
@@ -96,9 +94,26 @@ public class ApplyController
   }
  
   private HttpResponse getResponse(View view, HttpResponse response){
-    Result result = view.view(model);
+    Result result = view.viewResult(model);
     response.setResult(result);
     return response;
   }
+  
+  private boolean isJobSeekerFromOutsideOrHasIncompleteProfile(Jobseeker jobseeker)
+  {
+    JobseekerProfile profile = jobseekerProfileManager.getJobSeekerProfile(jobseeker);
+    return  !jobseeker.isPremium() && incompleteJobSeekerProfile(profile);
+    
+  }
+  
+  private boolean incompleteJobSeekerProfile(JobseekerProfile profile)
+  {
+    return (profile.getStatus().equals(ProfileStatus.INCOMPLETE) ||
+        profile.getStatus().equals(ProfileStatus.NO_PROFILE) ||
+        profile.getStatus().equals(ProfileStatus.REMOVED));
+  }
+  
+  
+  
  
 }
