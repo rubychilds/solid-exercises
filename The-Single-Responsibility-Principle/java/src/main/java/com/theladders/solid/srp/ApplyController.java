@@ -80,7 +80,7 @@ public class ApplyController
     model.put(JOB_ID, job.getJobId());
     model.put(JOB_TITLE, job.getTitle());
     
-    if (needsToCompleteProfile(jobseeker)) 
+    if (JobseekerStatus.needsToCompleteProfile(jobseeker, jobseekerProfileManager)) 
     {
       return getResponse(view.provideResumeCompletionView(model), response);
     }
@@ -92,22 +92,5 @@ public class ApplyController
     response.setResult(result);
     return response;
   }
-  
-  private boolean needsToCompleteProfile(Jobseeker jobseeker)
-  {
-    JobseekerProfile profile = jobseekerProfileManager.getJobSeekerProfile(jobseeker);
-    return  !jobseeker.isPremium() && incompleteJobSeekerProfile(profile);
-    
-  }
-  
-  private boolean incompleteJobSeekerProfile(JobseekerProfile profile)
-  {
-    return (profile.getStatus().equals(ProfileStatus.INCOMPLETE) ||
-        profile.getStatus().equals(ProfileStatus.NO_PROFILE) ||
-        profile.getStatus().equals(ProfileStatus.REMOVED));
-  }
-  
-  
-  
- 
+
 }
