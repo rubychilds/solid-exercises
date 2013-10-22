@@ -44,12 +44,7 @@ public class RequestManager
   {
     return session.getJobseeker();
   }
-   
-  
-  public Job getJob(JobSearchService jobSearchService)
-  {
-    return jobSearchService.getJob(Integer.parseInt(request.getParameter(JOB_ID)));
-  }
+
   
   
 }

@@ -24,10 +24,6 @@ public class ApplyController
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
   
-  private final Map<String,Object> model = new HashMap<String,Object>();
-  
-  private static String JOB_ID = "jobId";
-  private static String JOB_TITLE = "jobTitle";
 
   public ApplyController(JobseekerProfileManager jobseekerProfileManager,
                          JobSearchService jobSearchService,
@@ -40,52 +36,28 @@ public class ApplyController
     this.jobApplicationSystem = jobApplicationSystem;
     this.resumeManager = resumeManager;
     this.myResumeManager = myResumeManager;
+    
   }
 
   public HttpResponse handle(HttpRequest request,
                              HttpResponse response,
                              String origFileName)
   {
+   
     RequestManager requestManager = new RequestManager(request);
-    
+    int jobId = requestManager.getJobId();
     Jobseeker jobseeker = requestManager.getJobSeeker();
-
-    Job job = requestManager.getJob(jobSearchService);
     
-    View view = new View();
+    ApplicationProcessor applicationProcessor = new ApplicationProcessor(requestManager, 
+                                                                         jobseekerProfileManager,
+                                                                         jobSearchService,
+                                                                         jobApplicationSystem,
+                                                                         resumeManager,
+                                                                         myResumeManager);
     
-    if (job == null)
-    {
-      int jobId = requestManager.getJobId();
-      model.put(JOB_ID, jobId);
-      
-      return getResponse(view.provideInvalidJobView(model), response);
-    }
-
-    try
-    {
-      ApplicationHandler applicationHandler = new ApplicationHandler(resumeManager,
-                                                                     jobApplicationSystem, 
-                                                                     myResumeManager, requestManager
-                                                                     );
-      
-      applicationHandler.apply(jobseeker, job, origFileName);
-    }
-    catch (Exception e)
-    {
-      view.addError("We could not process your application.");
-      return getResponse(view.provideErrorView(model), response);
-    }
-
-    model.put(JOB_ID, job.getJobId());
-    model.put(JOB_TITLE, job.getTitle());
+    Result result = applicationProcessor.applyXXX(jobSearchService, jobId, jobseeker, origFileName);
     
-    if (JobseekerStatus.needsToCompleteProfile(jobseeker, jobseekerProfileManager)) 
-    {
-      return getResponse(view.provideResumeCompletionView(model), response);
-    }
-
-    return getResponse(view.provideSuccessView(model), response);
+    return getResponse(result, response);
   }
  
   private HttpResponse getResponse(Result result, HttpResponse response){

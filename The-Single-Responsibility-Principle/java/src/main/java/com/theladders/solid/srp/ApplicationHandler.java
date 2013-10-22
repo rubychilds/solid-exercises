@@ -13,30 +13,18 @@ import com.theladders.solid.srp.resume.ResumeManager;
 public class ApplicationHandler
 {
   
-  private ResumeManager resumeManager;
   private JobApplicationSystem jobApplicationSystem;
-  private MyResumeManager myResumeManager;
-  private RequestManager requestManager;
   
-  public ApplicationHandler(ResumeManager resumeManager, 
-                            JobApplicationSystem jobApplicationSystem, 
-                            MyResumeManager myResumeManager, 
-                            RequestManager requestManager)
+  public ApplicationHandler(JobApplicationSystem jobApplicationSystem)
   {
-    this.resumeManager = resumeManager;
     this.jobApplicationSystem = jobApplicationSystem;
-    this.myResumeManager = myResumeManager;
-    this.requestManager = requestManager;
   }
 
 
   public void apply(Jobseeker jobseeker,
                      Job job,
-                     String fileName)
+                     Resume resume)
   {
-    
-    ResumeHandler resumeHandler = new ResumeHandler(requestManager, resumeManager, myResumeManager);
-    Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(fileName,jobseeker);
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
     JobApplicationResult applicationResult = jobApplicationSystem.apply(application);
 
