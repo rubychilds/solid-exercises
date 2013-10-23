@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.theladders.solid.srp.http.HttpRequest;
 import com.theladders.solid.srp.http.HttpResponse;
+import com.theladders.solid.srp.http.HttpSession;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobSearchService;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
@@ -23,6 +24,10 @@ public class ApplyController
   private final JobApplicationSystem    jobApplicationSystem;
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
+  
+  public static String WHICH = "whichResume";
+  public static String JOB_ID = "jobId";
+  public static String MAKE_RESUME_ACTIVE = "makeResumeActive";
   
 
   public ApplyController(JobseekerProfileManager jobseekerProfileManager,
@@ -44,18 +49,16 @@ public class ApplyController
                              String origFileName)
   {
    
-    RequestManager requestManager = new RequestManager(request);
-    int jobId = requestManager.getJobId();
-    Jobseeker jobseeker = requestManager.getJobSeeker();
+    SessionData currentSession = createSessionData(request);
     
-    ApplicationProcessor applicationProcessor = new ApplicationProcessor(requestManager, 
+    ApplicationProcessor applicationProcessor = new ApplicationProcessor(currentSession, 
                                                                          jobseekerProfileManager,
                                                                          jobSearchService,
                                                                          jobApplicationSystem,
                                                                          resumeManager,
                                                                          myResumeManager);
     
-    Result result = applicationProcessor.applyXXX(jobSearchService, jobId, jobseeker, origFileName);
+    Result result = applicationProcessor.execute(jobSearchService, origFileName);
     
     return getResponse(result, response);
   }
@@ -63,6 +66,20 @@ public class ApplyController
   private HttpResponse getResponse(Result result, HttpResponse response){
     response.setResult(result);
     return response;
+  }
+  
+  private SessionData createSessionData(HttpRequest request)
+  {
+    String jobId = request.getParameter(JOB_ID);
+    String activateResume = request.getParameter(MAKE_RESUME_ACTIVE);
+    String whichResume = request.getParameter(WHICH);
+    
+    HttpSession currentSession = request.getSession();
+    Jobseeker jobseeker = currentSession.getJobseeker();
+    
+    ApplicationData currentData = new ApplicationData(jobId, activateResume, whichResume, jobseeker);
+    
+    return currentData;
   }
 
 }

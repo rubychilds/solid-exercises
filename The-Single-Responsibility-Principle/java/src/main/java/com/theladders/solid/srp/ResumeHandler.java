@@ -1,5 +1,7 @@
 package com.theladders.solid.srp;
 
+import Utils.ParameterNames;
+
 import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.Resume;
@@ -7,16 +9,18 @@ import com.theladders.solid.srp.resume.ResumeManager;
 
 public class ResumeHandler
 {
-  private RequestManager requestManager;
+  private String whichResume;
+  private String activateResume;
   private ResumeManager resumeManager;
   private MyResumeManager myResumeManager;
-  
-  private String EXISTING = "existing";
-  private String ACTIVATE_RESUME = "yes";
-  
-  public ResumeHandler(RequestManager requestManager, ResumeManager resumeManager, MyResumeManager myResumeManager) 
+
+  public ResumeHandler(String whichResume, 
+                       String activateResume, 
+                       ResumeManager resumeManager,
+                       MyResumeManager myResumeManager) 
   {
-    this.requestManager = requestManager;
+    this.whichResume = whichResume;
+    this.activateResume = activateResume;
     this.resumeManager = resumeManager;
     this.myResumeManager = myResumeManager;
   }
@@ -43,14 +47,14 @@ public class ResumeHandler
     return resume;
   }
   
-  public boolean useExistingResume()
+  private boolean useExistingResume()
   {
-    return RequestManager.EXISTING.equals(requestManager.whichResume());
+    return ParameterNames.EXISTING.equals(whichResume);
   }
   
-  public boolean makeResumeActive()
+  private boolean makeResumeActive()
   {
-    return RequestManager.ACTIVATE_RESUME.equals(requestManager.makeResumeActive());
+    return ParameterNames.ACTIVATE_RESUME.equals(activateResume);
   }
 
   
