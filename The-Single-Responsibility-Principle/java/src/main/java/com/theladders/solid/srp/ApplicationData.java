@@ -25,14 +25,17 @@ public class ApplicationData implements SessionData
   {
     return Integer.parseInt(this.jobId);
   };
+  
   public String activateResume()
   {
     return this.activateResume;
   };
+  
   public String whichResume()
   {
     return this.whichResume;
   };
+  
   public Jobseeker getJobseeker()
   {
     return this.jobseeker;

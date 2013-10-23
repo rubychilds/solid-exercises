@@ -6,9 +6,7 @@ import com.theladders.solid.srp.job.application.JobApplicationResult;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
 import com.theladders.solid.srp.job.application.UnprocessedApplication;
 import com.theladders.solid.srp.jobseeker.Jobseeker;
-import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.Resume;
-import com.theladders.solid.srp.resume.ResumeManager;
 
 public class ApplicationHandler
 {
@@ -22,8 +20,8 @@ public class ApplicationHandler
 
 
   public void apply(Jobseeker jobseeker,
-                     Job job,
-                     Resume resume)
+                    Job job,
+                    Resume resume)
   {
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
     JobApplicationResult applicationResult = jobApplicationSystem.apply(application);
@@ -32,8 +30,7 @@ public class ApplicationHandler
     {
       throw new ApplicationFailureException(applicationResult.toString());
     }
-  }
-    
+  }   
 }
   
 

@@ -14,7 +14,7 @@ public class ResumeHandler
   private ResumeManager resumeManager;
   private MyResumeManager myResumeManager;
 
-  public ResumeHandler(String whichResume, 
+  public ResumeHandler(String whichResume,
                        String activateResume, 
                        ResumeManager resumeManager,
                        MyResumeManager myResumeManager) 
@@ -56,5 +56,4 @@ public class ResumeHandler
   {
     return HttpRequestParameters.ACTIVATE_RESUME.equals(activateResume);
   }
-
 }

@@ -1,14 +1,11 @@
 package com.theladders.solid.srp;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import Utils.ErrorFields;
-import Utils.ModelFieldNames;
 
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
 import com.theladders.solid.srp.jobseeker.Jobseeker;
+import com.theladders.solid.srp.jobseeker.JobseekerProfile;
 import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.Resume;
@@ -22,8 +19,6 @@ public class ApplicationProcessor
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
   
-  private final Map<String,Object> model = new HashMap<String,Object>();
-  
   public ApplicationProcessor(JobseekerProfileManager jobseekerProfileManager,
                               JobApplicationSystem jobApplicationSystem,
                               ResumeManager resumeManager,
@@ -35,39 +30,37 @@ public class ApplicationProcessor
     this.myResumeManager = myResumeManager;
   }
   
-  
   public Result execute(SessionData currentSessionData,
                          String origFileName, Job job)
   {
 
-    View view = new View();
 
     Jobseeker jobseeker = currentSessionData.getJobseeker();
-    
+    ResumeHandler resumeHandler = new ResumeHandler(currentSessionData.whichResume(), 
+                                                    currentSessionData.activateResume(), 
+                                                    resumeManager, 
+                                                    myResumeManager);
     try
     {
-      apply(currentSessionData, origFileName, jobseeker, job);
+      Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(origFileName, jobseeker);
+      ApplicationHandler applicationHandler = new ApplicationHandler(jobApplicationSystem);
+      applicationHandler.apply(jobseeker, job, resume);
     }
     catch (Exception e)
     {
-      return view.provideErrorView(ErrorFields.UNABLE_TO_PROCESS_APP);
+      return new View().provideErrorView(ErrorFields.UNABLE_TO_PROCESS_APP);
     }
-
-    if (JobseekerStatus.needsToCompleteProfile(jobseeker, jobseekerProfileManager)) 
-    {
-      return view.provideResumeCompletionView(job.getJobId(),job.getTitle());
-    }
-      return view.provideSuccessView(job.getJobId(),job.getTitle());
+    
+    return finalView(jobseeker, job);
   }
   
-   
-  /*********************************************************************/  
-  private void apply(SessionData currentSessionData, String origFileName, Jobseeker jobseeker, Job job)
+  private Result finalView(Jobseeker jobseeker, Job job)
   {
-    ResumeHandler resumeHandler = new ResumeHandler(currentSessionData.whichResume(), currentSessionData.activateResume(), resumeManager, myResumeManager);
-    Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(origFileName, jobseeker);
-    
-    ApplicationHandler applicationHandler = new ApplicationHandler(jobApplicationSystem);
-    applicationHandler.apply(jobseeker, job, resume);
+    JobseekerProfile profile = jobseekerProfileManager.getJobSeekerProfile(jobseeker);
+    if (!jobseeker.isPremium() && profile.isIncompleteProfile()) 
+    {
+      return new View().provideResumeCompletionView(job.getJobId(), job.getTitle());
+    }
+      return new View().provideSuccessView(job.getJobId(), job.getTitle());
   }
 }

@@ -20,4 +20,11 @@ public class JobseekerProfile
   {
     return id;
   }
+  
+  public boolean isIncompleteProfile()
+  {
+    return (status.equals(ProfileStatus.INCOMPLETE) ||
+        status.equals(ProfileStatus.NO_PROFILE) ||
+        status.equals(ProfileStatus.REMOVED));
+  }
 }
