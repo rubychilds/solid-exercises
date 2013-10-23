@@ -1,14 +1,11 @@
 package com.theladders.solid.srp;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import Utils.HttpRequestParameters;
-import Utils.ModelFieldNames;
 
 import com.theladders.solid.srp.http.HttpRequest;
 import com.theladders.solid.srp.http.HttpResponse;
 import com.theladders.solid.srp.http.HttpSession;
+import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobSearchService;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
 import com.theladders.solid.srp.jobseeker.Jobseeker;
@@ -30,7 +27,6 @@ public class ApplyController
   {
  
     this.applicationProcessor = new ApplicationProcessor(jobseekerProfileManager,
-                                                         jobSearchService,
                                                          jobApplicationSystem,
                                                          resumeManager,
                                                          myResumeManager);
@@ -50,8 +46,9 @@ public class ApplyController
       Result result = new View().provideInvalidJobView(jobId);
       return getResponse(result, response);
     }
-
-    Result result = applicationProcessor.execute(currentSession, origFileName);
+    
+    Job job = jobSearchService.getJob(jobId);
+    Result result = applicationProcessor.execute(currentSession, origFileName,job);
     
     return getResponse(result, response);
   }

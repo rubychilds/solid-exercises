@@ -7,7 +7,6 @@ import Utils.ErrorFields;
 import Utils.ModelFieldNames;
 
 import com.theladders.solid.srp.job.Job;
-import com.theladders.solid.srp.job.JobSearchService;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
 import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
@@ -19,7 +18,6 @@ import com.theladders.solid.srp.view.View;
 public class ApplicationProcessor
 {
   private final JobseekerProfileManager jobseekerProfileManager;
-  private final JobSearchService        jobSearchService;
   private final JobApplicationSystem    jobApplicationSystem;
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
@@ -27,13 +25,11 @@ public class ApplicationProcessor
   private final Map<String,Object> model = new HashMap<String,Object>();
   
   public ApplicationProcessor(JobseekerProfileManager jobseekerProfileManager,
-                              JobSearchService jobSearchService,
                               JobApplicationSystem jobApplicationSystem,
                               ResumeManager resumeManager,
                               MyResumeManager myResumeManager)
   {
     this.jobseekerProfileManager = jobseekerProfileManager;
-    this.jobSearchService = jobSearchService;
     this.jobApplicationSystem = jobApplicationSystem;
     this.resumeManager = resumeManager;
     this.myResumeManager = myResumeManager;
@@ -41,13 +37,11 @@ public class ApplicationProcessor
   
   
   public Result execute(SessionData currentSessionData,
-                         String origFileName)
+                         String origFileName, Job job)
   {
 
     View view = new View();
-    int jobId = currentSessionData.getJobId();
 
-    Job job = jobSearchService.getJob(jobId);
     Jobseeker jobseeker = currentSessionData.getJobseeker();
     
     try
@@ -56,18 +50,14 @@ public class ApplicationProcessor
     }
     catch (Exception e)
     {
-      view.addError(ErrorFields.UNABLE_TO_PROCESS_APP);
-      return view.provideErrorView(model);
+      return view.provideErrorView(ErrorFields.UNABLE_TO_PROCESS_APP);
     }
-
-    model.put(ModelFieldNames.JOB_ID, job.getJobId());
-    model.put(ModelFieldNames.JOB_TITLE, job.getTitle());
 
     if (JobseekerStatus.needsToCompleteProfile(jobseeker, jobseekerProfileManager)) 
     {
-      return view.provideResumeCompletionView(model);
+      return view.provideResumeCompletionView(job.getJobId(),job.getTitle());
     }
-      return view.provideSuccessView(model);
+      return view.provideSuccessView(job.getJobId(),job.getTitle());
   }
   
    
