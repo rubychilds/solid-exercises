@@ -14,4 +14,9 @@ public class JobSearchService
   {
     return repository.getJob(jobId);
   }
+  
+  public boolean jobExists(int jobId)
+  {
+    return getJob(jobId) != null;
+  }
 }

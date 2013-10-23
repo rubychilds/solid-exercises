@@ -1,6 +1,6 @@
 package com.theladders.solid.srp;
 
-import Utils.ParameterNames;
+import Utils.HttpRequestParameters;
 
 import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.resume.MyResumeManager;
@@ -24,9 +24,9 @@ public class ResumeHandler
     this.resumeManager = resumeManager;
     this.myResumeManager = myResumeManager;
   }
-  
+
   public Resume saveNewOrRetrieveExistingResume(String newResumeFileName,
-                                                 Jobseeker jobseeker)
+                                                Jobseeker jobseeker)
   {
     Resume resume;
 
@@ -46,16 +46,15 @@ public class ResumeHandler
 
     return resume;
   }
-  
+
   private boolean useExistingResume()
   {
-    return ParameterNames.EXISTING.equals(whichResume);
-  }
-  
-  private boolean makeResumeActive()
-  {
-    return ParameterNames.ACTIVATE_RESUME.equals(activateResume);
+    return HttpRequestParameters.EXISTING.equals(whichResume);
   }
 
-  
+  private boolean makeResumeActive()
+  {
+    return HttpRequestParameters.ACTIVATE_RESUME.equals(activateResume);
+  }
+
 }

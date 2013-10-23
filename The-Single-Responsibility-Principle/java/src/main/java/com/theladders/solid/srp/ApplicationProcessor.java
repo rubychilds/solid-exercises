@@ -40,26 +40,19 @@ public class ApplicationProcessor
   }
   
   
-  public Result execute(SessionData currentSessionData, JobSearchService jobSearchService,
+  public Result execute(SessionData currentSessionData,
                          String origFileName)
   {
 
     View view = new View();
     int jobId = currentSessionData.getJobId();
-    
-    if (!jobExists(jobSearchService, jobId))
-    {
-      model.put(ModelFieldNames.JOB_ID, jobId);
 
-      return view.provideInvalidJobView(model);
-    }
-    
-    Job job = getJob(jobSearchService, jobId);
+    Job job = jobSearchService.getJob(jobId);
     Jobseeker jobseeker = currentSessionData.getJobseeker();
     
     try
     {
-      apply(currentSessionData, origFileName,jobseeker,job);
+      apply(currentSessionData, origFileName, jobseeker, job);
     }
     catch (Exception e)
     {
@@ -77,24 +70,12 @@ public class ApplicationProcessor
       return view.provideSuccessView(model);
   }
   
-  
-  /*********************************************************************/
-  private Job getJob(JobSearchService jobSearchService, int jobId)
-  {
-    return jobSearchService.getJob(jobId);
-  }
-  
-  private boolean jobExists(JobSearchService jobSearchService, int jobId)
-  {
-    Job job = getJob(jobSearchService, jobId);
-    return job != null;
-  }
-  
-  
+   
+  /*********************************************************************/  
   private void apply(SessionData currentSessionData, String origFileName, Jobseeker jobseeker, Job job)
   {
     ResumeHandler resumeHandler = new ResumeHandler(currentSessionData.whichResume(), currentSessionData.activateResume(), resumeManager, myResumeManager);
-    Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(origFileName,jobseeker);
+    Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(origFileName, jobseeker);
     
     ApplicationHandler applicationHandler = new ApplicationHandler(jobApplicationSystem);
     applicationHandler.apply(jobseeker, job, resume);
