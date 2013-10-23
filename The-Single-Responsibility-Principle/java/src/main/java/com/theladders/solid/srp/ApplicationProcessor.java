@@ -23,18 +23,15 @@ public class ApplicationProcessor
   private final JobApplicationSystem    jobApplicationSystem;
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
-  private final SessionData             currentSessionData;
   
   private final Map<String,Object> model = new HashMap<String,Object>();
   
-  public ApplicationProcessor(SessionData currentSessionData, 
-                              JobseekerProfileManager jobseekerProfileManager,
+  public ApplicationProcessor(JobseekerProfileManager jobseekerProfileManager,
                               JobSearchService jobSearchService,
                               JobApplicationSystem jobApplicationSystem,
                               ResumeManager resumeManager,
                               MyResumeManager myResumeManager)
   {
-    this.currentSessionData = currentSessionData;
     this.jobseekerProfileManager = jobseekerProfileManager;
     this.jobSearchService = jobSearchService;
     this.jobApplicationSystem = jobApplicationSystem;
@@ -43,7 +40,7 @@ public class ApplicationProcessor
   }
   
   
-  public Result execute(JobSearchService jobSearchService,
+  public Result execute(SessionData currentSessionData, JobSearchService jobSearchService,
                          String origFileName)
   {
 
@@ -62,7 +59,7 @@ public class ApplicationProcessor
     
     try
     {
-      apply(origFileName,jobseeker,job);
+      apply(currentSessionData, origFileName,jobseeker,job);
     }
     catch (Exception e)
     {
@@ -94,7 +91,7 @@ public class ApplicationProcessor
   }
   
   
-  private void apply(String origFileName,Jobseeker jobseeker, Job job)
+  private void apply(SessionData currentSessionData, String origFileName, Jobseeker jobseeker, Job job)
   {
     ResumeHandler resumeHandler = new ResumeHandler(currentSessionData.whichResume(), currentSessionData.activateResume(), resumeManager, myResumeManager);
     Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(origFileName,jobseeker);
