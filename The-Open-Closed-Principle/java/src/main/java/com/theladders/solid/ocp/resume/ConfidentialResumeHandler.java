@@ -1,5 +1,7 @@
 package com.theladders.solid.ocp.resume;
 
+import java.util.ArrayList;
+
 import com.theladders.solid.ocp.jobseeker.JobseekerConfidentialityProfile;
 import com.theladders.solid.ocp.jobseeker.JobseekerConfidentialityProfileDao;
 import com.theladders.solid.ocp.user.User;
@@ -22,13 +24,9 @@ public class ConfidentialResumeHandler
     JobseekerConfidentialityProfile profile = jobseekerConfidentialityProfileDao.fetchJobSeekerConfidentialityProfile(jsp.getId());
 
     boolean isChanged = false;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.Name) || isChanged;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.PhoneNumber) || isChanged;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.EmailAddress) || isChanged;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.MailingAddress) || isChanged;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.ContactInfo) || isChanged;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.CompanyName) || isChanged;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.WorkExperience) || isChanged;
+    
+    for(ConfidentialPhraseCategory phrase : ConfidentialPhraseCategory.values())
+      isChanged = profile.resetConfidentialFlagsForCategory(phrase) || isChanged;
 
     if (isChanged)
     {
@@ -36,15 +34,15 @@ public class ConfidentialResumeHandler
     }
   }
 
-  public void makeAllContactInfoNonConfidential(User user)
+  public void makeAllContactInfoNonConfidential(User user, ArrayList<ConfidentialPhraseCategory> contactInfo)
   {
     JobseekerProfile jsp = jobSeekerProfileManager.getJobSeekerProfile(user);
     JobseekerConfidentialityProfile profile = jobseekerConfidentialityProfileDao.fetchJobSeekerConfidentialityProfile(jsp.getId());
     boolean isChanged = false;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.PhoneNumber) || isChanged;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.EmailAddress) || isChanged;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.MailingAddress) || isChanged;
-    isChanged = profile.resetConfidentialFlagsForCategory(ConfidentialPhraseCategory.ContactInfo) || isChanged;
+    
+    for(ConfidentialPhraseCategory phrase : contactInfo)
+      isChanged = profile.resetConfidentialFlagsForCategory(phrase) || isChanged;
+
 
     if (isChanged)
     {

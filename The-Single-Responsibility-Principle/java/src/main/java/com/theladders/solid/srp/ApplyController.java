@@ -2,9 +2,11 @@ package com.theladders.solid.srp;
 
 import com.theladders.solid.srp.http.HttpRequest;
 import com.theladders.solid.srp.http.HttpResponse;
+import com.theladders.solid.srp.http.HttpSession;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobSearchService;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
+import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.ResumeManager;
@@ -33,26 +35,28 @@ public class ApplyController
                              HttpResponse response,
                              String origFileName)
   {
+    SessionData currentSession = new BuildData().createSessionData(request, origFileName);
 
-    SessionData currentSession = new BuildData().createSessionData(request);
+    int jobId = Integer.parseInt(request.getParameter("jobId"));
 
-    int jobId = currentSession.getJobId();
-    if (!jobSearchService.jobExists(jobId))
-    {
-      Result result = new View().provideInvalidJobView(jobId);
-      return getResponse(result, response);
-    }
+    HttpSession session = request.getSession();
+    
+    Jobseeker jobseeker = session.getJobseeker();
+    int jobseekerId = jobseeker.getId();
 
-    return getResponse(apply(jobId, currentSession, origFileName), response);
+    apply(jobId, jobseekerId, currentSession);
+
+    return getResponse();
   }
 
-  private Result apply(int jobId, SessionData currentSession, String origFileName)
+  private Result apply(int jobId, int jobseekerId, SessionData resumeData)
   {
     Job job = jobSearchService.getJob(jobId);   
-    return applicationProcessor.execute(currentSession, origFileName,job);
+    return applicationProcessor.execute(currentSession, origFileName, job);
   }
 
-  private HttpResponse getResponse(Result result, HttpResponse response){
+  private HttpResponse getResponse(Result result, HttpResponse response)
+  {
     response.setResult(result);
     return response;
   }

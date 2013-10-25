@@ -30,14 +30,19 @@ public class ApplicationProcessor
     this.myResumeManager = myResumeManager;
   }
   
-  public Result execute(SessionData currentSessionData,
-                         String origFileName, Job job)
+  public Result execute(SessionData resumeData,
+                        String origFileName, 
+                        Job job)
   {
+    
+    if (!jobSearchService.jobExists(jobId))
+    {
+      Result result = new View().provideInvalidJobView(jobId);
+      return getResponse(result, response);
+    }
 
-
-    Jobseeker jobseeker = currentSessionData.getJobseeker();
-    ResumeHandler resumeHandler = new ResumeHandler(currentSessionData.whichResume(), 
-                                                    currentSessionData.activateResume(), 
+    ResumeHandler resumeHandler = new ResumeHandler(resumeData.whichResume(), 
+                                                    resumeData.activateResume(), 
                                                     resumeManager, 
                                                     myResumeManager);
     try
@@ -61,6 +66,6 @@ public class ApplicationProcessor
     {
       return new View().provideResumeCompletionView(job.getJobId(), job.getTitle());
     }
-      return new View().provideSuccessView(job.getJobId(), job.getTitle());
+    return new View().provideSuccessView(job.getJobId(), job.getTitle());
   }
 }

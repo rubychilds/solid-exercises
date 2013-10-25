@@ -1,6 +1,9 @@
 package com.theladders.solid.ocp;
 
+import java.util.ArrayList;
+
 import com.theladders.solid.ocp.jobseeker.JobseekerConfidentialityProfileDao;
+import com.theladders.solid.ocp.resume.ConfidentialPhraseCategory;
 import com.theladders.solid.ocp.resume.ConfidentialResumeHandler;
 import com.theladders.solid.ocp.resume.JobseekerProfileManager;
 import com.theladders.solid.ocp.resume.ResumeConfidentialityManager;
@@ -17,8 +20,14 @@ public class App
 
     int id = 1; // get from command line?
     User user = new User(id);
-
-    resumeConfidentialityManager.makeAllContactInfoNonConfidential(user);
+    
+    ArrayList<ConfidentialPhraseCategory> contactCategories = new ArrayList<ConfidentialPhraseCategory>();
+    contactCategories.add(ConfidentialPhraseCategory.PhoneNumber);
+    contactCategories.add(ConfidentialPhraseCategory.EmailAddress);
+    contactCategories.add(ConfidentialPhraseCategory.MailingAddress);
+    contactCategories.add(ConfidentialPhraseCategory.ContactInfo);
+    
+    resumeConfidentialityManager.makeAllContactInfoNonConfidential(user, contactCategories);
     resumeConfidentialityManager.makeAllCategoriesNonConfidential(user);
   }
 }
