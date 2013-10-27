@@ -1,7 +1,5 @@
 package com.theladders.solid.ocp.resume;
 
-import java.util.ArrayList;
-
 import com.theladders.solid.ocp.jobseeker.JobseekerConfidentialityProfile;
 import com.theladders.solid.ocp.jobseeker.JobseekerConfidentialityProfileDao;
 import com.theladders.solid.ocp.user.User;
@@ -23,31 +21,51 @@ public class ConfidentialResumeHandler
     JobseekerProfile jsp = jobSeekerProfileManager.getJobSeekerProfile(user);
     JobseekerConfidentialityProfile profile = jobseekerConfidentialityProfileDao.fetchJobSeekerConfidentialityProfile(jsp.getId());
 
-    boolean isChanged = false;
-    
-    for(ConfidentialPhraseCategory phrase : ConfidentialPhraseCategory.values())
-      isChanged = profile.resetConfidentialFlagsForCategory(phrase) || isChanged;
-
+    boolean isChanged = convertAllToNonConfidential(profile);
     if (isChanged)
     {
       generatePermanentConfidentialFiles(user, profile);
     }
   }
 
-  public void makeAllContactInfoNonConfidential(User user, ArrayList<ConfidentialPhraseCategory> contactInfo)
+  public void makeAllContactInfoNonConfidential(User user)
   {
     JobseekerProfile jsp = jobSeekerProfileManager.getJobSeekerProfile(user);
     JobseekerConfidentialityProfile profile = jobseekerConfidentialityProfileDao.fetchJobSeekerConfidentialityProfile(jsp.getId());
-    boolean isChanged = false;
-    
-    for(ConfidentialPhraseCategory phrase : contactInfo)
-      isChanged = profile.resetConfidentialFlagsForCategory(phrase) || isChanged;
 
-
+    boolean isChanged = convertContactInfoNonConfidential(profile);
     if (isChanged)
     {
       generatePermanentConfidentialFiles(user, profile);
     }
+  }
+
+  private static boolean convertAllToNonConfidential(JobseekerConfidentialityProfile profile)
+  {
+    boolean isChanged = convertContactInfoNonConfidential(profile);
+
+    for (ConfidentialPhraseCategory category : ConfidentialPhraseCategory.values())
+    {
+      if (!category.isType(ConfidentialPhraseCategoryType.CONTACT))
+      {
+        isChanged = profile.resetConfidentialFlagsForCategory(category) || isChanged;
+      }
+    }
+    return isChanged;
+  }
+
+  private static boolean convertContactInfoNonConfidential(JobseekerConfidentialityProfile profile)
+  {
+    boolean isChanged = false;
+
+    for (ConfidentialPhraseCategory category : ConfidentialPhraseCategory.values())
+    {
+      if (category.isType(ConfidentialPhraseCategoryType.CONTACT))
+      {
+        isChanged = profile.resetConfidentialFlagsForCategory(category) || isChanged;
+      }
+    }
+    return isChanged;
   }
 
   @SuppressWarnings("unused")

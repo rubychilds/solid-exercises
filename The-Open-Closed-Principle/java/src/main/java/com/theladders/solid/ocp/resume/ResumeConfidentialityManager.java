@@ -1,7 +1,5 @@
 package com.theladders.solid.ocp.resume;
 
-import java.util.ArrayList;
-
 import com.theladders.solid.ocp.user.User;
 
 public class ResumeConfidentialityManager
@@ -13,9 +11,9 @@ public class ResumeConfidentialityManager
     this.confidentialResumeHandler = confidentialResumeHandler;
   }
 
-  public void makeAllContactInfoNonConfidential(User user, ArrayList<ConfidentialPhraseCategory> contactCategories)
+  public void makeAllContactInfoNonConfidential(User user)
   {
-    confidentialResumeHandler.makeAllContactInfoNonConfidential(user, contactCategories);
+    confidentialResumeHandler.makeAllContactInfoNonConfidential(user);
   }
 
   public void makeAllCategoriesNonConfidential(User user)
