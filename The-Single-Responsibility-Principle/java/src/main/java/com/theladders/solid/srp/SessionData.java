@@ -5,4 +5,5 @@ public interface SessionData
 {
  boolean useExistingResume();
  boolean makeResumeActive();
+String fileName();
 }

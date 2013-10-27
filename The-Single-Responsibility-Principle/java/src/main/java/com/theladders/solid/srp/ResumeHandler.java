@@ -1,7 +1,5 @@
 package com.theladders.solid.srp;
 
-import Utils.HttpRequestParameters;
-
 import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.Resume;
@@ -9,17 +7,21 @@ import com.theladders.solid.srp.resume.ResumeManager;
 
 public class ResumeHandler
 {
-  private String whichResume;
-  private String activateResume;
+
+  private String EXISTING = "existing";
+  private String ACTIVATE_RESUME = "yes";
+  
+  private static boolean existingResume;
+  private static boolean activateResume;
   private ResumeManager resumeManager;
   private MyResumeManager myResumeManager;
 
-  public ResumeHandler(String whichResume,
-                       String activateResume, 
+  public ResumeHandler(boolean existingResume,
+                       boolean activateResume, 
                        ResumeManager resumeManager,
                        MyResumeManager myResumeManager) 
   {
-    this.whichResume = whichResume;
+    this.existingResume = existingResume;
     this.activateResume = activateResume;
     this.resumeManager = resumeManager;
     this.myResumeManager = myResumeManager;
@@ -49,11 +51,11 @@ public class ResumeHandler
 
   private boolean useExistingResume()
   {
-    return HttpRequestParameters.EXISTING.equals(whichResume);
+    return EXISTING.equals(existingResume);
   }
 
   private boolean makeResumeActive()
   {
-    return HttpRequestParameters.ACTIVATE_RESUME.equals(activateResume);
+    return ACTIVATE_RESUME.equals(activateResume);
   }
 }

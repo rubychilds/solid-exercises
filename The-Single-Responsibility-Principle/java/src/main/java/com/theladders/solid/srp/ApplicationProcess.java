@@ -12,14 +12,14 @@ import com.theladders.solid.srp.resume.Resume;
 import com.theladders.solid.srp.resume.ResumeManager;
 import com.theladders.solid.srp.view.View;
 
-public class ApplicationProcessor
+public class ApplicationProcess
 {
   private final JobseekerProfileManager jobseekerProfileManager;
   private final JobApplicationSystem    jobApplicationSystem;
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
   
-  public ApplicationProcessor(JobseekerProfileManager jobseekerProfileManager,
+  public ApplicationProcess(JobseekerProfileManager jobseekerProfileManager,
                               JobApplicationSystem jobApplicationSystem,
                               ResumeManager resumeManager,
                               MyResumeManager myResumeManager)
@@ -30,25 +30,30 @@ public class ApplicationProcessor
     this.myResumeManager = myResumeManager;
   }
   
-  public Result execute(SessionData resumeData,
-                        String origFileName, 
-                        Job job)
-  {
+  public Result execute(Job job, Jobseeker jobseeker, SessionData resumeData) {
     
-    if (!jobSearchService.jobExists(jobId))
+    if (job == null)
     {
-      Result result = new View().provideInvalidJobView(jobId);
+      Result result = new View().provideInvalidJobView(job.getJobId());
       return getResponse(result, response);
     }
 
-    ResumeHandler resumeHandler = new ResumeHandler(resumeData.whichResume(), 
-                                                    resumeData.activateResume(), 
+    
+    ResumeHandler resumeHandler = new ResumeHandler(resumeData.useExistingResume(), 
+                                                    resumeData.makeResumeActive(), 
                                                     resumeManager, 
                                                     myResumeManager);
-    try
+
+    Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(resumeData.fileName(), jobseeker);
+    
+    if(resume == null)
     {
-      Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(origFileName, jobseeker);
-      ApplicationHandler applicationHandler = new ApplicationHandler(jobApplicationSystem);
+    	Result result = new View().provideInvalidJobView(job.getJobId());
+    	return getResponse(result, response);
+    }
+    
+    try
+    {      ApplicationHandler applicationHandler = new ApplicationHandler(jobApplicationSystem);
       applicationHandler.apply(jobseeker, job, resume);
     }
     catch (Exception e)
@@ -68,4 +73,6 @@ public class ApplicationProcessor
     }
     return new View().provideSuccessView(job.getJobId(), job.getTitle());
   }
+
+
 }

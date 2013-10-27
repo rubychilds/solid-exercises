@@ -14,7 +14,7 @@ import com.theladders.solid.srp.view.View;
 
 public class ApplyController
 {  
-  private ApplicationProcessor applicationProcessor;
+  private ApplicationProcess applicationProcessor;
   private JobSearchService jobSearchService;
 
   public ApplyController(JobseekerProfileManager jobseekerProfileManager,
@@ -24,7 +24,7 @@ public class ApplyController
                          MyResumeManager myResumeManager)
   {
 
-    this.applicationProcessor = new ApplicationProcessor(jobseekerProfileManager,
+    this.applicationProcessor = new ApplicationProcess(jobseekerProfileManager,
                                                          jobApplicationSystem,
                                                          resumeManager,
                                                          myResumeManager);
@@ -35,7 +35,7 @@ public class ApplyController
                              HttpResponse response,
                              String origFileName)
   {
-    SessionData currentSession = new BuildData().createSessionData(request, origFileName);
+    SessionData resumeData = new BuildData().createSessionData(request, origFileName);
 
     int jobId = Integer.parseInt(request.getParameter("jobId"));
 
@@ -43,17 +43,13 @@ public class ApplyController
     
     Jobseeker jobseeker = session.getJobseeker();
     int jobseekerId = jobseeker.getId();
-
-    apply(jobId, jobseekerId, currentSession);
+    
+    Job job = jobSearchService.getJob(jobId);
+    applicationProcessor.execute(job, jobseeker, resumeData);
 
     return getResponse();
   }
 
-  private Result apply(int jobId, int jobseekerId, SessionData resumeData)
-  {
-    Job job = jobSearchService.getJob(jobId);   
-    return applicationProcessor.execute(currentSession, origFileName, job);
-  }
 
   private HttpResponse getResponse(Result result, HttpResponse response)
   {
