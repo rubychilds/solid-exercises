@@ -28,7 +28,7 @@ public class DynamicEnvironment extends Environment
   {
     // TODO remove masked values
     // TODO join local instance values
-    return base.values();
+    return base.values(); // mod; needs to be super
   }
 
   /**
@@ -41,7 +41,7 @@ public class DynamicEnvironment extends Environment
    */
 
   @Override
-  public Object get(Object key)
+  public Object get(Object key) // put which reflects the get method - to ensure we get same info, that we put
   {
     String realKey = keyMap.get(key);
     Object value = super.get(realKey != null ? realKey : key);
@@ -56,16 +56,21 @@ public class DynamicEnvironment extends Environment
   public Set<Map.Entry<Object, Object>> entrySet()
   {
     Set<Map.Entry<Object, Object>> entrySet = new HashSet<>(super.entrySet());
+    
+
     entrySet.addAll(base.entrySet());
-    return Collections.unmodifiableSet(entrySet);
+   // return Collections.unmodifiableSet(entrySet); // should return a modifiable set - as described in docs
+    return entrySet; 
   }
 
   @Override
   public Set<Object> keySet()
   {
     Set<Object> keySet = new HashSet<>(super.keySet());
+    
     keySet.addAll(keyMap.keySet());
     keySet.addAll(base.keySet());
-    return Collections.unmodifiableSet(keySet);
+   // return Collections.unmodifiableSet(keySet); // should also be modifiable to remove elements
+    return keySet; 
   }
 }

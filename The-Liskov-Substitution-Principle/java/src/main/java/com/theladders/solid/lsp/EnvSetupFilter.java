@@ -14,56 +14,8 @@ import java.util.Map;
 
 public class EnvSetupFilter
 {
-  public static final String               SECURE_HOST = "secure";
-
-  // insecure, auto -> secure
-  private static final Map<String, String> securePropMap = new HashMap<>();
-  // auto -> insecure
-  private static final Map<String, String> insecurePropMap = new HashMap<>();
-  // secure -> insecure
-  private static final Map<String, String> noSSLPropMap = new HashMap<>();
-
-  private static final String              AUTO_HOME   = "autoProtoHome";
-  private static final String              MEMBER_HOME = "memberHome";
-  private static final String              GUEST_HOME  = "guestHome";
-
-  static
-  {
-    securePropMap.put("flash", "secureFlash");
-    securePropMap.put("images", "secureImages");
-    securePropMap.put("css", "secureCss");
-    securePropMap.put("js", "secureJs");
-    securePropMap.put("widgets", "secureWidgets");
-
-    securePropMap.put("landingFlash", "secureLandingFlash");
-    securePropMap.put("landingImages", "secureLandingImages");
-    securePropMap.put("landingCss", "secureLandingCss");
-
-    securePropMap.put("opalImages", "secureOpalImages");
-    securePropMap.put("opalCss", "secureOpalCss");
-
-    securePropMap.put("seoImages", "secureSeoImages");
-    securePropMap.put("seoCss", "secureSeoCss");
-    securePropMap.put("staticBase", "secureStaticBase");
-
-    securePropMap.put(AUTO_HOME, "secureHome");
-    securePropMap.put(MEMBER_HOME, "secureMemberHome");
-    securePropMap.put(GUEST_HOME, "secureGuestHome");
-
-    insecurePropMap.put(AUTO_HOME, "home");
-    insecurePropMap.put(MEMBER_HOME, "insecureMemberHome");
-    insecurePropMap.put(GUEST_HOME, "insecureGuestHome");
-
-    noSSLPropMap.put("secureHome", "home");
-    noSSLPropMap.put(AUTO_HOME, "home");
-
-    noSSLPropMap.put("secureGuestHome", "insecureGuestHome");
-    noSSLPropMap.put("secureMemberHome", "insecureMemberHome");
-    noSSLPropMap.put("secureStaticBase", "staticBase");
-    noSSLPropMap.put(MEMBER_HOME, "insecureMemberHome");
-    noSSLPropMap.put(GUEST_HOME, "insecureGuestHome");
-  }
-
+  public static final String               SECURE_HOST = "secure"; 
+  
   private final String hostName;
 
   public EnvSetupFilter(String hostName)
@@ -80,15 +32,15 @@ public class EnvSetupFilter
     Map<String, String> keyMap;
     if (!sslIsSupported)
     {
-      keyMap = new HashMap<>(noSSLPropMap);
+      keyMap = new NoSSLPropMap();
     }
     else if (isSecure)
     {
-      keyMap = new HashMap<>(securePropMap);
+      keyMap = new SecurePropMap();
     }
     else
     {
-      keyMap = new HashMap<>(insecurePropMap);
+      keyMap = new InsecurePropMap();
     }
 
     Environment dynamicEnv = new DynamicEnvironment(baseEnv, keyMap);
