@@ -8,11 +8,11 @@ import java.util.Set;
 public class Environment
 {
   public static final String KEY_EMAIL_DOMAIN = "emaildomain";
-  private static HashMap<String, String> environment;
+  private static HashMap<Object,Object> environment;
   
   public Environment()
   {
-    this.environment = new HashMap<String,String>();
+    this.environment = new HashMap<Object,Object>();
   }
 
   /**
@@ -21,23 +21,22 @@ public class Environment
    * @return email address or "" if either the user or domain is not defined
    */
   
-  public void put(String key, String value)
+  public void put(Object key, Object value)
   {
     environment.put(key, value);
   }
   
-  public String get(Object object)
+  public Object get(Object object)
   {
     return environment.get(object);
-
   }
   
-  public Set<Entry<String, String>> entrySet()
+  public Set<Entry<Object, Object>> entrySet()
   {
     return environment.entrySet();
   }
   
-  public Set<String> keySet()
+  public Set<Object> keySet()
   {
     return environment.keySet();
   }
@@ -56,8 +55,13 @@ public class Environment
     return (val != null) ? val.toString().trim() : "";
   }
 
-  public Collection<String> values()
+  public Collection<Object> values()
   {
     return environment.values();
+  }
+  
+  public HashMap<Object, Object> getMap()
+  {
+    return environment;
   }
 }

@@ -1,6 +1,5 @@
 package com.theladders.solid.lsp;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -23,7 +22,7 @@ public class EnvSetupFilter
     this.hostName = hostName;
   }
 
-  public Environment getEnvironment(boolean isSecure,
+  public DynamicEnvironment getEnvironment(boolean isSecure,
                                     boolean loggedInUser)
   {
     Environment baseEnv = EnvironmentFactory.getEnvironmentFor(hostName);
