@@ -11,7 +11,6 @@ public class NoSSLPropMap extends HashMap<String, String>
   
   public NoSSLPropMap()
   {
-
     this.put("secureHome", "home");
     this.put(AUTO_HOME, "home");
     this.put("secureGuestHome", "insecureGuestHome");

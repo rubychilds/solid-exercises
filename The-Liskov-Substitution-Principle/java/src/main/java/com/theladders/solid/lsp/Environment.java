@@ -1,14 +1,18 @@
 package com.theladders.solid.lsp;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
-public class Environment extends HashMap<Object, Object>
+public class Environment
 {
   public static final String KEY_EMAIL_DOMAIN = "emaildomain";
-
+  private static HashMap<String, String> environment;
+  
   public Environment()
   {
-    super();
+    this.environment = new HashMap<String,String>();
   }
 
   /**
@@ -16,6 +20,27 @@ public class Environment extends HashMap<Object, Object>
    *
    * @return email address or "" if either the user or domain is not defined
    */
+  
+  public void put(String key, String value)
+  {
+    environment.put(key, value);
+  }
+  
+  public String get(Object object)
+  {
+    return environment.get(object);
+
+  }
+  
+  public Set<Entry<String, String>> entrySet()
+  {
+    return environment.entrySet();
+  }
+  
+  public Set<String> keySet()
+  {
+    return environment.keySet();
+  }
 
   public String getAdminEmail()
   {
@@ -29,5 +54,10 @@ public class Environment extends HashMap<Object, Object>
   {
     Object val = get(key);
     return (val != null) ? val.toString().trim() : "";
+  }
+
+  public Collection<String> values()
+  {
+    return environment.values();
   }
 }

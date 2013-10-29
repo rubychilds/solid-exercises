@@ -2,6 +2,7 @@ package com.theladders.solid.lsp;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -12,23 +13,24 @@ import java.util.Set;
  * @author Zhi-Da Zhong &lt;zz@theladders.com&gt;
  */
 
-public class DynamicEnvironment extends Environment
+public class DynamicEnvironment
 {
   private final Environment         base;
   private final Map<String, String> keyMap; // map insecure prop names to secure ones
-
+  private final Map<String, String> dynamicEnvironment;
+  
   public DynamicEnvironment(Environment base, Map<String, String> propKeyMap)
   {
     this.base = base;
     this.keyMap = propKeyMap;
+    this.dynamicEnvironment = new HashMap<String, String>();
   }
 
-  @Override
   public Collection<Object> values()
   {
     // TODO remove masked values
     // TODO join local instance values
-    return base.values(); // mod; needs to be super
+    return base.values();
   }
 
   /**
@@ -40,11 +42,11 @@ public class DynamicEnvironment extends Environment
    * @return The value for the given key after mapping (e.g. "home" might be mapped to "secureHome")
    */
 
-  @Override
-  public Object get(Object key) // put which reflects the get method - to ensure we get same info, that we put
+
+  public Object get(Object key) // put which reflects the get method - tio ensure we 
   {
     String realKey = keyMap.get(key);
-    Object value = super.get(realKey != null ? realKey : key);
+    Object value = dynamicEnvironment.get(realKey != null ? realKey : key);
     if (value == null)
     {
       return base.get(realKey != null ? realKey : key);
@@ -52,25 +54,25 @@ public class DynamicEnvironment extends Environment
     return value;
   }
 
-  @Override
+
   public Set<Map.Entry<Object, Object>> entrySet()
   {
-    Set<Map.Entry<Object, Object>> entrySet = new HashSet<>(super.entrySet());
-    
-
+    Set<Map.Entry<Object, Object>> entrySet = new HashSet<>();
     entrySet.addAll(base.entrySet());
-   // return Collections.unmodifiableSet(entrySet); // should return a modifiable set - as described in docs
-    return entrySet; 
+    return entrySet; // should return a modifiable set - as described in docs
   }
 
-  @Override
   public Set<Object> keySet()
   {
-    Set<Object> keySet = new HashSet<>(super.keySet());
-    
+    Set<Object> keySet = new HashSet<>();
     keySet.addAll(keyMap.keySet());
     keySet.addAll(base.keySet());
-   // return Collections.unmodifiableSet(keySet); // should also be modifiable to remove elements
-    return keySet; 
+    return Collections.unmodifiableSet(keySet); // should also be modifiable to remove elements
   }
+  
+  public void put(String key, String value)
+  {
+    dynamicEnvironment.put(key, value);
+  }
+  
 }
