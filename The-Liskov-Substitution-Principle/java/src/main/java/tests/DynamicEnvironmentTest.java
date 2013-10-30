@@ -1,4 +1,4 @@
-package com.theladders.solid.lsp;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,28 +13,6 @@ import com.theladders.solid.lsp.DynamicEnvironment;
 public class DynamicEnvironmentTest
 {
 
-  /*
-   * @Test public void testWithEmptyParameters() { Map<String, String> keyMap = new HashMap<String,
-   * String>(); Environment environment = new Environment(); DynamicEnvironment dynamicEnvironment =
-   * new DynamicEnvironment(environment, keyMap); // both null objects - checking this
-   * Set<Map.Entry<Object, Object>> entrySet = dynamicEnvironment.entrySet();
-   * assertTrue(entrySet.isEmpty()); Set<Object> keySet = dynamicEnvironment.keySet();
-   * assertTrue(keySet.isEmpty()); }
-   * @Test public void testWithOneItemInEnvironment() { Map<String, String> keyMap = new
-   * HashMap<String, String>(); Environment environment = new Environment(); String key = "ruby";
-   * String value = "hello"; environment.put(key, value); DynamicEnvironment dynamicEnvironment =
-   * new DynamicEnvironment(environment, keyMap); Set<Map.Entry<Object, Object>> entrySet =
-   * dynamicEnvironment.entrySet(); assertEquals(entrySet.size(), 1); Set<Object> keySet =
-   * dynamicEnvironment.keySet(); assertEquals(keySet.size(), 1); Object returnedValue =
-   * dynamicEnvironment.get(key); assertEquals(returnedValue, value); }
-   * @Test public void testWithOneItemInBase() { Map<String, String> keyMap = new HashMap<String,
-   * String>(); Environment environment = new Environment(); String key = "ruby"; String value =
-   * "hello"; keyMap.put(key, value); DynamicEnvironment dynamicEnvironment = new
-   * DynamicEnvironment(environment, keyMap); Set<Map.Entry<Object, Object>> entrySet =
-   * dynamicEnvironment.entrySet(); assertTrue(entrySet.isEmpty()); Set<Object> keySet =
-   * dynamicEnvironment.keySet(); assertEquals(keySet.size(), 1); Object returnedValue =
-   * dynamicEnvironment.get(key); assertEquals(returnedValue, null); }
-   */
   private EnvSetupFilter      filter;
   private DynamicEnvironment  dynamicEnvironment;
   private static final String hostName                = "www.theladders.com/";
@@ -104,7 +82,9 @@ public class DynamicEnvironmentTest
     assertEquals(dynamicEnvironment.get("secureMemberSiteHome"), "https://www.theladders.com/member/");
     assertEquals(dynamicEnvironment.get("guestSiteHome"), "http://www.theladders.com/");
     assertEquals(dynamicEnvironment.get("falconSiteHome"), "http://www.theladders.com/");
+    
     assertEquals(dynamicEnvironment.get("isSSL"), "true");
+    
     assertEquals(dynamicEnvironment.get("autoProtoHome"), "http://www.theladders.com/");
     assertEquals(dynamicEnvironment.get("guestHome"), null);
     assertEquals(dynamicEnvironment.get("secureFalconSiteHome"), "https://www.theladders.com/");
