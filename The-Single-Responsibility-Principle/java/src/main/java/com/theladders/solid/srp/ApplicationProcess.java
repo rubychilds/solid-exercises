@@ -3,7 +3,10 @@ package com.theladders.solid.srp;
 import Utils.ErrorFields;
 
 import com.theladders.solid.srp.job.Job;
+import com.theladders.solid.srp.job.application.ApplicationFailureException;
+import com.theladders.solid.srp.job.application.JobApplicationResult;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
+import com.theladders.solid.srp.job.application.UnprocessedApplication;
 import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.jobseeker.JobseekerProfile;
 import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
@@ -18,61 +21,68 @@ public class ApplicationProcess
   private final JobApplicationSystem    jobApplicationSystem;
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
-  
+
   public ApplicationProcess(JobseekerProfileManager jobseekerProfileManager,
-                              JobApplicationSystem jobApplicationSystem,
-                              ResumeManager resumeManager,
-                              MyResumeManager myResumeManager)
+                            JobApplicationSystem jobApplicationSystem,
+                            ResumeManager resumeManager,
+                            MyResumeManager myResumeManager)
   {
     this.jobseekerProfileManager = jobseekerProfileManager;
     this.jobApplicationSystem = jobApplicationSystem;
     this.resumeManager = resumeManager;
     this.myResumeManager = myResumeManager;
   }
-  
-  public Result execute(Job job, Jobseeker jobseeker, SessionData resumeData) {
-    
+
+  public ApplicationResponse execute(Job job,
+                        Jobseeker jobseeker,
+                        SessionData resumeData)
+  {
     if (job == null)
     {
-      Result result = new View().provideInvalidJobView(job.getJobId());
-      return getResponse(result, response);
+      return new ApplicationResponse(ApplicationResponseType.INVALID_JOB, job.getJobId());
     }
 
-    
-    ResumeHandler resumeHandler = new ResumeHandler(resumeData.useExistingResume(), 
-                                                    resumeData.makeResumeActive(), 
-                                                    resumeManager, 
-                                                    myResumeManager);
+    Resume resume = saveNewOrRetrieveExistingResume(resumeData, jobseeker);
+    UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
+    // unprocessed application isVALID only if jobseekeer != null && resume != null && job!= null
 
-    Resume resume = resumeHandler.saveNewOrRetrieveExistingResume(resumeData.fileName(), jobseeker);
+    if (jobApplicationFailed(application))
+      return new ApplicationResponse(ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION, -1, null, ErrorFields.UNABLE_TO_PROCESS_APP);
+
+    if (jobseekerNeedsProfileCompletion(jobseeker))
+      return new ApplicationResponse(ApplicationResponseType.NEEDS_COMPLETION, job.getJobId(), job.getTitle());
     
-    if(resume == null)
+    return new ApplicationResponse(ApplicationResponseType.SUCESSFUL, job.getJobId(), job.getTitle());
+  }
+
+  public Resume saveNewOrRetrieveExistingResume(SessionData resumeData,
+                                                Jobseeker jobseeker)
+  {
+    Resume resume;
+
+    if (!resumeData.useExistingResume())
     {
-    	Result result = new View().provideInvalidJobView(job.getJobId());
-    	return getResponse(result, response);
+      resume = resumeManager.saveResume(jobseeker, resumeData.fileName());
+
+      if (resume != null && resumeData.makeResumeActive())
+        myResumeManager.saveAsActive(jobseeker, resume);
     }
+    else
+      resume = myResumeManager.getActiveResume(jobseeker.getId());
     
-    try
-    {      ApplicationHandler applicationHandler = new ApplicationHandler(jobApplicationSystem);
-      applicationHandler.apply(jobseeker, job, resume);
-    }
-    catch (Exception e)
-    {
-      return new View().provideErrorView(ErrorFields.UNABLE_TO_PROCESS_APP);
-    }
-    
-    return finalView(jobseeker, job);
+    return resume;
   }
   
-  private Result finalView(Jobseeker jobseeker, Job job)
+  public boolean jobseekerNeedsProfileCompletion(Jobseeker jobseeker)
   {
     JobseekerProfile profile = jobseekerProfileManager.getJobSeekerProfile(jobseeker);
-    if (!jobseeker.isPremium() && profile.isIncompleteProfile()) 
-    {
-      return new View().provideResumeCompletionView(job.getJobId(), job.getTitle());
-    }
-    return new View().provideSuccessView(job.getJobId(), job.getTitle());
+    return !jobseeker.isPremium() && profile.isIncompleteProfile();
   }
-
-
+  
+  public boolean jobApplicationFailed(UnprocessedApplication application)
+  {
+    JobApplicationResult applicationResult = jobApplicationSystem.apply(application);
+    return applicationResult.failure();
+    
+  }
 }
