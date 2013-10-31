@@ -34,8 +34,8 @@ public class ApplicationProcess
   }
 
   public ApplicationResponse execute(Job job,
-                        Jobseeker jobseeker,
-                        SessionData resumeData)
+                                     Jobseeker jobseeker,
+                                     SessionData resumeData)
   {
     if (job == null)
     {
@@ -43,46 +43,57 @@ public class ApplicationProcess
     }
 
     Resume resume = saveNewOrRetrieveExistingResume(resumeData, jobseeker);
+
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
     // unprocessed application isVALID only if jobseekeer != null && resume != null && job!= null
 
     if (jobApplicationFailed(application))
-      return new ApplicationResponse(ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION, -1, null, ErrorFields.UNABLE_TO_PROCESS_APP);
+    {
+      return new ApplicationResponse(ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION,
+                                     -1,
+                                     null,
+                                     ErrorFields.UNABLE_TO_PROCESS_APP);
 
+    }
     if (jobseekerNeedsProfileCompletion(jobseeker))
       return new ApplicationResponse(ApplicationResponseType.NEEDS_COMPLETION, job.getJobId(), job.getTitle());
-    
+
     return new ApplicationResponse(ApplicationResponseType.SUCESSFUL, job.getJobId(), job.getTitle());
   }
 
-  public Resume saveNewOrRetrieveExistingResume(SessionData resumeData,
-                                                Jobseeker jobseeker)
+  private Resume saveNewOrRetrieveExistingResume(SessionData resumeData,
+                                                 Jobseeker jobseeker)
   {
     Resume resume;
 
+    String resumeFileName = resumeData.fileName();
+    if (resumeFileName == null)
+    {
+      return null;
+    }
+
     if (!resumeData.useExistingResume())
     {
-      resume = resumeManager.saveResume(jobseeker, resumeData.fileName());
+      resume = resumeManager.saveResume(jobseeker, resumeFileName);
 
       if (resume != null && resumeData.makeResumeActive())
         myResumeManager.saveAsActive(jobseeker, resume);
     }
     else
       resume = myResumeManager.getActiveResume(jobseeker.getId());
-    
+
     return resume;
   }
-  
-  public boolean jobseekerNeedsProfileCompletion(Jobseeker jobseeker)
+
+  private boolean jobseekerNeedsProfileCompletion(Jobseeker jobseeker)
   {
     JobseekerProfile profile = jobseekerProfileManager.getJobSeekerProfile(jobseeker);
     return !jobseeker.isPremium() && profile.isIncompleteProfile();
   }
-  
-  public boolean jobApplicationFailed(UnprocessedApplication application)
+
+  private boolean jobApplicationFailed(UnprocessedApplication application)
   {
     JobApplicationResult applicationResult = jobApplicationSystem.apply(application);
     return applicationResult.failure();
-    
   }
 }

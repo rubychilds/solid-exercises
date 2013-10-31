@@ -37,7 +37,8 @@ public class ApplyController
                              String origFileName)
   {
     SessionData resumeData = new BuildData().createSessionData(request, origFileName);
-
+    
+    System.out.println("resume name" + origFileName);
     int jobId = Integer.parseInt(request.getParameter("jobId"));
 
     HttpSession session = request.getSession();
@@ -51,7 +52,6 @@ public class ApplyController
     // ApplyProcessor
 
     ApplicationResponse applicationResponse = applicationProcessor.execute(job, jobseeker, resumeData);
-
     ViewContainer views = new ViewContainer();
 
     View finalView = views.getView(applicationResponse.getType());

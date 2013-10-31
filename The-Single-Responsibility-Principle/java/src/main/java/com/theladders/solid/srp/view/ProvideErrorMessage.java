@@ -14,7 +14,7 @@ public class ProvideErrorMessage extends View
 {
   private ArrayList<String> errList = new ArrayList<String>();
 
-  private ApplicationResponseType type  = ApplicationResponseType.ERROR;
+  private ApplicationResponseType type  = ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION;
   private Map<String, Object> model = new  HashMap<String, Object>();
 
   protected void setApplicationResponse(ApplicationResponse response)
@@ -28,6 +28,7 @@ public class ProvideErrorMessage extends View
     setApplicationResponse(response);
     return new Result("error", model, errList);
   }
+  
   public ApplicationResponseType getType()
   {
     return this.type;
