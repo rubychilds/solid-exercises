@@ -24,7 +24,6 @@ public class ProvideResumeCompletionView extends View
 
   public Result getResult(ApplicationResponse response)
   {
-    System.out.println("complete resume - in view");
     setApplicationResponse(response);
     model.put(ModelFieldNames.JOB_ID, jobId);
     model.put(ModelFieldNames.JOB_TITLE, jobtitle);

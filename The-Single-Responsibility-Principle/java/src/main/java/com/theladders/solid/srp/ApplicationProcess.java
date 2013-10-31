@@ -33,13 +33,14 @@ public class ApplicationProcess
     this.myResumeManager = myResumeManager;
   }
 
-  public ApplicationResponse execute(Job job,
+  public ApplicationResponse execute(int jobId, Job job,
                                      Jobseeker jobseeker,
                                      SessionData resumeData)
   {
     if (job == null)
     {
-      return new ApplicationResponse(ApplicationResponseType.INVALID_JOB, job.getJobId());
+      System.out.println("job is invalid");
+      return new ApplicationResponse(ApplicationResponseType.INVALID_JOB, jobId);
     }
 
     Resume resume = saveNewOrRetrieveExistingResume(resumeData, jobseeker);
@@ -52,8 +53,7 @@ public class ApplicationProcess
       return new ApplicationResponse(ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION,
                                      -1,
                                      null,
-                                     ErrorFields.UNABLE_TO_PROCESS_APP);
-
+                                     ErrorFields.UNABLE_TO_PROCESS_APP); 
     }
     if (jobseekerNeedsProfileCompletion(jobseeker))
       return new ApplicationResponse(ApplicationResponseType.NEEDS_COMPLETION, job.getJobId(), job.getTitle());
