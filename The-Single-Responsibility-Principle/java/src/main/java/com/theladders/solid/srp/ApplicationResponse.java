@@ -3,9 +3,9 @@ package com.theladders.solid.srp;
 public class ApplicationResponse
 {
   private ApplicationResponseType type  = ApplicationResponseType.ERROR;
-  private int                     jobid = -1;
-  private String                  jobtitle;
-  private String                  errorMessage;
+  private static int              jobid = -1;
+  private static String           jobtitle;
+  private static String           errorMessage;
 
   public ApplicationResponse(ApplicationResponseType type,
                              int invalid,
@@ -40,4 +40,23 @@ public class ApplicationResponse
     this(type, -1, null, null);
   }
 
+  public static String getErrorMessage()
+  {
+    return errorMessage;
+  }
+
+  public static String getjobTitle()
+  {
+    return errorMessage;
+  }
+
+  public static int getJobId()
+  {
+    return jobid;
+  }
+  
+  public ApplicationResponseType getType()
+  {
+    return this.type;
+  }
 }
