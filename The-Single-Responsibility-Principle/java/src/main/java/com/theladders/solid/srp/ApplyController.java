@@ -17,6 +17,8 @@ public class ApplyController
 {
   private ApplicationProcess applicationProcessor;
   private JobSearchService   jobSearchService;
+  private static String      WHICH              = "whichResume";
+  private static String      MAKE_RESUME_ACTIVE = "makeResumeActive";
 
   public ApplyController(JobseekerProfileManager jobseekerProfileManager,
                          JobSearchService jobSearchService,
@@ -36,8 +38,8 @@ public class ApplyController
                              HttpResponse response,
                              String origFileName)
   {
-    SessionData resumeData = new BuildData().createSessionData(request, origFileName);
-      
+    SessionData resumeData = createResumeData(request, origFileName);
+
     int jobId = Integer.parseInt(request.getParameter("jobId"));
 
     HttpSession session = request.getSession();
@@ -66,4 +68,14 @@ public class ApplyController
     response.setResult(result);
     return response;
   }
+
+  private SessionData createResumeData(HttpRequest request,
+                                       String origFileName)
+  {
+    String activateResume = request.getParameter(MAKE_RESUME_ACTIVE);
+    String whichResume = request.getParameter(WHICH);
+
+    return new ResumeData(origFileName, activateResume, whichResume);
+  }
+
 }

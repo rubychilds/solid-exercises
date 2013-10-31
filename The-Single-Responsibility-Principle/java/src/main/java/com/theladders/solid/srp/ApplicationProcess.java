@@ -33,7 +33,8 @@ public class ApplicationProcess
     this.myResumeManager = myResumeManager;
   }
 
-  public ApplicationResponse execute(int jobId, Job job,
+  public ApplicationResponse execute(int jobId,
+                                     Job job,
                                      Jobseeker jobseeker,
                                      SessionData resumeData)
   {
@@ -53,7 +54,7 @@ public class ApplicationProcess
       return new ApplicationResponse(ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION,
                                      -1,
                                      null,
-                                     ErrorFields.UNABLE_TO_PROCESS_APP); 
+                                     ErrorFields.UNABLE_TO_PROCESS_APP);
     }
     if (jobseekerNeedsProfileCompletion(jobseeker))
       return new ApplicationResponse(ApplicationResponseType.NEEDS_COMPLETION, job.getJobId(), job.getTitle());
