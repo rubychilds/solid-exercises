@@ -18,15 +18,29 @@ public class ProvideResumeCompletionView extends View
 
   protected void setApplicationResponse(ApplicationResponse response)
   {
-    this.jobId = ApplicationResponse.getJobId();
-    this.jobtitle = ApplicationResponse.getjobTitle();
+    this.jobId = response.getJobId();
+    this.jobtitle = response.getjobTitle();
   }
 
   public Result getResult(ApplicationResponse response)
   {
+    System.out.println("complete resume - in view");
+    setApplicationResponse(response);
     model.put(ModelFieldNames.JOB_ID, jobId);
     model.put(ModelFieldNames.JOB_TITLE, jobtitle);
     return new Result("completeResumePlease", model);
   }
+  
+  public ApplicationResponseType getType()
+  {
+    return this.type;
+  }
+
+  @Override
+  public boolean isType(ApplicationResponseType type)
+  {
+    return this.type.equals(type);
+  }
+  
 
 }

@@ -2,14 +2,14 @@ package com.theladders.solid.srp;
 
 public class ResumeData implements SessionData
 {
-  private String activateResume;
-  private String whichResume;
-  private String originalFileName;
+  private String       activateResume;
+  private String       whichResume;
+  private String       originalFileName;
 
-  public static String EXISTING = "existing";
-  public static String ACTIVATE_RESUME = "yes";
+  public static String EXISTING           = "existing";
+  public static String ACTIVATE_RESUME    = "yes";
 
-  public static String WHICH = "whichResume";
+  public static String WHICH              = "whichResume";
   public static String MAKE_RESUME_ACTIVE = "makeResumeActive";
 
   public ResumeData(String originalFileName,

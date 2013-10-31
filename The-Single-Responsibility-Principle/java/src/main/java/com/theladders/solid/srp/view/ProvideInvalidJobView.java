@@ -22,7 +22,7 @@ public class ProvideInvalidJobView extends View
   
   protected void setApplicationResponse(ApplicationResponse response)
   {
-    this.jobId = -1;
+    this.jobId = response.getJobId();
   }
     
   public Result getResult(ApplicationResponse response)
@@ -31,4 +31,10 @@ public class ProvideInvalidJobView extends View
     model.put(ModelFieldNames.JOB_ID, jobId);
     return new Result("invalidJob", model);
  }
+  
+  public ApplicationResponseType getType()
+  {
+    return this.type;
+  }
+  
 }

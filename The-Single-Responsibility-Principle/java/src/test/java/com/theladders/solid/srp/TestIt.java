@@ -43,7 +43,7 @@ public class TestIt
   private ActiveResumeRepository     activeResumeRepository;
 
   private SuccessfulApplication      existingApplication;
-
+/*
   @Test
   public void requestWithValidJob()
   {
@@ -116,7 +116,7 @@ public class TestIt
 
     assertEquals("invalidJob", response.getResultType());
   }
-
+*/
   @Test
   public void requestWithNoResume()
   {
@@ -134,7 +134,7 @@ public class TestIt
 
     assertEquals("error", response.getResultType());
   }
-
+/*
   @Test
   public void reapplyToJob()
   {
@@ -170,7 +170,7 @@ public class TestIt
 
     assertEquals("completeResumePlease", response.getResultType());
   }
-
+/*
   @Test
   public void resumeIsSaved()
   {
@@ -207,7 +207,7 @@ public class TestIt
 
     assertEquals(new Resume("Save Me Seymour"), activeResumeRepository.activeResumeFor(APPROVED_JOBSEEKER));
   }
-
+*/
   @Before
   public void setup()
   {

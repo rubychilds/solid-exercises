@@ -19,7 +19,7 @@ public class ProvideErrorMessage extends View
 
   protected void setApplicationResponse(ApplicationResponse response)
   {
-    String errorMessage = ApplicationResponse.getErrorMessage();
+    String errorMessage = response.getErrorMessage();
     errList.add(errorMessage);
   }
 
@@ -27,5 +27,14 @@ public class ProvideErrorMessage extends View
   {
     setApplicationResponse(response);
     return new Result("error", model, errList);
+  }
+  public ApplicationResponseType getType()
+  {
+    return this.type;
+  }
+  
+  public boolean isType(ApplicationResponseType type)
+  {
+    return this.type.equals(type);
   }
 }

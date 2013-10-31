@@ -14,9 +14,9 @@ import com.theladders.solid.srp.view.View;
 import com.theladders.solid.srp.view.ViewContainer;
 
 public class ApplyController
-{  
+{
   private ApplicationProcess applicationProcessor;
-  private JobSearchService jobSearchService;
+  private JobSearchService   jobSearchService;
 
   public ApplyController(JobseekerProfileManager jobseekerProfileManager,
                          JobSearchService jobSearchService,
@@ -26,9 +26,9 @@ public class ApplyController
   {
 
     this.applicationProcessor = new ApplicationProcess(jobseekerProfileManager,
-                                                         jobApplicationSystem,
-                                                         resumeManager,
-                                                         myResumeManager);
+                                                       jobApplicationSystem,
+                                                       resumeManager,
+                                                       myResumeManager);
     this.jobSearchService = jobSearchService;
   }
 
@@ -41,21 +41,28 @@ public class ApplyController
     int jobId = Integer.parseInt(request.getParameter("jobId"));
 
     HttpSession session = request.getSession();
-    
+
+    // Jobseeker
     Jobseeker jobseeker = session.getJobseeker();
+
     int jobseekerId = jobseeker.getId();
-    
+    // Job
     Job job = jobSearchService.getJob(jobId);
+    // ApplyProcessor
+
     ApplicationResponse applicationResponse = applicationProcessor.execute(job, jobseeker, resumeData);
+
     ViewContainer views = new ViewContainer();
+
     View finalView = views.getView(applicationResponse.getType());
+
     Result result = finalView.getResult(applicationResponse);
-    
+
     return getResponse(result, response);
   }
 
-
-  private HttpResponse getResponse(Result result, HttpResponse response)
+  private HttpResponse getResponse(Result result,
+                                   HttpResponse response)
   {
     response.setResult(result);
     return response;

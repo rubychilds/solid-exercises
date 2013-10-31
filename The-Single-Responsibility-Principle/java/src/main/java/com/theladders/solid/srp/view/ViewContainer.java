@@ -35,9 +35,17 @@ public class ViewContainer
     for (View currentView : views)
     {
       if (currentView.isType(type))
+      {
         return currentView;
+      }
+
     }
     return null;
+  }
+
+  public String toString()
+  {
+    return views.toString();
   }
 
 }
