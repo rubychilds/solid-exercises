@@ -1,6 +1,6 @@
-package com.theladders.solid.isp.oldjob;
+package com.theladders.solid.isp.JobFinance;
 
-public class JobReimbursable
+public class JobReimbursable implements JobFinance
 {
   private boolean reimbursable = false;
   

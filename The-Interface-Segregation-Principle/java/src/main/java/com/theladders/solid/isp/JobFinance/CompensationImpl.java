@@ -1,22 +1,11 @@
-package com.theladders.solid.isp.oldjob;
+package com.theladders.solid.isp.JobFinance;
 
-public class Compensation
+public class CompensationImpl implements JobFinance
 {
-
-  private String compensation;
   private String compensationBonus;
+  private String compensation;
   private String compensationOther;
   private String compensationSalary;
-
-  public String getCompensation()
-  {
-    return compensation;
-  }
-
-  public void setCompensation(String compensation)
-  {
-    this.compensation = compensation;
-  }
 
   public String getCompensationBonus()
   {
@@ -26,6 +15,16 @@ public class Compensation
   public void setCompensationBonus(String compensationBonus)
   {
     this.compensationBonus = compensationBonus;
+  }
+
+  public String getCompensation()
+  {
+    return compensation;
+  }
+
+  public void setCompensation(String compensation)
+  {
+    this.compensation = compensation;
   }
 
   public String getCompensationOther()

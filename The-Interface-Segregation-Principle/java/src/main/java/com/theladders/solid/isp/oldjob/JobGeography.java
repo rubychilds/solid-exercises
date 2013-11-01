@@ -2,9 +2,20 @@ package com.theladders.solid.isp.oldjob;
 
 import com.theladders.solid.isp.oldjob.stubs.Region;
 
-public class JobRegion
+public class JobGeography
 {
-  private Region  region;
+  private String location;
+  private Region region;
+
+  public String getLocation()
+  {
+    return location;
+  }
+
+  public void setLocation(String location)
+  {
+    this.location = location;
+  }
 
   public void setRegion(Region region)
   {

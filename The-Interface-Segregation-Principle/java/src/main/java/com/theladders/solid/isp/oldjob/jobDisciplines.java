@@ -6,8 +6,8 @@ import com.theladders.solid.isp.oldjob.stubs.Discipline;
 
 public class jobDisciplines
 {
-  private List<Discipline>         disciplines;
-  
+  private List<Discipline> disciplines;
+
   public List<Discipline> getDisciplines()
   {
     return disciplines;

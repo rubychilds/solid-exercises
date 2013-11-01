@@ -1,6 +1,6 @@
 package com.theladders.solid.isp.oldjob;
 
-public class JobExclustivity
+public class JobExclusivity
 {
 
   private boolean exclusive = false;

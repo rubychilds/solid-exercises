@@ -1,6 +1,6 @@
 package com.theladders.solid.isp.oldjob;
 
-public class Company
+public class JobCompany
 {
   private String  company;
   private Integer companySize;
