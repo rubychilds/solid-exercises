@@ -38,7 +38,6 @@ public class ProvideResumeCompletionView extends View
   public void addError(String error)
   {
     // TODO Auto-generated method stub
-    
   }
 
 }

@@ -11,8 +11,8 @@ import com.theladders.solid.srp.http.HttpResponse;
 public class ProvideInvalidJobView extends View
 {
 
-  private Map<String, Object>     model = new HashMap<String, Object>();
-  
+  private Map<String, Object> model = new HashMap<String, Object>();
+
   public HttpResponse getResult(HttpResponse httpresponse)
   {
     model.put(ModelFieldNames.JOB_ID, getJobID());
@@ -27,7 +27,7 @@ public class ProvideInvalidJobView extends View
   public void addError(String erro)
   {
     // TODO Auto-generated method stub
-    
+
   }
 
 }

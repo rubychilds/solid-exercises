@@ -1,5 +1,7 @@
 package com.theladders.solid.srp;
 
+import Utils.ErrorFields;
+
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.application.JobApplicationResult;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
@@ -45,12 +47,11 @@ public class ApplicationProcess
     if (jobApplicationFailed(application))
     {
       View view = viewCollection.getErrorView();
-      view.addError("We could not process your application.");
+      view.addError(ErrorFields.UNABLE_TO_PROCESS_APP);
       return view;
     }
 
     if (jobseekerNeedsProfileCompletion(jobseeker))
-
       return viewCollection.getResumeCompletionView();
 
     return viewCollection.getSuccessView();
