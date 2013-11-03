@@ -3,6 +3,7 @@ package com.theladders.solid.srp.view;
 import com.theladders.solid.srp.ApplicationResponse;
 import com.theladders.solid.srp.ApplicationResponseType;
 import com.theladders.solid.srp.Result;
+import com.theladders.solid.srp.http.HttpResponse;
 
 public abstract class View
 {
@@ -10,7 +11,7 @@ public abstract class View
 
   public abstract boolean isType(ApplicationResponseType type);
 
-  public abstract Result getResult(ApplicationResponse response);
+  public abstract HttpResponse getResult(ApplicationResponse response, HttpResponse hhtpresponse);
 
   public abstract ApplicationResponseType getType();
 

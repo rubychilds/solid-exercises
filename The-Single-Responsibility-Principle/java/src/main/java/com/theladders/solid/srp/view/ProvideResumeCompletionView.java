@@ -8,6 +8,7 @@ import Utils.ModelFieldNames;
 import com.theladders.solid.srp.ApplicationResponse;
 import com.theladders.solid.srp.ApplicationResponseType;
 import com.theladders.solid.srp.Result;
+import com.theladders.solid.srp.http.HttpResponse;
 
 public class ProvideResumeCompletionView extends View
 {
@@ -16,15 +17,20 @@ public class ProvideResumeCompletionView extends View
   private int                     jobId;
   private String                  jobtitle;
 
-  public Result getResult(ApplicationResponse response)
+  public HttpResponse getResult(ApplicationResponse response, HttpResponse httpresponse)
   {
     this.jobId = response.getJobId();
     this.jobtitle = response.getjobTitle();
+    
     model.put(ModelFieldNames.JOB_ID, jobId);
     model.put(ModelFieldNames.JOB_TITLE, jobtitle);
-    return new Result("completeResumePlease", model);
+    
+    Result result = new Result("completeResumePlease", model);
+    httpresponse.setResult(result);
+    
+    return httpresponse;
   }
-  
+
   public ApplicationResponseType getType()
   {
     return this.type;
@@ -35,6 +41,5 @@ public class ProvideResumeCompletionView extends View
   {
     return this.type.equals(type);
   }
-  
 
 }

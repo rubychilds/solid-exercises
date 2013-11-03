@@ -30,7 +30,7 @@ public class ViewContainer
     return views;
   }
 
-  public View getView(ApplicationResponseType type)
+  public View getView(ApplicationResponseType type )
   {
     for (View currentView : views)
     {

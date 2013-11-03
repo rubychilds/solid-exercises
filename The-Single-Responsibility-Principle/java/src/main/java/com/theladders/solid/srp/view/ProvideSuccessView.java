@@ -8,6 +8,7 @@ import Utils.ModelFieldNames;
 import com.theladders.solid.srp.ApplicationResponse;
 import com.theladders.solid.srp.ApplicationResponseType;
 import com.theladders.solid.srp.Result;
+import com.theladders.solid.srp.http.HttpResponse;
 
 public class ProvideSuccessView extends View
 {
@@ -17,13 +18,17 @@ public class ProvideSuccessView extends View
   private int                     jobId;
   private String                  jobtitle;
 
-  public Result getResult(ApplicationResponse response)
+  public HttpResponse getResult(ApplicationResponse response, HttpResponse httpresponse)
   {
     this.jobId = response.getJobId();
     this.jobtitle = response.getjobTitle();
+    
     model.put(ModelFieldNames.JOB_ID, jobId);
     model.put(ModelFieldNames.JOB_TITLE, jobtitle);
-    return new Result("success", model);
+    
+    Result result = new Result("success", model);
+    httpresponse.setResult(result);
+    return httpresponse;
   }
   public ApplicationResponseType getType()
   {

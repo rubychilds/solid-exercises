@@ -8,28 +8,33 @@ import Utils.ModelFieldNames;
 import com.theladders.solid.srp.ApplicationResponse;
 import com.theladders.solid.srp.ApplicationResponseType;
 import com.theladders.solid.srp.Result;
+import com.theladders.solid.srp.http.HttpResponse;
 
 public class ProvideInvalidJobView extends View
 {
-  
-  private ApplicationResponseType type = ApplicationResponseType.INVALID_JOB;
-  private Map<String, Object> model = new  HashMap<String, Object>();
-  private int jobId;
 
-  public boolean isType(ApplicationResponseType type){
-    return this.type  == type;
+  private ApplicationResponseType type  = ApplicationResponseType.INVALID_JOB;
+  private Map<String, Object>     model = new HashMap<String, Object>();
+  private int                     jobId;
+
+  public boolean isType(ApplicationResponseType type)
+  {
+    return this.type == type;
   }
 
-  public Result getResult(ApplicationResponse response)
+  public HttpResponse getResult(ApplicationResponse response,
+                                HttpResponse httpresponse)
   {
     this.jobId = response.getJobId();
     model.put(ModelFieldNames.JOB_ID, jobId);
-    return new Result("invalidJob", model);
- }
-  
+    Result result = new Result("invalidJob", model);
+    httpresponse.setResult(result);
+    return httpresponse;
+  }
+
   public ApplicationResponseType getType()
   {
     return this.type;
   }
-  
+
 }

@@ -44,29 +44,16 @@ public class ApplyController
 
     HttpSession session = request.getSession();
 
-    // Jobseeker
     Jobseeker jobseeker = session.getJobseeker();
 
-    int jobseekerId = jobseeker.getId();
-    // Job
     Job job = jobSearchService.getJob(jobId);
-    // ApplyProcessor
 
     ApplicationResponse applicationResponse = applicationProcessor.execute(jobId, job, jobseeker, resumeData);
     ViewContainer views = new ViewContainer();
 
     View finalView = views.getView(applicationResponse.getType());
 
-    Result result = finalView.getResult(applicationResponse);
-
-    return getResponse(result, response);
-  }
-
-  private HttpResponse getResponse(Result result,
-                                   HttpResponse response)
-  {
-    response.setResult(result);
-    return response;
+    return finalView.getResult(applicationResponse, response);
   }
 
   private SessionData createResumeData(HttpRequest request,

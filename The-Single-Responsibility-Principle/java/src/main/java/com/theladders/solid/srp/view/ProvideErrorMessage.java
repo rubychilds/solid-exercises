@@ -9,6 +9,7 @@ import Utils.ModelFieldNames;
 import com.theladders.solid.srp.ApplicationResponse;
 import com.theladders.solid.srp.ApplicationResponseType;
 import com.theladders.solid.srp.Result;
+import com.theladders.solid.srp.http.HttpResponse;
 
 public class ProvideErrorMessage extends View
 {
@@ -17,11 +18,13 @@ public class ProvideErrorMessage extends View
   private ApplicationResponseType type  = ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION;
   private Map<String, Object> model = new  HashMap<String, Object>();
 
-  public Result getResult(ApplicationResponse response)
+  public HttpResponse getResult(ApplicationResponse response, HttpResponse httpresponse)
   {
     String errorMessage = response.getErrorMessage();
     errList.add(errorMessage);
-    return new Result("error", model, errList);
+    Result result = new Result("error", model, errList);
+    httpresponse.setResult(result);
+    return httpresponse;
   }
   
   public ApplicationResponseType getType()
