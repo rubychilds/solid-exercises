@@ -6,8 +6,8 @@ public class App
   public static void main(String[] args)
   {
     LocationInfo location = new LocationInfo();
-
-    JobCombination job = new JobCombination(location);
+    CompanyInfo company = new CompanyInfo();
+    JobCombination job = new JobCombination(location, company);
 
   }
 

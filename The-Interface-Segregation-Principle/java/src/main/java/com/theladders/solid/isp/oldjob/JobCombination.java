@@ -3,16 +3,11 @@ package com.theladders.solid.isp.oldjob;
 public class JobCombination extends JobImpl
 {
   private Location location;
+  private Company company;
   
-  public JobCombination(Location location){
+  public JobCombination(Location location, Company company){
     this.location = location;
-  }
-
-  @Override
-  public String getLocation()
-  {
-    // TODO Auto-generated method stub
-    return null;
+    this.company = company;
   }
 
   @Override

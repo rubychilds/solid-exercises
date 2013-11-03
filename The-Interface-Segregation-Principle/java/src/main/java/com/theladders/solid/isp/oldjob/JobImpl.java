@@ -10,8 +10,6 @@ import com.theladders.solid.isp.oldjob.stubs.Region;
 
 public abstract class JobImpl implements JobCommon
 {
-  private String           company;
-  private Integer          companySize;
   private String           compensation;
   private String           compensationBonus;
   private String           compensationOther;
@@ -20,7 +18,6 @@ public abstract class JobImpl implements JobCommon
   private Date             entryDate;
   private Experience       experience;
   private Industry         industry;
-  private String           location;
   private int              oldJobId     = 0;
   private Date             publicationDate;
   private Region           region;
@@ -32,26 +29,6 @@ public abstract class JobImpl implements JobCommon
   private boolean          exclusive    = false;
   private boolean          reimbursable = false;
   private Date             updateTime   = null;
-
-  public String getCompany()
-  {
-    return company;
-  }
-
-  public void setCompany(String company)
-  {
-    this.company = company;
-  }
-
-  public Integer getCompanySize()
-  {
-    return companySize;
-  }
-
-  public void setCompanySize(Integer companySize)
-  {
-    this.companySize = companySize;
-  }
 
   public String getCompensation()
   {

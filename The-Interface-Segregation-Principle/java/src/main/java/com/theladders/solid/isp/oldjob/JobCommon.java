@@ -10,25 +10,6 @@ import com.theladders.solid.isp.oldjob.stubs.Region;
 
 public interface JobCommon
 {
-  /**
-   * @return the name of the company
-   */
-  String getCompany();
-
-  /**
-   * Gets the value of the company_size_id field.
-   * This represents the id in the company size table for the description of
-   * how large the company is.
-   *
-   * @return companySize
-   */
-  Integer getCompanySize();
-
-  /**
-   * Get this job's compensation (text).
-   *
-   * @return compensation for this job.
-   */
   String getCompensation();
 
   /**
@@ -79,9 +60,7 @@ public interface JobCommon
    * @return the Industry for this job.
    */
   Industry getIndustry();
-
-  String getLocation();
-
+  
   int getOldJobId();
 
   /**
