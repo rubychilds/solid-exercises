@@ -31,8 +31,7 @@ public class ApplicationProcess
     this.myResumeManager = myResumeManager;
   }
 
-  public View execute(int jobId,
-                      Job job,
+  public View execute(Job job,
                       Jobseeker jobseeker,
                       SessionData resumeData,
                       ViewCollection viewCollection)

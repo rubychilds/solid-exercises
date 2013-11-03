@@ -48,7 +48,7 @@ public class ApplyController
     Job job = jobSearchService.getJob(jobId);
    
     ViewCollection viewCollection = new ViewCollection();
-    View finalView = applicationProcessor.execute(jobId, job, jobseeker, resumeData, viewCollection);
+    View finalView = applicationProcessor.execute(job, jobseeker, resumeData, viewCollection);
 
     if(job != null)
       finalView.setJobID(jobId);
