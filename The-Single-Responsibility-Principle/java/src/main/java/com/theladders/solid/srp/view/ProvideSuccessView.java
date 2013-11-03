@@ -18,23 +18,26 @@ public class ProvideSuccessView extends View
   private int                     jobId;
   private String                  jobtitle;
 
-  public HttpResponse getResult(ApplicationResponse response, HttpResponse httpresponse)
+  public HttpResponse getResult(ApplicationResponse response,
+                                HttpResponse httpresponse)
   {
     this.jobId = response.getJobId();
     this.jobtitle = response.getjobTitle();
-    
+
     model.put(ModelFieldNames.JOB_ID, jobId);
     model.put(ModelFieldNames.JOB_TITLE, jobtitle);
-    
+
     Result result = new Result("success", model);
     httpresponse.setResult(result);
+
     return httpresponse;
   }
+
   public ApplicationResponseType getType()
   {
     return this.type;
   }
-  
+
   public boolean isType(ApplicationResponseType type)
   {
     return this.type.equals(type);

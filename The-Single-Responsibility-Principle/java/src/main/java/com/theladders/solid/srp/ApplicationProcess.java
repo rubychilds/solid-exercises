@@ -14,6 +14,7 @@ import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.Resume;
 import com.theladders.solid.srp.resume.ResumeManager;
 import com.theladders.solid.srp.view.View;
+import com.theladders.solid.srp.view.ViewCollection;
 
 public class ApplicationProcess
 {
@@ -21,27 +22,32 @@ public class ApplicationProcess
   private final JobApplicationSystem    jobApplicationSystem;
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
+  private final ViewCollection          viewCollection;
 
   public ApplicationProcess(JobseekerProfileManager jobseekerProfileManager,
                             JobApplicationSystem jobApplicationSystem,
                             ResumeManager resumeManager,
-                            MyResumeManager myResumeManager)
+                            MyResumeManager myResumeManager,
+                            ViewCollection views)
   {
     this.jobseekerProfileManager = jobseekerProfileManager;
     this.jobApplicationSystem = jobApplicationSystem;
     this.resumeManager = resumeManager;
     this.myResumeManager = myResumeManager;
+    this.viewCollection = views;
   }
 
-  public ApplicationResponse execute(int jobId,
-                                     Job job,
-                                     Jobseeker jobseeker,
-                                     SessionData resumeData)
+  public View execute(int jobId,
+                      Job job,
+                      Jobseeker jobseeker,
+                      SessionData resumeData)
   {
     if (job == null)
     {
       System.out.println("job is invalid");
-      return new ApplicationResponse(ApplicationResponseType.INVALID_JOB, jobId);
+
+      // return new ApplicationResponse(ApplicationResponseType.INVALID_JOB, jobId);
+      return viewCollection.getInvalidJobView();
     }
 
     Resume resume = saveNewOrRetrieveExistingResume(resumeData, jobseeker);
@@ -51,15 +57,22 @@ public class ApplicationProcess
 
     if (jobApplicationFailed(application))
     {
-      return new ApplicationResponse(ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION,
-                                     -1,
-                                     null,
-                                     ErrorFields.UNABLE_TO_PROCESS_APP);
+      /*
+       * return new ApplicationResponse(ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION, -1,
+       * null, ErrorFields.UNABLE_TO_PROCESS_APP);
+       */
+      return viewCollection.getErrorView();
+
     }
     if (jobseekerNeedsProfileCompletion(jobseeker))
-      return new ApplicationResponse(ApplicationResponseType.NEEDS_COMPLETION, job.getJobId(), job.getTitle());
+    {
+      // return new ApplicationResponse(ApplicationResponseType.NEEDS_COMPLETION, job.getJobId(),
+      // job.getTitle());
 
-    return new ApplicationResponse(ApplicationResponseType.SUCESSFUL, job.getJobId(), job.getTitle());
+      return viewCollection.getResumeCompletionView();
+    }
+    //    new ApplicationResponse(ApplicationResponseType.SUCESSFUL, job.getJobId(), job.getTitle());
+    return viewCollection.getSuccessView(); 
   }
 
   private Resume saveNewOrRetrieveExistingResume(SessionData resumeData,

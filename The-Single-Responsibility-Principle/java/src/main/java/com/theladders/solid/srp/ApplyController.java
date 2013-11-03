@@ -11,6 +11,7 @@ import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.ResumeManager;
 import com.theladders.solid.srp.view.View;
+import com.theladders.solid.srp.view.ViewCollection;
 import com.theladders.solid.srp.view.ViewContainer;
 
 public class ApplyController
@@ -26,11 +27,12 @@ public class ApplyController
                          ResumeManager resumeManager,
                          MyResumeManager myResumeManager)
   {
-
+    ViewCollection viewCollection = new ViewCollection();
     this.applicationProcessor = new ApplicationProcess(jobseekerProfileManager,
                                                        jobApplicationSystem,
                                                        resumeManager,
-                                                       myResumeManager);
+                                                       myResumeManager,
+                                                       viewCollection);
     this.jobSearchService = jobSearchService;
   }
 
@@ -45,13 +47,9 @@ public class ApplyController
     HttpSession session = request.getSession();
 
     Jobseeker jobseeker = session.getJobseeker();
-
     Job job = jobSearchService.getJob(jobId);
 
-    ApplicationResponse applicationResponse = applicationProcessor.execute(jobId, job, jobseeker, resumeData);
-    ViewContainer views = new ViewContainer();
-
-    View finalView = views.getView(applicationResponse.getType());
+    View finalView = applicationProcessor.execute(jobId, job, jobseeker, resumeData);
 
     return finalView.getResult(applicationResponse, response);
   }

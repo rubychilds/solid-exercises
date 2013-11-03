@@ -22,8 +22,10 @@ public class ProvideErrorMessage extends View
   {
     String errorMessage = response.getErrorMessage();
     errList.add(errorMessage);
+    
     Result result = new Result("error", model, errList);
     httpresponse.setResult(result);
+    
     return httpresponse;
   }
   

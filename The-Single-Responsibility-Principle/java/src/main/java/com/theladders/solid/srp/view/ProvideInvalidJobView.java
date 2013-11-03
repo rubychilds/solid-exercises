@@ -27,8 +27,10 @@ public class ProvideInvalidJobView extends View
   {
     this.jobId = response.getJobId();
     model.put(ModelFieldNames.JOB_ID, jobId);
+    
     Result result = new Result("invalidJob", model);
     httpresponse.setResult(result);
+    
     return httpresponse;
   }
 

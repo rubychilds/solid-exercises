@@ -1,18 +1,33 @@
 package com.theladders.solid.srp.view;
 
-import com.theladders.solid.srp.ApplicationResponse;
-import com.theladders.solid.srp.ApplicationResponseType;
-import com.theladders.solid.srp.Result;
-import com.theladders.solid.srp.http.HttpResponse;
-
-public abstract class View
+public class View
 {
-  private ApplicationResponseType type;
+  private int jobId;
+  private String jobTitle;
 
-  public abstract boolean isType(ApplicationResponseType type);
+  public void setJobID(int jobId)
+  {
+    this.jobId = jobId;
+  }
 
-  public abstract HttpResponse getResult(ApplicationResponse response, HttpResponse hhtpresponse);
+  public int getJobID()
+  {
+    return jobId;
+  }
 
-  public abstract ApplicationResponseType getType();
+  public void setJob(int jobId)
+  {
+    this.jobId = jobId;
+  }
 
+  public String getJobTitle()
+  {
+    return jobTitle;
+  }
+  
+  public void setJobTitle(String jobTitle)
+  {
+    this.jobTitle = jobTitle;
+  }
+  
 }
