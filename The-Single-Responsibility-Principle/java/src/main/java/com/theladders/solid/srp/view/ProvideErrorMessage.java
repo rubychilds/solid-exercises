@@ -17,15 +17,10 @@ public class ProvideErrorMessage extends View
   private ApplicationResponseType type  = ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION;
   private Map<String, Object> model = new  HashMap<String, Object>();
 
-  protected void setApplicationResponse(ApplicationResponse response)
+  public Result getResult(ApplicationResponse response)
   {
     String errorMessage = response.getErrorMessage();
     errList.add(errorMessage);
-  }
-
-  public Result getResult(ApplicationResponse response)
-  {
-    setApplicationResponse(response);
     return new Result("error", model, errList);
   }
   

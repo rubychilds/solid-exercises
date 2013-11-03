@@ -19,15 +19,10 @@ public class ProvideInvalidJobView extends View
   public boolean isType(ApplicationResponseType type){
     return this.type  == type;
   }
-  
-  protected void setApplicationResponse(ApplicationResponse response)
-  {
-    this.jobId = response.getJobId();
-  }
-    
+
   public Result getResult(ApplicationResponse response)
   {
-    setApplicationResponse(response);
+    this.jobId = response.getJobId();
     model.put(ModelFieldNames.JOB_ID, jobId);
     return new Result("invalidJob", model);
  }

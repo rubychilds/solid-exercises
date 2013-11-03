@@ -16,15 +16,10 @@ public class ProvideResumeCompletionView extends View
   private int                     jobId;
   private String                  jobtitle;
 
-  protected void setApplicationResponse(ApplicationResponse response)
+  public Result getResult(ApplicationResponse response)
   {
     this.jobId = response.getJobId();
     this.jobtitle = response.getjobTitle();
-  }
-
-  public Result getResult(ApplicationResponse response)
-  {
-    setApplicationResponse(response);
     model.put(ModelFieldNames.JOB_ID, jobId);
     model.put(ModelFieldNames.JOB_TITLE, jobtitle);
     return new Result("completeResumePlease", model);

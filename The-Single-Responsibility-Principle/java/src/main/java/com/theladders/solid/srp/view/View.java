@@ -12,8 +12,6 @@ public abstract class View
 
   public abstract Result getResult(ApplicationResponse response);
 
-  protected abstract void setApplicationResponse(ApplicationResponse response);
-
   public abstract ApplicationResponseType getType();
 
 }
