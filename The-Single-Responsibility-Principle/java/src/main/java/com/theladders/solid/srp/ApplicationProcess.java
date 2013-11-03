@@ -22,25 +22,23 @@ public class ApplicationProcess
   private final JobApplicationSystem    jobApplicationSystem;
   private final ResumeManager           resumeManager;
   private final MyResumeManager         myResumeManager;
-  private final ViewCollection          viewCollection;
 
   public ApplicationProcess(JobseekerProfileManager jobseekerProfileManager,
                             JobApplicationSystem jobApplicationSystem,
                             ResumeManager resumeManager,
-                            MyResumeManager myResumeManager,
-                            ViewCollection views)
+                            MyResumeManager myResumeManager)
   {
     this.jobseekerProfileManager = jobseekerProfileManager;
     this.jobApplicationSystem = jobApplicationSystem;
     this.resumeManager = resumeManager;
     this.myResumeManager = myResumeManager;
-    this.viewCollection = views;
   }
 
   public View execute(int jobId,
                       Job job,
                       Jobseeker jobseeker,
-                      SessionData resumeData)
+                      SessionData resumeData,
+                      ViewCollection viewCollection)
   {
     if (job == null)
     {

@@ -27,12 +27,11 @@ public class ApplyController
                          ResumeManager resumeManager,
                          MyResumeManager myResumeManager)
   {
-    ViewCollection viewCollection = new ViewCollection();
+
     this.applicationProcessor = new ApplicationProcess(jobseekerProfileManager,
                                                        jobApplicationSystem,
                                                        resumeManager,
-                                                       myResumeManager,
-                                                       viewCollection);
+                                                       myResumeManager);
     this.jobSearchService = jobSearchService;
   }
 
@@ -49,7 +48,8 @@ public class ApplyController
     Jobseeker jobseeker = session.getJobseeker();
     Job job = jobSearchService.getJob(jobId);
 
-    View finalView = applicationProcessor.execute(jobId, job, jobseeker, resumeData);
+    ViewCollection viewCollection = new ViewCollection();
+    View finalView = applicationProcessor.execute(jobId, job, jobseeker, resumeData, viewCollection);
 
     return finalView.getResult(applicationResponse, response);
   }
