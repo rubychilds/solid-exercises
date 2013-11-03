@@ -1,7 +1,5 @@
 package com.theladders.solid.srp;
 
-import Utils.ErrorFields;
-
 import com.theladders.solid.srp.applicationResult.ApplicationResult;
 import com.theladders.solid.srp.applicationResult.ResultCollection;
 import com.theladders.solid.srp.job.Job;
@@ -14,6 +12,7 @@ import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.Resume;
 import com.theladders.solid.srp.resume.ResumeManager;
+import com.theladders.solid.srp.utils.ErrorFields;
 
 public class ApplicationProcess
 {

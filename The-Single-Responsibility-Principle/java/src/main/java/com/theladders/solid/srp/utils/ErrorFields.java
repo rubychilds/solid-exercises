@@ -1,4 +1,4 @@
-package Utils;
+package com.theladders.solid.srp.utils;
 
 public class ErrorFields
 {

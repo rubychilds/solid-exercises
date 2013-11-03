@@ -3,10 +3,9 @@ package com.theladders.solid.srp.applicationResult;
 import java.util.HashMap;
 import java.util.Map;
 
-import Utils.ModelFieldNames;
-
 import com.theladders.solid.srp.Result;
 import com.theladders.solid.srp.http.HttpResponse;
+import com.theladders.solid.srp.utils.ModelFieldNames;
 
 public class ProvideInvalidJobResult extends ApplicationResult
 {
