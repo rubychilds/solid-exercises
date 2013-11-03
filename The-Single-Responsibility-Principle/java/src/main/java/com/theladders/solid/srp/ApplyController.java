@@ -1,5 +1,7 @@
 package com.theladders.solid.srp;
 
+import com.theladders.solid.srp.applicationResult.ApplicationResult;
+import com.theladders.solid.srp.applicationResult.ResultCollection;
 import com.theladders.solid.srp.http.HttpRequest;
 import com.theladders.solid.srp.http.HttpResponse;
 import com.theladders.solid.srp.http.HttpSession;
@@ -10,8 +12,6 @@ import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.ResumeManager;
-import com.theladders.solid.srp.view.ApplicationResult;
-import com.theladders.solid.srp.view.ResultCollection;
 
 public class ApplyController
 {

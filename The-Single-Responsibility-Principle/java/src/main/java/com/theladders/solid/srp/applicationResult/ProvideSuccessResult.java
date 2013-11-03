@@ -1,4 +1,4 @@
-package com.theladders.solid.srp.view;
+package com.theladders.solid.srp.applicationResult;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.theladders.solid.srp.view;
+package com.theladders.solid.srp.applicationResult;
 
 import com.theladders.solid.srp.http.HttpResponse;
 
