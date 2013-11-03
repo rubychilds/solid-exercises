@@ -12,8 +12,8 @@ import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.Resume;
 import com.theladders.solid.srp.resume.ResumeManager;
-import com.theladders.solid.srp.view.View;
-import com.theladders.solid.srp.view.ViewCollection;
+import com.theladders.solid.srp.view.ApplicationResult;
+import com.theladders.solid.srp.view.ResultCollection;
 
 public class ApplicationProcess
 {
@@ -33,10 +33,10 @@ public class ApplicationProcess
     this.myResumeManager = myResumeManager;
   }
 
-  public View execute(Job job,
+  public ApplicationResult execute(Job job,
                       Jobseeker jobseeker,
                       SessionData resumeData,
-                      ViewCollection viewCollection)
+                      ResultCollection viewCollection)
   {
     if (job == null)
       return viewCollection.getInvalidJobView();
@@ -46,7 +46,7 @@ public class ApplicationProcess
 
     if (jobApplicationFailed(application))
     {
-      View view = viewCollection.getErrorView();
+      ApplicationResult view = viewCollection.getErrorView();
       view.addError(ErrorFields.UNABLE_TO_PROCESS_APP);
       return view;
     }

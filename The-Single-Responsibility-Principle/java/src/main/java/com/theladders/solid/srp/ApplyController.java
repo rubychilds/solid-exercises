@@ -10,8 +10,8 @@ import com.theladders.solid.srp.jobseeker.Jobseeker;
 import com.theladders.solid.srp.jobseeker.JobseekerProfileManager;
 import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.ResumeManager;
-import com.theladders.solid.srp.view.View;
-import com.theladders.solid.srp.view.ViewCollection;
+import com.theladders.solid.srp.view.ApplicationResult;
+import com.theladders.solid.srp.view.ResultCollection;
 
 public class ApplyController
 {
@@ -47,8 +47,8 @@ public class ApplyController
     Jobseeker jobseeker = session.getJobseeker();
     Job job = jobSearchService.getJob(jobId);
    
-    ViewCollection viewCollection = new ViewCollection();
-    View finalView = applicationProcessor.execute(job, jobseeker, resumeData, viewCollection);
+    ResultCollection viewCollection = new ResultCollection();
+    ApplicationResult finalView = applicationProcessor.execute(job, jobseeker, resumeData, viewCollection);
 
     if(job != null)
       finalView.setJobID(jobId);

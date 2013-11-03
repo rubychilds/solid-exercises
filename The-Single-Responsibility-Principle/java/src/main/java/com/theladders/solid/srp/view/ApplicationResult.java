@@ -2,7 +2,7 @@ package com.theladders.solid.srp.view;
 
 import com.theladders.solid.srp.http.HttpResponse;
 
-abstract public class View
+abstract public class ApplicationResult
 {
   private int jobId;
 

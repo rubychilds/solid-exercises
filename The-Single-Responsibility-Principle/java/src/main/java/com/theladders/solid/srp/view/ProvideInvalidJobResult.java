@@ -8,36 +8,26 @@ import Utils.ModelFieldNames;
 import com.theladders.solid.srp.Result;
 import com.theladders.solid.srp.http.HttpResponse;
 
-public class ProvideSuccessView extends View
+public class ProvideInvalidJobResult extends ApplicationResult
 {
 
   private Map<String, Object> model = new HashMap<String, Object>();
-  private String              jobTitle;
 
   public HttpResponse getResult(HttpResponse httpresponse)
   {
     model.put(ModelFieldNames.JOB_ID, getJobID());
-    model.put(ModelFieldNames.JOB_TITLE, getJobTitle());
 
-    Result result = new Result("success", model);
+    Result result = new Result("invalidJob", model);
     httpresponse.setResult(result);
 
     return httpresponse;
   }
 
-  public String getJobTitle()
+  @Override
+  public void addError(String erro)
   {
-    return jobTitle;
-  }
+    // TODO Auto-generated method stub
 
-  public void setJobTitle(String jobTitle)
-  {
-    this.jobTitle = jobTitle;
-  }
-
-  public void addError(String error)
-  {
-    
   }
 
 }

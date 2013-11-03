@@ -7,7 +7,7 @@ import java.util.Map;
 import com.theladders.solid.srp.Result;
 import com.theladders.solid.srp.http.HttpResponse;
 
-public class ProvideErrorMessage extends View
+public class ProvideErrorMessage extends ApplicationResult
 {
   private ArrayList<String> errList = new ArrayList<String>();
 

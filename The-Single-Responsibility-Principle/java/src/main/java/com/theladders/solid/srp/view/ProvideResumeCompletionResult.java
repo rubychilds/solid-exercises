@@ -8,7 +8,7 @@ import Utils.ModelFieldNames;
 import com.theladders.solid.srp.Result;
 import com.theladders.solid.srp.http.HttpResponse;
 
-public class ProvideResumeCompletionView extends View
+public class ProvideResumeCompletionResult extends ApplicationResult
 {
   private Map<String, Object> model = new HashMap<String, Object>();
   private String              jobTitle;
