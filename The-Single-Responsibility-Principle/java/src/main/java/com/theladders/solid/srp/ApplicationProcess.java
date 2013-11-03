@@ -1,9 +1,6 @@
 package com.theladders.solid.srp;
 
-import Utils.ErrorFields;
-
 import com.theladders.solid.srp.job.Job;
-import com.theladders.solid.srp.job.application.ApplicationFailureException;
 import com.theladders.solid.srp.job.application.JobApplicationResult;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
 import com.theladders.solid.srp.job.application.UnprocessedApplication;
@@ -41,22 +38,19 @@ public class ApplicationProcess
                       ViewCollection viewCollection)
   {
     if (job == null)
-    {
-      // return new ApplicationResponse(ApplicationResponseType.INVALID_JOB, jobId);
       return viewCollection.getInvalidJobView();
-    }
 
     Resume resume = saveNewOrRetrieveExistingResume(resumeData, jobseeker);
-
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
-    // unprocessed application isVALID only if jobseekeer != null && resume != null && job!= null
 
     if (jobApplicationFailed(application))
     {
       // must set jobTitle
-      return viewCollection.getErrorView();
-
+      View view = viewCollection.getErrorView();
+      view.addError("We could not process your application.");
+      return view;
     }
+
     if (jobseekerNeedsProfileCompletion(jobseeker))
     {
       // must set jobTitle

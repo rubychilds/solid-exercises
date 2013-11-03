@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Utils.ModelFieldNames;
-
-import com.theladders.solid.srp.ApplicationResponse;
-import com.theladders.solid.srp.ApplicationResponseType;
 import com.theladders.solid.srp.Result;
 import com.theladders.solid.srp.http.HttpResponse;
 
@@ -19,13 +15,15 @@ public class ProvideErrorMessage extends View
 
   public HttpResponse getResult(HttpResponse httpresponse)
   {
-    String errorMessage = response.getErrorMessage(); // must add errorMessage
-    errList.add(errorMessage);
-    
     Result result = new Result("error", model, errList);
     httpresponse.setResult(result);
     
     return httpresponse;
+  }
+  
+  public void addError(String error)
+  {
+    errList.add(error);
   }
 
 }

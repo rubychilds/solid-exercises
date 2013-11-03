@@ -23,4 +23,11 @@ public class ProvideInvalidJobView extends View
     return httpresponse;
   }
 
+  @Override
+  public void addError(String erro)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

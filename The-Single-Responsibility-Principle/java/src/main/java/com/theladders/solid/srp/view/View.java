@@ -17,5 +17,7 @@ abstract public class View
   }
 
   public abstract HttpResponse getResult(HttpResponse response);
+
+  public abstract void addError(String erro);
   
 }

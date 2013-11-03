@@ -35,4 +35,9 @@ public class ProvideSuccessView extends View
     this.jobTitle = jobTitle;
   }
 
+  public void addError(String error)
+  {
+    
+  }
+
 }

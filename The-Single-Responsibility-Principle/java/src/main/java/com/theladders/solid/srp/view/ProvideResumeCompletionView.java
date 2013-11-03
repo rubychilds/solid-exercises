@@ -34,4 +34,11 @@ public class ProvideResumeCompletionView extends View
     this.jobTitle = jobTitle;
   }
 
+  @Override
+  public void addError(String error)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
 }
