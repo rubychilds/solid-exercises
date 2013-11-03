@@ -5,7 +5,7 @@ public class View
   private int jobId;
   private String jobTitle;
 
-  public void setJobID(int jobId)
+  public View(int jobId)
   {
     this.jobId = jobId;
   }
