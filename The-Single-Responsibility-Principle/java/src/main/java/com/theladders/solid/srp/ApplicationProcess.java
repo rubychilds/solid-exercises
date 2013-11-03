@@ -44,19 +44,15 @@ public class ApplicationProcess
 
     if (jobApplicationFailed(application))
     {
-      // must set jobTitle
       View view = viewCollection.getErrorView();
       view.addError("We could not process your application.");
       return view;
     }
 
     if (jobseekerNeedsProfileCompletion(jobseeker))
-    {
-      // must set jobTitle
+
       return viewCollection.getResumeCompletionView();
-    }
-    // must set JobTitle
-    // new ApplicationResponse(ApplicationResponseType.SUCESSFUL, job.getJobId(), job.getTitle());
+
     return viewCollection.getSuccessView();
   }
 
@@ -66,10 +62,9 @@ public class ApplicationProcess
     Resume resume;
 
     String resumeFileName = resumeData.fileName();
+
     if (resumeFileName == null)
-    {
       return null;
-    }
 
     if (!resumeData.useExistingResume())
     {
