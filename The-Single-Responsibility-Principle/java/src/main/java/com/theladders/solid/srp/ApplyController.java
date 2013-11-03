@@ -12,7 +12,6 @@ import com.theladders.solid.srp.resume.MyResumeManager;
 import com.theladders.solid.srp.resume.ResumeManager;
 import com.theladders.solid.srp.view.View;
 import com.theladders.solid.srp.view.ViewCollection;
-import com.theladders.solid.srp.view.ViewContainer;
 
 public class ApplyController
 {
@@ -47,11 +46,14 @@ public class ApplyController
 
     Jobseeker jobseeker = session.getJobseeker();
     Job job = jobSearchService.getJob(jobId);
-
+   
     ViewCollection viewCollection = new ViewCollection();
     View finalView = applicationProcessor.execute(jobId, job, jobseeker, resumeData, viewCollection);
 
-    return finalView.getResult(applicationResponse, response);
+    if(job != null)
+      finalView.setJobID(jobId);
+    
+    return finalView.getResult(response);
   }
 
   private SessionData createResumeData(HttpRequest request,

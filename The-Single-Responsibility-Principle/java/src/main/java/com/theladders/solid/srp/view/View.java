@@ -1,11 +1,12 @@
 package com.theladders.solid.srp.view;
 
-public class View
+import com.theladders.solid.srp.http.HttpResponse;
+
+abstract public class View
 {
   private int jobId;
-  private String jobTitle;
 
-  public View(int jobId)
+  public void setJobID(int jobId)
   {
     this.jobId = jobId;
   }
@@ -15,19 +16,6 @@ public class View
     return jobId;
   }
 
-  public void setJob(int jobId)
-  {
-    this.jobId = jobId;
-  }
-
-  public String getJobTitle()
-  {
-    return jobTitle;
-  }
-  
-  public void setJobTitle(String jobTitle)
-  {
-    this.jobTitle = jobTitle;
-  }
+  public abstract HttpResponse getResult(HttpResponse response);
   
 }

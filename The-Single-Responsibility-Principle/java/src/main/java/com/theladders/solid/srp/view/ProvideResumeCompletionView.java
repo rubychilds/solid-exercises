@@ -14,17 +14,12 @@ public class ProvideResumeCompletionView extends View
 {
   private ApplicationResponseType type  = ApplicationResponseType.NEEDS_COMPLETION;
   private Map<String, Object>     model = new HashMap<String, Object>();
-  private int                     jobId;
-  private String                  jobtitle;
+  private String                  jobTitle;
 
-  public HttpResponse getResult(ApplicationResponse response,
-                                HttpResponse httpresponse)
+  public HttpResponse getResult(HttpResponse httpresponse)
   {
-    this.jobId = response.getJobId();
-    this.jobtitle = response.getjobTitle();
-
-    model.put(ModelFieldNames.JOB_ID, jobId);
-    model.put(ModelFieldNames.JOB_TITLE, jobtitle);
+    model.put(ModelFieldNames.JOB_ID, getJobID());
+    model.put(ModelFieldNames.JOB_TITLE, getJobTitle());
 
     Result result = new Result("completeResumePlease", model);
     httpresponse.setResult(result);
@@ -40,6 +35,16 @@ public class ProvideResumeCompletionView extends View
   public boolean isType(ApplicationResponseType type)
   {
     return this.type.equals(type);
+  }
+  
+  public String getJobTitle()
+  {
+    return jobTitle;
+  }
+  
+  public void setJobTitle(String jobTitle)
+  {
+    this.jobTitle = jobTitle;
   }
 
 }

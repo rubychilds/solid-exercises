@@ -15,22 +15,19 @@ public class ProvideInvalidJobView extends View
 
   private ApplicationResponseType type  = ApplicationResponseType.INVALID_JOB;
   private Map<String, Object>     model = new HashMap<String, Object>();
-  private int                     jobId;
 
   public boolean isType(ApplicationResponseType type)
   {
     return this.type == type;
   }
 
-  public HttpResponse getResult(ApplicationResponse response,
-                                HttpResponse httpresponse)
+  public HttpResponse getResult(HttpResponse httpresponse)
   {
-    this.jobId = response.getJobId();
-    model.put(ModelFieldNames.JOB_ID, jobId);
-    
+    model.put(ModelFieldNames.JOB_ID, getJobID());
+
     Result result = new Result("invalidJob", model);
     httpresponse.setResult(result);
-    
+
     return httpresponse;
   }
 

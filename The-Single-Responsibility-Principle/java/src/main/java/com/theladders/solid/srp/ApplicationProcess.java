@@ -42,8 +42,6 @@ public class ApplicationProcess
   {
     if (job == null)
     {
-      System.out.println("job is invalid");
-
       // return new ApplicationResponse(ApplicationResponseType.INVALID_JOB, jobId);
       return viewCollection.getInvalidJobView();
     }
@@ -55,22 +53,18 @@ public class ApplicationProcess
 
     if (jobApplicationFailed(application))
     {
-      /*
-       * return new ApplicationResponse(ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION, -1,
-       * null, ErrorFields.UNABLE_TO_PROCESS_APP);
-       */
+      // must set jobTitle
       return viewCollection.getErrorView();
 
     }
     if (jobseekerNeedsProfileCompletion(jobseeker))
     {
-      // return new ApplicationResponse(ApplicationResponseType.NEEDS_COMPLETION, job.getJobId(),
-      // job.getTitle());
-
+      // must set jobTitle
       return viewCollection.getResumeCompletionView();
     }
-    //    new ApplicationResponse(ApplicationResponseType.SUCESSFUL, job.getJobId(), job.getTitle());
-    return viewCollection.getSuccessView(); 
+    // must set JobTitle
+    // new ApplicationResponse(ApplicationResponseType.SUCESSFUL, job.getJobId(), job.getTitle());
+    return viewCollection.getSuccessView();
   }
 
   private Resume saveNewOrRetrieveExistingResume(SessionData resumeData,
