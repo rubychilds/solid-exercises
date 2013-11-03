@@ -15,12 +15,11 @@ public class ProvideErrorMessage extends View
 {
   private ArrayList<String> errList = new ArrayList<String>();
 
-  private ApplicationResponseType type  = ApplicationResponseType.UNABLE_TO_PROCESS_APPLICATION;
   private Map<String, Object> model = new  HashMap<String, Object>();
 
-  public HttpResponse getResult(ApplicationResponse response, HttpResponse httpresponse)
+  public HttpResponse getResult(HttpResponse httpresponse)
   {
-    String errorMessage = response.getErrorMessage();
+    String errorMessage = response.getErrorMessage(); // must add errorMessage
     errList.add(errorMessage);
     
     Result result = new Result("error", model, errList);
@@ -28,14 +27,5 @@ public class ProvideErrorMessage extends View
     
     return httpresponse;
   }
-  
-  public ApplicationResponseType getType()
-  {
-    return this.type;
-  }
-  
-  public boolean isType(ApplicationResponseType type)
-  {
-    return this.type.equals(type);
-  }
+
 }
