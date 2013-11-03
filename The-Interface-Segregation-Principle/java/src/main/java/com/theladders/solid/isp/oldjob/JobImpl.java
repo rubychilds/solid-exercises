@@ -10,28 +10,28 @@ import com.theladders.solid.isp.oldjob.stubs.Region;
 
 public abstract class JobImpl implements JobCommon
 {
-  private String                   company;
-  private Integer                  companySize;
-  private String                   compensation;
-  private String                   compensationBonus;
-  private String                   compensationOther;
-  private String                   compensationSalary;
-  private List<Discipline>         disciplines;
-  private Date                     entryDate;
-  private Experience               experience;
-  private Industry                 industry;
-  private String                   location;
-  private int                      oldJobId           = 0;
-  private Date                     publicationDate;
-  private Region                   region;
-  private String                   reportsTo;
-  private int                      subscriberId       = 0;
-  private String                   title;
-  private boolean                  anonymous          = false;
-  private boolean                  confidential       = false;
-  private boolean                  exclusive          = false;
-  private boolean                  reimbursable       = false;
-  private Date                     updateTime         = null;
+  private String           company;
+  private Integer          companySize;
+  private String           compensation;
+  private String           compensationBonus;
+  private String           compensationOther;
+  private String           compensationSalary;
+  private List<Discipline> disciplines;
+  private Date             entryDate;
+  private Experience       experience;
+  private Industry         industry;
+  private String           location;
+  private int              oldJobId     = 0;
+  private Date             publicationDate;
+  private Region           region;
+  private String           reportsTo;
+  private int              subscriberId = 0;
+  private String           title;
+  private boolean          anonymous    = false;
+  private boolean          confidential = false;
+  private boolean          exclusive    = false;
+  private boolean          reimbursable = false;
+  private Date             updateTime   = null;
 
   public String getCompany()
   {
@@ -133,21 +133,10 @@ public abstract class JobImpl implements JobCommon
     this.industry = industry;
   }
 
-  public String getLocation()
-  {
-    return location;
-  }
-
-  public void setLocation(String location)
-  {
-    this.location = location;
-  }
-
   public int getOldJobId()
   {
     return oldJobId;
   }
-
 
   public void setOldJobId(int oldJobId)
   {
@@ -245,11 +234,10 @@ public abstract class JobImpl implements JobCommon
   }
 
   /**
-   * WARNING: THIS IS NOT IMPLEMENTED EVERYWHERE.
-   * I have not implemented getUpdateTime to be returned from the DAO anywhere except the job
-   * search flow.
-   *
-   * This method is used by search to set the update time which is used for version information.
+   * WARNING: THIS IS NOT IMPLEMENTED EVERYWHERE. I have not implemented getUpdateTime to be
+   * returned from the DAO anywhere except the job search flow. This method is used by search to set
+   * the update time which is used for version information.
+   * 
    * @return the last time this job was updated.
    */
   public Date getUpdateTime()

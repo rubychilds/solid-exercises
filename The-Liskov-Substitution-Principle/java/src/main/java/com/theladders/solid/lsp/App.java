@@ -14,7 +14,7 @@ public class App
     boolean loggedInUser = ask("Is a user logged into the site?");
 
     DynamicEnvironment env = filter.getEnvironment(isSecure, loggedInUser);
-    
+
     System.out.println(env);
   }
 

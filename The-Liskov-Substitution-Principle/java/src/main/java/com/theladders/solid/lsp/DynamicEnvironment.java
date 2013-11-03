@@ -9,17 +9,18 @@ import java.util.Set;
 
 /**
  * A wrapper that allows some properties to be overriden on a per-request basis.
- *
+ * 
  * @author Zhi-Da Zhong &lt;zz@theladders.com&gt;
  */
 
 public class DynamicEnvironment
 {
   private final Environment         base;
-  private final Map<String, String> keyMap; // map insecure prop names to secure ones
+  private final Map<String, String> keyMap;            // map insecure prop names to secure ones
   private final Map<Object, Object> dynamicEnvironment;
-  
-  public DynamicEnvironment(Environment base, Map<String, String> propKeyMap)
+
+  public DynamicEnvironment(Environment base,
+                            Map<String, String> propKeyMap)
   {
     this.base = base;
     this.keyMap = propKeyMap;
@@ -36,13 +37,13 @@ public class DynamicEnvironment
   /**
    * This method uses a mapped version of the given key to access first its own Map then its
    * underlying Map.
-   *
+   * 
    * @param key
    *          An environment key like "home"
    * @return The value for the given key after mapping (e.g. "home" might be mapped to "secureHome")
    */
 
-  public Object get(Object key) // put which reflects the get method - tio ensure we 
+  public Object get(Object key)
   {
     Object realKey = keyMap.get(key);
     Object value = dynamicEnvironment.get(realKey != null ? realKey : key);
@@ -53,12 +54,11 @@ public class DynamicEnvironment
     return value;
   }
 
-
   public Set<Map.Entry<Object, Object>> entrySet()
   {
     Set<Map.Entry<Object, Object>> entrySet = new HashSet<>(dynamicEnvironment.entrySet());
     entrySet.addAll(base.entrySet());
-    return Collections.unmodifiableSet(entrySet); // should return a modifiable set - as described in docs
+    return Collections.unmodifiableSet(entrySet); 
   }
 
   public Set<Object> keySet()
@@ -66,18 +66,18 @@ public class DynamicEnvironment
     Set<Object> keySet = new HashSet<>(dynamicEnvironment.keySet());
     keySet.addAll(keyMap.keySet());
     keySet.addAll(base.keySet());
-    return Collections.unmodifiableSet(keySet); // should also be modifiable to remove elements
-  }
-  
-  public void put(Object key, Object value)
+    return Collections.unmodifiableSet(keySet);
+    }
+
+  public void put(Object key,
+                  Object value)
   {
     dynamicEnvironment.put(key, value);
   }
-  
+
   public String toString()
   {
     return dynamicEnvironment.toString();
   }
 
-  
 }
