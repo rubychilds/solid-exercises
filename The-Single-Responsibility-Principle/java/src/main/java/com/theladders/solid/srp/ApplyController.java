@@ -15,10 +15,11 @@ import com.theladders.solid.srp.resume.ResumeManager;
 
 public class ApplyController
 {
-  private ApplicationProcess applicationProcessor;
-  private JobSearchService   jobSearchService;
-  private static String      WHICH              = "whichResume";
-  private static String      MAKE_RESUME_ACTIVE = "makeResumeActive";
+
+  private ApplicationBuffer applicationBuffer;
+
+  private static String     WHICH              = "whichResume";
+  private static String     MAKE_RESUME_ACTIVE = "makeResumeActive";
 
   public ApplyController(JobseekerProfileManager jobseekerProfileManager,
                          JobSearchService jobSearchService,
@@ -27,41 +28,32 @@ public class ApplyController
                          MyResumeManager myResumeManager)
   {
 
-    this.applicationProcessor = new ApplicationProcess(jobseekerProfileManager,
-                                                       jobApplicationSystem,
-                                                       resumeManager,
-                                                       myResumeManager);
-    this.jobSearchService = jobSearchService;
+    this.applicationBuffer = new ApplicationBuffer(jobseekerProfileManager,
+                                                   jobSearchService,
+                                                   jobApplicationSystem,
+                                                   resumeManager,
+                                                   myResumeManager);
+
   }
 
   public HttpResponse handle(HttpRequest request,
                              HttpResponse response,
                              String origFileName)
   {
-    ResumeData resumeData = createResumeData(request, origFileName);
 
     int jobId = Integer.parseInt(request.getParameter("jobId"));
 
     HttpSession session = request.getSession();
-
     Jobseeker jobseeker = session.getJobseeker();
-    Job job = jobSearchService.getJob(jobId);
-    
-    ApplicationResult finalView = applicationProcessor.execute(job, jobseeker, resumeData);
-
-    if(job == null)
-      finalView.setJobID(jobId);
-    
-    return finalView.getResult(response);
-  }
-
-  private ResumeData createResumeData(HttpRequest request,
-                                       String origFileName)
-  {
     String activateResume = request.getParameter(MAKE_RESUME_ACTIVE);
     String whichResume = request.getParameter(WHICH);
 
-    return new ResumeData(origFileName, activateResume, whichResume);
+    ApplicationResult applicationResult = applicationBuffer.execute(jobId,
+                                                                    origFileName,
+                                                                    jobseeker,
+                                                                    activateResume,
+                                                                    whichResume);
+    return applicationResult.getResult(response) ;
   }
 
 }
