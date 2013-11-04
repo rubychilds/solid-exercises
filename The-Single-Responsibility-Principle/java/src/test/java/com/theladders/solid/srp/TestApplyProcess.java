@@ -13,7 +13,6 @@ import com.theladders.solid.srp.applicationResult.ProvideSuccessResult;
 import com.theladders.solid.srp.applicationResult.ResultCollection;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobRepository;
-import com.theladders.solid.srp.job.JobSearchService;
 import com.theladders.solid.srp.job.application.JobApplicationRepository;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
 import com.theladders.solid.srp.job.application.SuccessfulApplication;
@@ -237,7 +236,7 @@ public class TestApplyProcess
   }
 
   private void addJobToRepository(int jobId)
-  {
+  { 
     if (jobId != INVALID_JOB_ID)
     {
       jobRepository.addJob(new Job(jobId));
@@ -277,7 +276,6 @@ public class TestApplyProcess
   public void setupApplicationProcess()
   {
     JobseekerProfileManager jobseekerProfileManager = new JobseekerProfileManager(jobseekerProfileRepository);
-    JobSearchService jobSearchService = new JobSearchService(jobRepository);
     JobApplicationSystem jobApplicationSystem = new JobApplicationSystem(jobApplicationRepository);
     ResumeManager resumeManager = new ResumeManager(resumeRepository);
     MyResumeManager myResumeManager = new MyResumeManager(activeResumeRepository);
