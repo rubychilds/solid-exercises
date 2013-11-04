@@ -1,7 +1,7 @@
 package com.theladders.solid.srp;
 
 import com.theladders.solid.srp.applicationResult.ApplicationResult;
-import com.theladders.solid.srp.applicationResult.ResultCollection;
+import com.theladders.solid.srp.applicationResult.ResultFactory;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.application.JobApplicationResult;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
@@ -34,26 +34,30 @@ public class ApplicationProcess
 
   public ApplicationResult execute(Job job,
                       Jobseeker jobseeker,
-                      SessionData resumeData,
-                      ResultCollection viewCollection)
+                      SessionData resumeData)
   {
     if (job == null)
-      return viewCollection.getInvalidJobView();
+      return ResultFactory.getInvalidJobView();
 
+    int jobId = job.getJobId();
+    String jobTitle = job.getTitle();
     Resume resume = saveNewOrRetrieveExistingResume(resumeData, jobseeker);
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
 
     if (jobApplicationFailed(application))
     {
-      ApplicationResult view = viewCollection.getErrorView();
+      ApplicationResult view = ResultFactory.getErrorView();
       view.addError(ErrorFields.UNABLE_TO_PROCESS_APP);
       return view;
     }
 
-    if (jobseekerNeedsProfileCompletion(jobseeker))
-      return viewCollection.getResumeCompletionView();
-
-    return viewCollection.getSuccessView();
+    if (jobseekerNeedsProfileCompletion(jobseeker)){
+      ApplicationResult view = ResultFactory.getResumeCompletionView();
+      view.setJobID(jobId);
+      view.setJobTitle(jobTitle);
+      return view;    
+    }
+    return ResultFactory.getSuccessView();
   }
 
   private Resume saveNewOrRetrieveExistingResume(SessionData resumeData,

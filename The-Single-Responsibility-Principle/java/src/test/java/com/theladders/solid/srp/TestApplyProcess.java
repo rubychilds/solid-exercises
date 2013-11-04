@@ -10,7 +10,7 @@ import com.theladders.solid.srp.applicationResult.ProvideErrorMessage;
 import com.theladders.solid.srp.applicationResult.ProvideInvalidJobResult;
 import com.theladders.solid.srp.applicationResult.ProvideResumeCompletionResult;
 import com.theladders.solid.srp.applicationResult.ProvideSuccessResult;
-import com.theladders.solid.srp.applicationResult.ResultCollection;
+import com.theladders.solid.srp.applicationResult.ResultFactory;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobRepository;
 import com.theladders.solid.srp.job.application.JobApplicationRepository;
@@ -51,7 +51,7 @@ public class TestApplyProcess
     Job job = new Job(15);
     Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
     ResumeData resumeData = new ResumeData(null, null, null);
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
 
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
 
@@ -65,7 +65,7 @@ public class TestApplyProcess
     Job job = new Job(5);
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
 
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
 
@@ -79,7 +79,7 @@ public class TestApplyProcess
     Job job = new Job(5);
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
 
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
 
@@ -93,7 +93,7 @@ public class TestApplyProcess
     Job job = new Job(5);
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, "whichResume", "existing");
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
 
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
 
@@ -107,7 +107,7 @@ public class TestApplyProcess
     Job job = new Job(INVALID_JOB_ID);
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
 
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
 
@@ -123,7 +123,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(null, null, null);
 
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
 
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
 
@@ -139,7 +139,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
 
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
 
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
 
@@ -155,7 +155,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
 
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
 
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
 
@@ -171,7 +171,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
 
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
     
     applicationProcess.execute(job, jobseeker, resumeData, resultCollection);    
     
@@ -187,7 +187,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData("Save Me Seymour", "yes", "makeResumeActive");
 
-    ResultCollection resultCollection = new ResultCollection();
+    ResultFactory resultCollection = new ResultFactory();
     
     applicationProcess.execute(job, jobseeker, resumeData, resultCollection);    
     

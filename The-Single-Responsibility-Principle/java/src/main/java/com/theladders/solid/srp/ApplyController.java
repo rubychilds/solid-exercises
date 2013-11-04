@@ -1,7 +1,7 @@
 package com.theladders.solid.srp;
 
 import com.theladders.solid.srp.applicationResult.ApplicationResult;
-import com.theladders.solid.srp.applicationResult.ResultCollection;
+import com.theladders.solid.srp.applicationResult.ResultFactory;
 import com.theladders.solid.srp.http.HttpRequest;
 import com.theladders.solid.srp.http.HttpResponse;
 import com.theladders.solid.srp.http.HttpSession;
@@ -46,9 +46,8 @@ public class ApplyController
 
     Jobseeker jobseeker = session.getJobseeker();
     Job job = jobSearchService.getJob(jobId);
-   
-    ResultCollection viewCollection = new ResultCollection();
-    ApplicationResult finalView = applicationProcessor.execute(job, jobseeker, resumeData, viewCollection);
+    
+    ApplicationResult finalView = applicationProcessor.execute(job, jobseeker, resumeData);
 
     if(job != null)
       finalView.setJobID(jobId);
