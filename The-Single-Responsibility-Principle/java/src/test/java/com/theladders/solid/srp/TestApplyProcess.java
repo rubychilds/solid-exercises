@@ -10,7 +10,6 @@ import com.theladders.solid.srp.applicationResult.ProvideErrorMessage;
 import com.theladders.solid.srp.applicationResult.ProvideInvalidJobResult;
 import com.theladders.solid.srp.applicationResult.ProvideResumeCompletionResult;
 import com.theladders.solid.srp.applicationResult.ProvideSuccessResult;
-import com.theladders.solid.srp.applicationResult.ResultFactory;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobRepository;
 import com.theladders.solid.srp.job.application.JobApplicationRepository;
@@ -51,9 +50,8 @@ public class TestApplyProcess
     Job job = new Job(15);
     Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
     ResumeData resumeData = new ResumeData(null, null, null);
-    ResultFactory resultCollection = new ResultFactory();
-
-    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+    
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
 
     assertTrue(applicationResult.getClass().isInstance(new ProvideErrorMessage()));
   }
@@ -65,9 +63,8 @@ public class TestApplyProcess
     Job job = new Job(5);
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
-    ResultFactory resultCollection = new ResultFactory();
-
-    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+    
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
 
     assertTrue(applicationResult.getClass().isInstance(new ProvideSuccessResult()));
   }
@@ -79,9 +76,8 @@ public class TestApplyProcess
     Job job = new Job(5);
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
-    ResultFactory resultCollection = new ResultFactory();
-
-    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
+    
 
     assertTrue(applicationResult.getClass().isInstance(new ProvideSuccessResult()));
   }
@@ -93,9 +89,8 @@ public class TestApplyProcess
     Job job = new Job(5);
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, "whichResume", "existing");
-    ResultFactory resultCollection = new ResultFactory();
-
-    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
+    
 
     assertTrue(applicationResult.getClass().isInstance(new ProvideSuccessResult()));
   }
@@ -107,9 +102,8 @@ public class TestApplyProcess
     Job job = new Job(INVALID_JOB_ID);
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
-    ResultFactory resultCollection = new ResultFactory();
-
-    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
+    
 
     applicationResult.getClass().isInstance(new ProvideInvalidJobResult());
   }
@@ -123,9 +117,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(null, null, null);
 
-    ResultFactory resultCollection = new ResultFactory();
-
-    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
 
     applicationResult.getClass().isInstance(new ProvideErrorMessage());
   }
@@ -139,9 +131,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
 
-    ResultFactory resultCollection = new ResultFactory();
-
-    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
 
     applicationResult.getClass().isInstance(new ProvideErrorMessage());
   }
@@ -155,9 +145,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
 
-    ResultFactory resultCollection = new ResultFactory();
-
-    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
 
     applicationResult.getClass().isInstance(new ProvideResumeCompletionResult());
   }
@@ -171,9 +159,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
 
-    ResultFactory resultCollection = new ResultFactory();
-    
-    applicationProcess.execute(job, jobseeker, resumeData, resultCollection);    
+    applicationProcess.execute(job, jobseeker, resumeData);    
     
     assertTrue(resumeRepository.contains(new Resume(SHARED_RESUME_NAME)));
   }
@@ -187,9 +173,7 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData("Save Me Seymour", "yes", "makeResumeActive");
 
-    ResultFactory resultCollection = new ResultFactory();
-    
-    applicationProcess.execute(job, jobseeker, resumeData, resultCollection);    
+    applicationProcess.execute(job, jobseeker, resumeData);    
     
     assertTrue(resumeRepository.contains(new Resume("Save Me Seymour")));
   }
