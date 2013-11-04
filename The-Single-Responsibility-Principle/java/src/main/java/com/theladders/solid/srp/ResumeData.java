@@ -1,6 +1,6 @@
 package com.theladders.solid.srp;
 
-public class ResumeData implements SessionData
+public class ResumeData
 {
   private String       activateResume;
   private String       whichResume;

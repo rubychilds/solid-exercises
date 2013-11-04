@@ -34,7 +34,7 @@ public class ApplicationProcess
 
   public ApplicationResult execute(Job job,
                       Jobseeker jobseeker,
-                      SessionData resumeData)
+                      ResumeData resumeData)
   {
     if (job == null)
       return ResultFactory.getInvalidJobView();
@@ -64,7 +64,7 @@ public class ApplicationProcess
     return view;
   }
 
-  private Resume saveNewOrRetrieveExistingResume(SessionData resumeData,
+  private Resume saveNewOrRetrieveExistingResume(ResumeData resumeData,
                                                  Jobseeker jobseeker)
   {
     Resume resume;

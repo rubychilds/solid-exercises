@@ -38,7 +38,7 @@ public class ApplyController
                              HttpResponse response,
                              String origFileName)
   {
-    SessionData resumeData = createResumeData(request, origFileName);
+    ResumeData resumeData = createResumeData(request, origFileName);
 
     int jobId = Integer.parseInt(request.getParameter("jobId"));
 
@@ -55,7 +55,7 @@ public class ApplyController
     return finalView.getResult(response);
   }
 
-  private SessionData createResumeData(HttpRequest request,
+  private ResumeData createResumeData(HttpRequest request,
                                        String origFileName)
   {
     String activateResume = request.getParameter(MAKE_RESUME_ACTIVE);

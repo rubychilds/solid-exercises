@@ -50,7 +50,7 @@ public class TestApplyProcess
     Job job = new Job(15);
     Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
     ResumeData resumeData = new ResumeData(null, null, null);
-    
+
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
 
     assertTrue(applicationResult.getClass().isInstance(new ProvideErrorMessage()));
@@ -63,7 +63,7 @@ public class TestApplyProcess
     Job job = new Job(5);
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
-    
+
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
 
     assertTrue(applicationResult.getClass().isInstance(new ProvideSuccessResult()));
@@ -77,7 +77,6 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
-    
 
     assertTrue(applicationResult.getClass().isInstance(new ProvideSuccessResult()));
   }
@@ -90,7 +89,6 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, "whichResume", "existing");
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
-    
 
     assertTrue(applicationResult.getClass().isInstance(new ProvideSuccessResult()));
   }
@@ -103,7 +101,6 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
     ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData);
-    
 
     applicationResult.getClass().isInstance(new ProvideInvalidJobResult());
   }
@@ -159,11 +156,11 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
 
-    applicationProcess.execute(job, jobseeker, resumeData);    
-    
+    applicationProcess.execute(job, jobseeker, resumeData);
+
     assertTrue(resumeRepository.contains(new Resume(SHARED_RESUME_NAME)));
   }
-  
+
   @Test
   public void resumeIsMadeActive()
   {
@@ -173,8 +170,8 @@ public class TestApplyProcess
 
     ResumeData resumeData = new ResumeData("Save Me Seymour", "yes", "makeResumeActive");
 
-    applicationProcess.execute(job, jobseeker, resumeData);    
-    
+    applicationProcess.execute(job, jobseeker, resumeData);
+
     assertTrue(resumeRepository.contains(new Resume("Save Me Seymour")));
   }
 
@@ -220,7 +217,7 @@ public class TestApplyProcess
   }
 
   private void addJobToRepository(int jobId)
-  { 
+  {
     if (jobId != INVALID_JOB_ID)
     {
       jobRepository.addJob(new Job(jobId));
