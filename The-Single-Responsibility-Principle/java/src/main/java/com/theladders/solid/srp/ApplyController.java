@@ -49,7 +49,7 @@ public class ApplyController
     
     ApplicationResult finalView = applicationProcessor.execute(job, jobseeker, resumeData);
 
-    if(job != null)
+    if(job == null)
       finalView.setJobID(jobId);
     
     return finalView.getResult(response);

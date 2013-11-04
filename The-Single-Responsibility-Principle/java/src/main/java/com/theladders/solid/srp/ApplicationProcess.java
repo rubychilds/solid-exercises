@@ -57,7 +57,11 @@ public class ApplicationProcess
       view.setJobTitle(jobTitle);
       return view;    
     }
-    return ResultFactory.getSuccessView();
+    
+    ApplicationResult view = ResultFactory.getSuccessView();
+    view.setJobID(jobId);
+    view.setJobTitle(jobTitle);
+    return view;
   }
 
   private Resume saveNewOrRetrieveExistingResume(SessionData resumeData,
