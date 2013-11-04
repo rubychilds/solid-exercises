@@ -1,11 +1,9 @@
 package com.theladders.solid.srp;
 
 import com.theladders.solid.srp.applicationResult.ApplicationResult;
-import com.theladders.solid.srp.applicationResult.ResultFactory;
 import com.theladders.solid.srp.http.HttpRequest;
 import com.theladders.solid.srp.http.HttpResponse;
 import com.theladders.solid.srp.http.HttpSession;
-import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobSearchService;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
 import com.theladders.solid.srp.jobseeker.Jobseeker;
