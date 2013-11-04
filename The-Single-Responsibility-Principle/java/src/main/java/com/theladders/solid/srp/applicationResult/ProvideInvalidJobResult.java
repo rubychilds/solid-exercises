@@ -12,21 +12,11 @@ public class ProvideInvalidJobResult extends ApplicationResult
 
   private Map<String, Object> model = new HashMap<String, Object>();
 
-  public HttpResponse getResult(HttpResponse httpresponse)
+  public void setResult()
   {
     model.put(ModelFieldNames.JOB_ID, getJobID());
-
-    Result result = new Result("invalidJob", model);
-    httpresponse.setResult(result);
-
-    return httpresponse;
+    finalResult = new Result("invalidJob", model);
   }
 
-  @Override
-  public void addError(String erro)
-  {
-    // TODO Auto-generated method stub
-
-  }
 
 }

@@ -51,7 +51,7 @@ public class ApplyController
                                                                     jobseeker,
                                                                     activateResume,
                                                                     whichResume);
-    return applicationResult.getResult(response) ;
+    return applicationResult.getResponse(response) ;
   }
 
 }

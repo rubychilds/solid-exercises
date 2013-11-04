@@ -1,6 +1,7 @@
 package com.theladders.solid.srp;
 
 import com.theladders.solid.srp.applicationResult.ApplicationResult;
+import com.theladders.solid.srp.applicationResult.ProvideErrorMessage;
 import com.theladders.solid.srp.applicationResult.ResultFactory;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.application.JobApplicationResult;
@@ -36,8 +37,11 @@ public class ApplicationProcess
                       Jobseeker jobseeker,
                       ResumeData resumeData)
   {
-    if (job == null)
-      return ResultFactory.getInvalidJobView();
+    if (job == null){
+      ApplicationResult result = ResultFactory.getInvalidJobView();
+      result.setResult();
+      return result;
+    }
 
     int jobId = job.getJobId();
     String jobTitle = job.getTitle();
@@ -46,8 +50,9 @@ public class ApplicationProcess
 
     if (jobApplicationFailed(application))
     {
-      ApplicationResult view = ResultFactory.getErrorView();
+      ProvideErrorMessage view = ResultFactory.getErrorView();
       view.addError(ErrorFields.UNABLE_TO_PROCESS_APP);
+      view.setResult();
       return view;
     }
 
@@ -55,12 +60,14 @@ public class ApplicationProcess
       ApplicationResult view = ResultFactory.getResumeCompletionView();
       view.setJobID(jobId);
       view.setJobTitle(jobTitle);
+      view.setResult();
       return view;    
     }
     
     ApplicationResult view = ResultFactory.getSuccessView();
     view.setJobID(jobId);
     view.setJobTitle(jobTitle);
+    view.setResult();
     return view;
   }
 

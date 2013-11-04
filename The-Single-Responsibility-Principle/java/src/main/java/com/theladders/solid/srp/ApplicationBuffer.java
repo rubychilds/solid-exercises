@@ -1,7 +1,6 @@
 package com.theladders.solid.srp;
 
 import com.theladders.solid.srp.applicationResult.ApplicationResult;
-import com.theladders.solid.srp.http.HttpRequest;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobSearchService;
 import com.theladders.solid.srp.job.application.JobApplicationSystem;
@@ -47,7 +46,6 @@ public class ApplicationBuffer
       finalView.setJobID(jobId);
 
     return finalView;
-
   }
 
   private ResumeData createResumeData(String activateResume,

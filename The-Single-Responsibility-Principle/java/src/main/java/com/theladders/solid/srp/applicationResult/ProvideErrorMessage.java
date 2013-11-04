@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.theladders.solid.srp.Result;
-import com.theladders.solid.srp.http.HttpResponse;
 
 public class ProvideErrorMessage extends ApplicationResult
 {
@@ -13,12 +12,9 @@ public class ProvideErrorMessage extends ApplicationResult
 
   private Map<String, Object> model = new  HashMap<String, Object>();
 
-  public HttpResponse getResult(HttpResponse httpresponse)
+  public void setResult()
   {
-    Result result = new Result("error", model, errList);
-    httpresponse.setResult(result);
-    
-    return httpresponse;
+    finalResult = new Result("error", model, errList);
   }
   
   public void addError(String error)
