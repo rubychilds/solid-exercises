@@ -1,7 +1,16 @@
 package com.theladders.solid.srp;
 
-import org.junit.Before;
+import static org.junit.Assert.*;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import com.theladders.solid.srp.applicationResult.ApplicationResult;
+import com.theladders.solid.srp.applicationResult.ProvideErrorMessage;
+import com.theladders.solid.srp.applicationResult.ProvideInvalidJobResult;
+import com.theladders.solid.srp.applicationResult.ProvideResumeCompletionResult;
+import com.theladders.solid.srp.applicationResult.ProvideSuccessResult;
+import com.theladders.solid.srp.applicationResult.ResultCollection;
 import com.theladders.solid.srp.job.Job;
 import com.theladders.solid.srp.job.JobRepository;
 import com.theladders.solid.srp.job.JobSearchService;
@@ -36,6 +45,155 @@ public class TestApplyProcess
   private ActiveResumeRepository     activeResumeRepository;
 
   private SuccessfulApplication      existingApplication;
+
+  @Test
+  public void requestWithNullCVString()
+  {
+    Job job = new Job(15);
+    Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
+    ResumeData resumeData = new ResumeData(null, null, null);
+    ResultCollection resultCollection = new ResultCollection();
+
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+
+    assertTrue(applicationResult.getClass().isInstance(new ProvideErrorMessage()));
+  }
+
+  @Test
+  public void requestWithValidJob()
+  {
+    Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
+    Job job = new Job(5);
+
+    ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
+    ResultCollection resultCollection = new ResultCollection();
+
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+
+    assertTrue(applicationResult.getClass().isInstance(new ProvideSuccessResult()));
+  }
+
+  @Test
+  public void requestWithValidJobByBasic()
+  {
+    Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, false);
+    Job job = new Job(5);
+
+    ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
+    ResultCollection resultCollection = new ResultCollection();
+
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+
+    assertTrue(applicationResult.getClass().isInstance(new ProvideSuccessResult()));
+  }
+
+  @Test
+  public void applyUsingExistingResume()
+  {
+    Jobseeker jobseeker = new Jobseeker(JOBSEEKER_WITH_RESUME, true);
+    Job job = new Job(5);
+
+    ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, "whichResume", "existing");
+    ResultCollection resultCollection = new ResultCollection();
+
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+
+    assertTrue(applicationResult.getClass().isInstance(new ProvideSuccessResult()));
+  }
+
+  @Test
+  public void requestWithInvalidJob()
+  {
+    Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
+    Job job = new Job(INVALID_JOB_ID);
+
+    ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
+    ResultCollection resultCollection = new ResultCollection();
+
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+
+    applicationResult.getClass().isInstance(new ProvideInvalidJobResult());
+  }
+
+  @Test
+  public void requestWithNoResume()
+  {
+    Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
+
+    Job job = new Job(5);
+
+    ResumeData resumeData = new ResumeData(null, null, null);
+
+    ResultCollection resultCollection = new ResultCollection();
+
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+
+    applicationResult.getClass().isInstance(new ProvideErrorMessage());
+  }
+
+  @Test
+  public void reapplyToJob()
+  {
+    Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
+
+    Job job = new Job(15);
+
+    ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
+
+    ResultCollection resultCollection = new ResultCollection();
+
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+
+    applicationResult.getClass().isInstance(new ProvideErrorMessage());
+  }
+
+  @Test
+  public void unapprovedBasic()
+  {
+    Jobseeker jobseeker = new Jobseeker(INCOMPLETE_JOBSEEKER, false);
+
+    Job job = new Job(5);
+
+    ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
+
+    ResultCollection resultCollection = new ResultCollection();
+
+    ApplicationResult applicationResult = applicationProcess.execute(job, jobseeker, resumeData, resultCollection);
+
+    applicationResult.getClass().isInstance(new ProvideResumeCompletionResult());
+  }
+
+  @Test
+  public void resumeIsSaved()
+  {
+    Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
+
+    Job job = new Job(5);
+
+    ResumeData resumeData = new ResumeData(SHARED_RESUME_NAME, null, null);
+
+    ResultCollection resultCollection = new ResultCollection();
+    
+    applicationProcess.execute(job, jobseeker, resumeData, resultCollection);    
+    
+    assertTrue(resumeRepository.contains(new Resume(SHARED_RESUME_NAME)));
+  }
+  
+  @Test
+  public void resumeIsMadeActive()
+  {
+    Jobseeker jobseeker = new Jobseeker(APPROVED_JOBSEEKER, true);
+
+    Job job = new Job(5);
+
+    ResumeData resumeData = new ResumeData("Save Me Seymour", "yes", "makeResumeActive");
+
+    ResultCollection resultCollection = new ResultCollection();
+    
+    applicationProcess.execute(job, jobseeker, resumeData, resultCollection);    
+    
+    assertTrue(resumeRepository.contains(new Resume("Save Me Seymour")));
+  }
 
   @Before
   public void setup()
