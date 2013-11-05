@@ -38,10 +38,7 @@ public class ApplicationProcess
                                    ResumeData resumeData)
   {
     if (job == null)
-    {
-      ApplicationResult result = ResultFactory.getInvalidJobView();
-      return result;
-    }
+      return ResultFactory.getInvalidJobView();
 
     Resume resume = saveNewOrRetrieveExistingResume(resumeData, jobseeker);
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
