@@ -20,6 +20,8 @@ import com.theladders.solid.isp.jobInfo.JobPublication;
 import com.theladders.solid.isp.jobInfo.JobPublicationInfo;
 import com.theladders.solid.isp.jobInfo.JobRequirements;
 import com.theladders.solid.isp.jobInfo.JobRequirementsInfo;
+import com.theladders.solid.isp.jobInfo.JobSite;
+import com.theladders.solid.isp.jobInfo.JobSiteInfo;
 import com.theladders.solid.isp.jobInfo.JobVisibility;
 import com.theladders.solid.isp.jobInfo.JobVisibilityInfo;
 import com.theladders.solid.isp.oldjob.stubs.City;
@@ -31,7 +33,7 @@ import com.theladders.solid.isp.oldjob.stubs.Region;
 import com.theladders.solid.isp.oldjob.stubs.Sector;
 
 public class JobCombination extends JobImpl implements JobCompany, JobGeography, JobCompensation, JobVisibility, JobPublication,
-    JobDescription, JobIdentifiers, JobPost, JobRequirements
+    JobDescription, JobIdentifiers, JobPost, JobRequirements, JobSite
 {
   private JobCompanyInfo      companyInfo;
   private JobGeographyInfo    geographyInfo;
@@ -44,6 +46,7 @@ public class JobCombination extends JobImpl implements JobCompany, JobGeography,
   private JobRequirementsInfo requirementsInfo;
   private JobAreasInfo     jobAreasInfo;
   private JobRelocationPaidInfo jobRelocationPaidInfo;
+  private JobSiteInfo jobSiteInfo;
 
   public JobCombination(JobCompanyInfo companyInfo,
                         JobGeographyInfo geographyInfo,
@@ -55,7 +58,8 @@ public class JobCombination extends JobImpl implements JobCompany, JobGeography,
                         JobPostInfo jobPostInfo,
                         JobRequirementsInfo requirementsInfo,
                         JobAreasInfo jobAreasInfo,
-                        JobRelocationPaidInfo jobRelocationPaidInfo)
+                        JobRelocationPaidInfo jobRelocationPaidInfo,
+                        JobSiteInfo jobSiteInfo)
   {
     this.geographyInfo = geographyInfo;
     this.companyInfo = companyInfo;
@@ -67,6 +71,7 @@ public class JobCombination extends JobImpl implements JobCompany, JobGeography,
     this.requirementsInfo = requirementsInfo;
     this.jobAreasInfo = jobAreasInfo;
     this.jobRelocationPaidInfo = jobRelocationPaidInfo;
+    this.jobSiteInfo = jobSiteInfo;
   }
 
   public boolean isJobReq()
@@ -199,11 +204,6 @@ public class JobCombination extends JobImpl implements JobCompany, JobGeography,
     return identifiersInfo.getJobId();
   }
 
-  public int getJobSiteId()
-  {
-    return identifiersInfo.getJobSiteId();
-  }
-
   public Integer getParentJobId()
   {
     return identifiersInfo.getParentJobId();
@@ -230,8 +230,8 @@ public class JobCombination extends JobImpl implements JobCompany, JobGeography,
   public boolean isFilled()
   {
     return jobPostInfo.isFilled();
-
   }
+  
 
   public Date getEntryDate()
   {
@@ -251,6 +251,13 @@ public class JobCombination extends JobImpl implements JobCompany, JobGeography,
   {
     return jobRelocationPaidInfo.isReimbursable();
   }
+  
+  // JOBSITE
+  public int getJobSiteId()
+  {
+    return jobSiteInfo.getJobSiteId();
+  }
+  
 
   /************* UNIMPLEMENTED *****************/
 

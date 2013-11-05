@@ -11,6 +11,7 @@ import com.theladders.solid.isp.jobInfo.JobAreasInfo;
 import com.theladders.solid.isp.jobInfo.JobPostInfo;
 import com.theladders.solid.isp.jobInfo.JobPublicationInfo;
 import com.theladders.solid.isp.jobInfo.JobRequirementsInfo;
+import com.theladders.solid.isp.jobInfo.JobSiteInfo;
 import com.theladders.solid.isp.jobInfo.JobVisibilityInfo;
 import com.theladders.solid.isp.oldjob.stubs.City;
 import com.theladders.solid.isp.oldjob.stubs.Region;
@@ -31,7 +32,8 @@ public class App
     JobPostInfo jobPostInfo = new JobPostInfo();
     JobRequirementsInfo requirementsInfo = new JobRequirementsInfo();
     JobAreasInfo jobAreasInfo = new JobAreasInfo();
-    JobRelocationPaidInfo jobRelocationPaidInfo = new JobRelocationPaidInfo()       ;
+    JobRelocationPaidInfo jobRelocationPaidInfo = new JobRelocationPaidInfo();  
+    JobSiteInfo jobSiteInfo = new JobSiteInfo();
 
     JobCombination job = new JobCombination(company,
                                             location,
@@ -43,7 +45,8 @@ public class App
                                             jobPostInfo,
                                             requirementsInfo,
                                             jobAreasInfo,
-                                            jobRelocationPaidInfo);
+                                            jobRelocationPaidInfo,
+                                            jobSiteInfo);
 
   }
 

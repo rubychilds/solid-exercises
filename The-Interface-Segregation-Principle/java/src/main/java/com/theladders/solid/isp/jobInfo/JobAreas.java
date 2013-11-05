@@ -1,9 +1,11 @@
 package com.theladders.solid.isp.jobInfo;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.theladders.solid.isp.oldjob.stubs.Discipline;
 import com.theladders.solid.isp.oldjob.stubs.Industry;
+import com.theladders.solid.isp.oldjob.stubs.JobFunction;
 import com.theladders.solid.isp.oldjob.stubs.Sector;
 
 public interface JobAreas
@@ -28,5 +30,7 @@ public interface JobAreas
    * @return the sector for this job.
    */
   Sector getSector();
+  
+  Collection<JobFunction> getJobFunctions();
 
 }

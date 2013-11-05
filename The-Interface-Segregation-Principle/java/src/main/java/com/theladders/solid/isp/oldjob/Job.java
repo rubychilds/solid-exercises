@@ -1,10 +1,8 @@
 package com.theladders.solid.isp.oldjob;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 
-import com.theladders.solid.isp.oldjob.stubs.JobFunction;
 import com.theladders.solid.isp.oldjob.stubs.PositionLevel;
 
 /**
@@ -36,21 +34,12 @@ public interface Job extends Serializable
    */
   boolean isJobReq();
 
-  boolean isReimbursable();
-
   /**
    * @return The last time this job was updated
    */
   Date getUpdateTime();
 
   PositionLevel getPositionLevel();
-
-  /**
-   * Get the URL for this job. This is only valid for external (harvested) jobs (! isJobReq).
-   * 
-   * @return URL for this job.
-   */
-  String getUrl();
 
   /**
    * Is this job a Marketing job? If this flag is set, basic access is allowed to this job (where
@@ -61,5 +50,4 @@ public interface Job extends Serializable
   // TODO: This should only ever be true for JobReq, refactor into the JobReq interface
   boolean isMarketing();
 
-  Collection<JobFunction> getJobFunctions();
 }

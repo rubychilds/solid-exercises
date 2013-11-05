@@ -10,12 +10,7 @@ public interface JobIdentifiers
    */
   int getJobId();
 
-  /**
-   * Return the jobsite id for this job.
-   * 
-   * @return jobsite id for this job.
-   */
-  int getJobSiteId();
+
 
   /**
    * Returns the real job_id.

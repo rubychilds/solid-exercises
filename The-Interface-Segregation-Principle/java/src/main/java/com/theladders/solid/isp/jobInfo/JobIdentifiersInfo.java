@@ -4,7 +4,6 @@ public class JobIdentifiersInfo implements JobIdentifiers
 {
   private int oldJobId    = 0;
   private int jobId       = 0;
-  private int jobSiteId   = 0;
   private int parentJobId = 0;
 
   public int getOldJobId()
@@ -17,16 +16,6 @@ public class JobIdentifiersInfo implements JobIdentifiers
     this.oldJobId = oldJobId;
   }
 
-  public int getJobSiteId()
-  {
-    return jobSiteId;
-  }
-  
-  public void setJobSiteId(int jobSiteId)
-  {
-    this.jobSiteId = jobSiteId;
-  }
-
   public Integer getParentJobId()
   {
     return parentJobId;
@@ -34,17 +23,17 @@ public class JobIdentifiersInfo implements JobIdentifiers
 
   public void setParentJobId(int parentJobId)
   {
-    this.parentJobId =  parentJobId;
+    this.parentJobId = parentJobId;
   }
 
   public int getJobId()
   {
     return jobId;
   }
-  
+
   public void setJobId()
   {
-    this.jobId =  jobId;
+    this.jobId = jobId;
   }
 
 }
