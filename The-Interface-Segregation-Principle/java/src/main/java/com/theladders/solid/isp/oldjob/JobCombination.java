@@ -10,14 +10,12 @@ public class JobCombination extends JobImpl
     this.company = company;
   }
 
-  @Override
   public boolean isJobReq()
   {
     // TODO Auto-generated method stub
     return false;
   }
 
-  @Override
   public String getDescription()
   {
     // TODO Auto-generated method stub
