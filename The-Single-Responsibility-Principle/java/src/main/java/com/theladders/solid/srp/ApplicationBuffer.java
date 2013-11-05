@@ -45,6 +45,7 @@ public class ApplicationBuffer
     if (job == null)
       finalView.setJobID(jobId);
 
+    finalView.setResult();
     return finalView;
   }
 

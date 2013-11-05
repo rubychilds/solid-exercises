@@ -34,17 +34,15 @@ public class ApplicationProcess
   }
 
   public ApplicationResult execute(Job job,
-                      Jobseeker jobseeker,
-                      ResumeData resumeData)
+                                   Jobseeker jobseeker,
+                                   ResumeData resumeData)
   {
-    if (job == null){
+    if (job == null)
+    {
       ApplicationResult result = ResultFactory.getInvalidJobView();
-      result.setResult();
       return result;
     }
 
-    int jobId = job.getJobId();
-    String jobTitle = job.getTitle();
     Resume resume = saveNewOrRetrieveExistingResume(resumeData, jobseeker);
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
 
@@ -52,23 +50,28 @@ public class ApplicationProcess
     {
       ProvideErrorMessage view = ResultFactory.getErrorView();
       view.addError(ErrorFields.UNABLE_TO_PROCESS_APP);
-      view.setResult();
       return view;
     }
 
-    if (jobseekerNeedsProfileCompletion(jobseeker)){
+    if (jobseekerNeedsProfileCompletion(jobseeker))
+    {
       ApplicationResult view = ResultFactory.getResumeCompletionView();
-      view.setJobID(jobId);
-      view.setJobTitle(jobTitle);
-      view.setResult();
-      return view;    
+      setJobVariblesInResult(view, job);
+      return view;
     }
-    
+
     ApplicationResult view = ResultFactory.getSuccessView();
+    setJobVariblesInResult(view, job);
+    return view;
+  }
+
+  private void setJobVariblesInResult(ApplicationResult view,
+                                      Job job)
+  {
+    int jobId = job.getJobId();
+    String jobTitle = job.getTitle();
     view.setJobID(jobId);
     view.setJobTitle(jobTitle);
-    view.setResult();
-    return view;
   }
 
   private Resume saveNewOrRetrieveExistingResume(ResumeData resumeData,

@@ -5,8 +5,8 @@ import com.theladders.solid.srp.http.HttpResponse;
 
 abstract public class ApplicationResult
 {
-  private int jobId;
-  private String jobTitle;
+  private int      jobId;
+  private String   jobTitle;
   protected Result finalResult;
 
   public void setJobID(int jobId)
@@ -18,7 +18,7 @@ abstract public class ApplicationResult
   {
     return jobId;
   }
-  
+
   public void setJobTitle(String title)
   {
     this.jobTitle = title;
@@ -33,9 +33,8 @@ abstract public class ApplicationResult
   {
     response.setResult(finalResult);
     return response;
-    
   }
-  
+
   public abstract void setResult();
-  
+
 }
