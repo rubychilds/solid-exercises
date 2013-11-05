@@ -1,4 +1,4 @@
-package com.theladders.solid.isp.oldjob;
+package com.theladders.solid.isp.jobInfo;
 
 public class CompensationInfo
 {
@@ -6,6 +6,14 @@ public class CompensationInfo
   private String compensationBonus;
   private String compensationOther;
   private String compensationSalary;
+ 
+  public CompensationInfo(String compensation, String compensationBonus, String compensationOther, String compensationSalar)
+  {
+    this.compensation = compensation;
+    this.compensationBonus = compensationBonus;
+    this.compensationOther = compensationOther;
+    this.compensationSalary = compensationSalary;
+  }
   
   public String getCompensation()
   {

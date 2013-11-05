@@ -1,18 +1,25 @@
-package com.theladders.solid.isp.oldjob;
+package com.theladders.solid.isp.jobInfo;
 
 public class CompanyInfo implements Company
 {
-  private String  company;
+  private String  companyName;
   private Integer companySize;
+
+  public CompanyInfo(int companySize,
+                     String companyName)
+  {
+    this.companySize = companySize;
+    this.companyName = companyName;
+  }
 
   public String getCompany()
   {
-    return company;
+    return companyName;
   }
 
   public void setCompany(String company)
   {
-    this.company = company;
+    this.companyName = company;
   }
 
   public Integer getCompanySize()

@@ -1,4 +1,4 @@
-package com.theladders.solid.isp.oldjob;
+package com.theladders.solid.isp.jobInfo;
 
 public interface Company
 {

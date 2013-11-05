@@ -6,97 +6,15 @@ import java.util.List;
 import com.theladders.solid.isp.oldjob.stubs.Discipline;
 import com.theladders.solid.isp.oldjob.stubs.Experience;
 import com.theladders.solid.isp.oldjob.stubs.Industry;
-import com.theladders.solid.isp.oldjob.stubs.Region;
 
-public abstract class JobImpl implements JobCommon
+public abstract class JobImpl implements Job
 {
 
-  private List<Discipline> disciplines;
-  private Date             entryDate;
-  private Experience       experience;
-  private Industry         industry;
-  private int              oldJobId     = 0;
-  private Date             publicationDate;
-  private Region           region;
-  private String           reportsTo;
-  private int              subscriberId = 0;
-  private String           title;
-  private boolean          anonymous    = false;
-  private boolean          confidential = false;
-  private boolean          exclusive    = false;
-  private boolean          reimbursable = false;
-  private Date             updateTime   = null;
+  private String reportsTo;
+  private int    subscriberId = 0;
+  private String title;
 
-
-  public List<Discipline> getDisciplines()
-  {
-    return disciplines;
-  }
-
-  public void setDisciplines(List<Discipline> disciplines)
-  {
-    this.disciplines = disciplines;
-  }
-
-  public Date getEntryDate()
-  {
-    return entryDate;
-  }
-
-  public void setEntryDate(Date entryDate)
-  {
-    this.entryDate = entryDate;
-  }
-
-  public Experience getExperience()
-  {
-    return experience;
-  }
-
-  public void setExperience(Experience experience)
-  {
-    this.experience = experience;
-  }
-
-  public Industry getIndustry()
-  {
-    return industry;
-  }
-
-  public void setIndustry(Industry industry)
-  {
-    this.industry = industry;
-  }
-
-  public int getOldJobId()
-  {
-    return oldJobId;
-  }
-
-  public void setOldJobId(int oldJobId)
-  {
-    this.oldJobId = oldJobId;
-  }
-
-  public Date getPublicationDate()
-  {
-    return publicationDate;
-  }
-
-  public void setPublicationDate(Date publicationDate)
-  {
-    this.publicationDate = publicationDate;
-  }
-
-  public void setRegion(Region region)
-  {
-    this.region = region;
-  }
-
-  public Region getRegion()
-  {
-    return region;
-  }
+  private Date   updateTime   = null;
 
   public String getReportsTo()
   {
@@ -126,46 +44,6 @@ public abstract class JobImpl implements JobCommon
   public void setTitle(String title)
   {
     this.title = title;
-  }
-
-  public boolean isAnonymous()
-  {
-    return anonymous;
-  }
-
-  public void setAnonymous(boolean anonymous)
-  {
-    this.anonymous = anonymous;
-  }
-
-  public boolean isConfidential()
-  {
-    return confidential;
-  }
-
-  public void setConfidential(boolean confidential)
-  {
-    this.confidential = confidential;
-  }
-
-  public boolean isExclusive()
-  {
-    return exclusive;
-  }
-
-  public void setExclusive(boolean exclusive)
-  {
-    this.exclusive = exclusive;
-  }
-
-  public boolean isReimbursable()
-  {
-    return reimbursable;
-  }
-
-  public void setReimbursable(boolean reimbursable)
-  {
-    this.reimbursable = reimbursable;
   }
 
   /**
