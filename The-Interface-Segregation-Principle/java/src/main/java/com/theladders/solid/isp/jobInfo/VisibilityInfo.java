@@ -2,10 +2,19 @@ package com.theladders.solid.isp.jobInfo;
 
 public class VisibilityInfo
 {
-  private boolean          anonymous    = false;
-  private boolean          confidential = false;
-  private boolean          exclusive    = false;
-  
+  private boolean anonymous    = false;
+  private boolean confidential = false;
+  private boolean exclusive    = false;
+
+  public VisibilityInfo(boolean anonymous,
+                        boolean confidential,
+                        boolean exclusive)
+  {
+    this.anonymous = anonymous;
+    this.confidential = confidential;
+    this.exclusive = exclusive;
+  }
+
   public boolean isAnonymous()
   {
     return anonymous;

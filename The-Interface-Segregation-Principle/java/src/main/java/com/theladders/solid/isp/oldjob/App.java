@@ -1,5 +1,7 @@
 package com.theladders.solid.isp.oldjob;
 
+import java.util.Date;
+
 import com.theladders.solid.isp.jobInfo.CompanyInfo;
 import com.theladders.solid.isp.jobInfo.CompensationInfo;
 import com.theladders.solid.isp.jobInfo.DescriptionInfo;
@@ -21,10 +23,10 @@ public class App
 
     CompanyInfo company = new CompanyInfo(100, "TheLadders");
     GeographyInfo location = new GeographyInfo("New York", new Region("NY"), new City("New York") );
-    CompensationInfo compensationInfo = new CompensationInfo();
-    VisibilityInfo visibilityInfo = new VisibilityInfo();
-    PublicationInfo publicationInfo = new PublicationInfo();
-    DescriptionInfo descriptionInfo = new DescriptionInfo();
+    CompensationInfo compensationInfo = new CompensationInfo("1000", "2000", null, null);
+    VisibilityInfo visibilityInfo = new VisibilityInfo(true, false, true);
+    PublicationInfo publicationInfo = new PublicationInfo("I love this job", new Date(), new Date() );
+    DescriptionInfo descriptionInfo = new DescriptionInfo("", "");
     IdentifiersInfo identifiersInfo = new IdentifiersInfo();
     JobPostInfo jobPostInfo = new JobPostInfo();
     RequirementsInfo requirementsInfo = new RequirementsInfo();

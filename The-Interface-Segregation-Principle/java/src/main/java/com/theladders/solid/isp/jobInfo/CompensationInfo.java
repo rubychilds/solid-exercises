@@ -7,7 +7,7 @@ public class CompensationInfo
   private String compensationOther;
   private String compensationSalary;
  
-  public CompensationInfo(String compensation, String compensationBonus, String compensationOther, String compensationSalar)
+  public CompensationInfo(String compensation, String compensationBonus, String compensationOther, String compensationSalary)
   {
     this.compensation = compensation;
     this.compensationBonus = compensationBonus;

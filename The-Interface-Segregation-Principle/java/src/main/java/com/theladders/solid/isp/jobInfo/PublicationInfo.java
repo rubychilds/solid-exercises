@@ -8,6 +8,14 @@ public class PublicationInfo implements Publication
   private Date   originalPublicationDate;
   private String editorNote;
 
+  public PublicationInfo(String editorNote, Date publicationDate, Date originalPublicationDate)
+  {
+    this.editorNote = editorNote;
+    this.publicationDate = publicationDate;
+    this.originalPublicationDate = originalPublicationDate;
+  }
+  
+  
   public Date getPublicationDate()
   {
     return publicationDate;

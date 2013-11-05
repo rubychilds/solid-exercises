@@ -22,9 +22,9 @@ public class IdentifiersInfo implements Identifiers
     return jobSiteId;
   }
   
-  public void setJobSiteId()
+  public void setJobSiteId(int jobSiteId)
   {
-    this.jobSiteId =  jobSiteId;
+    this.jobSiteId = jobSiteId;
   }
 
   public Integer getParentJobId()
