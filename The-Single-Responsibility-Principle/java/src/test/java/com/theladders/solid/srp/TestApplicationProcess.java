@@ -26,7 +26,7 @@ import com.theladders.solid.srp.resume.Resume;
 import com.theladders.solid.srp.resume.ResumeManager;
 import com.theladders.solid.srp.resume.ResumeRepository;
 
-public class TestApplyProcess
+public class TestApplicationProcess
 {
 
   private static final int           INVALID_JOB_ID        = 555;
