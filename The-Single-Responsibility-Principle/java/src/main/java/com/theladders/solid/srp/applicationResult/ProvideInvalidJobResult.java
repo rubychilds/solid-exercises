@@ -9,7 +9,6 @@ import com.theladders.solid.srp.utils.ModelFieldNames;
 
 public class ProvideInvalidJobResult extends ApplicationResult
 {
-
   private Map<String, Object> model = new HashMap<String, Object>();
 
   public void setResult()
@@ -17,6 +16,4 @@ public class ProvideInvalidJobResult extends ApplicationResult
     model.put(ModelFieldNames.JOB_ID, getJobID());
     finalResult = new Result("invalidJob", model);
   }
-
-
 }

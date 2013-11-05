@@ -8,19 +8,18 @@ public class ResultFactory
     return new ProvideErrorMessage();
   }
 
-  public static ProvideInvalidJobResult getInvalidJobView()
+  public static ProvideInvalidJobResult getInvalidJobResult()
   {
     return new ProvideInvalidJobResult();
   }
 
-  public static ProvideSuccessResult getSuccessView()
+  public static ProvideSuccessResult getSuccessResult()
   {
     return new ProvideSuccessResult();
   }
 
-  public static ProvideResumeCompletionResult getResumeCompletionView()
+  public static ProvideResumeCompletionResult getResumeCompletionResult()
   {
     return new ProvideResumeCompletionResult();
   }
-
 }

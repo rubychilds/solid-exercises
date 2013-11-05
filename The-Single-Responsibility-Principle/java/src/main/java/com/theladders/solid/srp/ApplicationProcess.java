@@ -38,7 +38,7 @@ public class ApplicationProcess
                                    ResumeData resumeData)
   {
     if (job == null)
-      return ResultFactory.getInvalidJobView();
+      return ResultFactory.getInvalidJobResult();
 
     Resume resume = saveNewOrRetrieveExistingResume(resumeData, jobseeker);
     UnprocessedApplication application = new UnprocessedApplication(jobseeker, job, resume);
@@ -52,12 +52,12 @@ public class ApplicationProcess
 
     if (jobseekerNeedsProfileCompletion(jobseeker))
     {
-      ApplicationResult applicationResult = ResultFactory.getResumeCompletionView();
+      ApplicationResult applicationResult = ResultFactory.getResumeCompletionResult();
       setJobVariblesInResult(applicationResult, job);
       return applicationResult;
     }
 
-    ApplicationResult applicationResult = ResultFactory.getSuccessView();
+    ApplicationResult applicationResult = ResultFactory.getSuccessResult();
     setJobVariblesInResult(applicationResult, job);
     return applicationResult;
   }
