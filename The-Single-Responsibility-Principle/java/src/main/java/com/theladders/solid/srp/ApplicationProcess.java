@@ -48,21 +48,21 @@ public class ApplicationProcess
 
     if (jobApplicationFailed(application))
     {
-      ProvideErrorMessage view = ResultFactory.getErrorView();
-      view.addError(ErrorFields.UNABLE_TO_PROCESS_APP);
-      return view;
+      ProvideErrorMessage applicationResult  = ResultFactory.getErrorView();
+      applicationResult.addError(ErrorFields.UNABLE_TO_PROCESS_APP);
+      return applicationResult ;
     }
 
     if (jobseekerNeedsProfileCompletion(jobseeker))
     {
-      ApplicationResult view = ResultFactory.getResumeCompletionView();
-      setJobVariblesInResult(view, job);
-      return view;
+      ApplicationResult applicationResult  = ResultFactory.getResumeCompletionView();
+      setJobVariblesInResult(applicationResult , job);
+      return applicationResult;
     }
 
-    ApplicationResult view = ResultFactory.getSuccessView();
-    setJobVariblesInResult(view, job);
-    return view;
+    ApplicationResult applicationResult = ResultFactory.getSuccessView();
+    setJobVariblesInResult(applicationResult , job);
+    return applicationResult ;
   }
 
   private void setJobVariblesInResult(ApplicationResult view,
