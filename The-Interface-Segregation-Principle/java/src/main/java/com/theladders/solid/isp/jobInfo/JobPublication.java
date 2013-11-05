@@ -2,7 +2,7 @@ package com.theladders.solid.isp.jobInfo;
 
 import java.util.Date;
 
-public interface Publication
+public interface JobPublication
 {
   Date getPublicationDate();
 

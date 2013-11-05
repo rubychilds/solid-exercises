@@ -1,6 +1,6 @@
 package com.theladders.solid.isp.jobInfo;
 
-public interface Company
+public interface JobCompany
 {
 
   public String getCompany();

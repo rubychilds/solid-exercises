@@ -1,11 +1,11 @@
 package com.theladders.solid.isp.jobInfo;
 
-public class CompanyInfo implements Company
+public class JobCompanyInfo implements JobCompany
 {
   private String  companyName;
   private Integer companySize;
 
-  public CompanyInfo(int companySize,
+  public JobCompanyInfo(int companySize,
                      String companyName)
   {
     this.companySize = companySize;

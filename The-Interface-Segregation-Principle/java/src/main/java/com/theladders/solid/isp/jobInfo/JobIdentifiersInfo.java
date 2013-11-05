@@ -1,6 +1,6 @@
 package com.theladders.solid.isp.jobInfo;
 
-public class IdentifiersInfo implements Identifiers
+public class JobIdentifiersInfo implements JobIdentifiers
 {
   private int oldJobId    = 0;
   private int jobId       = 0;

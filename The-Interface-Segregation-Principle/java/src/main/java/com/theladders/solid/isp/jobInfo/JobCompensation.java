@@ -1,6 +1,6 @@
 package com.theladders.solid.isp.jobInfo;
 
-public interface Compensation
+public interface JobCompensation
 {
   
   String getCompensation();

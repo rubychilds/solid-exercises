@@ -1,6 +1,6 @@
 package com.theladders.solid.isp.jobInfo;
 
-public interface Visibility
+public interface JobVisibility
 {
 
   /**

@@ -3,7 +3,7 @@ package com.theladders.solid.isp.jobInfo;
 import com.theladders.solid.isp.oldjob.stubs.City;
 import com.theladders.solid.isp.oldjob.stubs.Region;
 
-public interface Geography
+public interface JobGeography
 {
   String getLocation();
 

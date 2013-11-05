@@ -1,13 +1,13 @@
 package com.theladders.solid.isp.jobInfo;
 
-public class CompensationInfo
+public class JobCompensationInfo
 {
   private String compensation;
   private String compensationBonus;
   private String compensationOther;
   private String compensationSalary;
  
-  public CompensationInfo(String compensation, String compensationBonus, String compensationOther, String compensationSalary)
+  public JobCompensationInfo(String compensation, String compensationBonus, String compensationOther, String compensationSalary)
   {
     this.compensation = compensation;
     this.compensationBonus = compensationBonus;

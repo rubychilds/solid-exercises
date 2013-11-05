@@ -3,25 +3,25 @@ package com.theladders.solid.isp.oldjob;
 import java.util.Collection;
 import java.util.Date;
 
-import com.theladders.solid.isp.jobInfo.Company;
-import com.theladders.solid.isp.jobInfo.CompanyInfo;
-import com.theladders.solid.isp.jobInfo.Compensation;
-import com.theladders.solid.isp.jobInfo.CompensationInfo;
-import com.theladders.solid.isp.jobInfo.Description;
-import com.theladders.solid.isp.jobInfo.DescriptionInfo;
-import com.theladders.solid.isp.jobInfo.Geography;
-import com.theladders.solid.isp.jobInfo.GeographyInfo;
-import com.theladders.solid.isp.jobInfo.Identifiers;
-import com.theladders.solid.isp.jobInfo.IdentifiersInfo;
+import com.theladders.solid.isp.jobInfo.JobCompany;
+import com.theladders.solid.isp.jobInfo.JobCompanyInfo;
+import com.theladders.solid.isp.jobInfo.JobCompensation;
+import com.theladders.solid.isp.jobInfo.JobCompensationInfo;
+import com.theladders.solid.isp.jobInfo.JobDescription;
+import com.theladders.solid.isp.jobInfo.JobDescriptionInfo;
+import com.theladders.solid.isp.jobInfo.JobGeography;
+import com.theladders.solid.isp.jobInfo.JobGeographyInfo;
+import com.theladders.solid.isp.jobInfo.JobIdentifiers;
+import com.theladders.solid.isp.jobInfo.JobIdentifiersInfo;
 import com.theladders.solid.isp.jobInfo.JobAreasInfo;
 import com.theladders.solid.isp.jobInfo.JobPost;
 import com.theladders.solid.isp.jobInfo.JobPostInfo;
-import com.theladders.solid.isp.jobInfo.Publication;
-import com.theladders.solid.isp.jobInfo.PublicationInfo;
-import com.theladders.solid.isp.jobInfo.Requirements;
-import com.theladders.solid.isp.jobInfo.RequirementsInfo;
-import com.theladders.solid.isp.jobInfo.Visibility;
-import com.theladders.solid.isp.jobInfo.VisibilityInfo;
+import com.theladders.solid.isp.jobInfo.JobPublication;
+import com.theladders.solid.isp.jobInfo.JobPublicationInfo;
+import com.theladders.solid.isp.jobInfo.JobRequirements;
+import com.theladders.solid.isp.jobInfo.JobRequirementsInfo;
+import com.theladders.solid.isp.jobInfo.JobVisibility;
+import com.theladders.solid.isp.jobInfo.JobVisibilityInfo;
 import com.theladders.solid.isp.oldjob.stubs.City;
 import com.theladders.solid.isp.oldjob.stubs.Experience;
 import com.theladders.solid.isp.oldjob.stubs.JobFunction;
@@ -30,30 +30,30 @@ import com.theladders.solid.isp.oldjob.stubs.PositionLevel;
 import com.theladders.solid.isp.oldjob.stubs.Region;
 import com.theladders.solid.isp.oldjob.stubs.Sector;
 
-public class JobCombination extends JobImpl implements Company, Geography, Compensation, Visibility, Publication,
-    Description, Identifiers, JobPost, Requirements
+public class JobCombination extends JobImpl implements JobCompany, JobGeography, JobCompensation, JobVisibility, JobPublication,
+    JobDescription, JobIdentifiers, JobPost, JobRequirements
 {
-  private CompanyInfo      companyInfo;
-  private GeographyInfo    geographyInfo;
-  private CompensationInfo compensationInfo;
-  private VisibilityInfo   visibilityInfo;
-  private PublicationInfo  publicationInfo;
-  private DescriptionInfo  descriptionInfo;
-  private IdentifiersInfo  identifiersInfo;
+  private JobCompanyInfo      companyInfo;
+  private JobGeographyInfo    geographyInfo;
+  private JobCompensationInfo compensationInfo;
+  private JobVisibilityInfo   visibilityInfo;
+  private JobPublicationInfo  publicationInfo;
+  private JobDescriptionInfo  descriptionInfo;
+  private JobIdentifiersInfo  identifiersInfo;
   private JobPostInfo      jobPostInfo;
-  private RequirementsInfo requirementsInfo;
+  private JobRequirementsInfo requirementsInfo;
   private JobAreasInfo     jobAreasInfo;
   private JobRelocationPaidInfo jobRelocationPaidInfo;
 
-  public JobCombination(CompanyInfo companyInfo,
-                        GeographyInfo geographyInfo,
-                        CompensationInfo compensationInfo,
-                        VisibilityInfo visibilityInfo,
-                        PublicationInfo publicationInfo,
-                        DescriptionInfo descriptionInfo,
-                        IdentifiersInfo identifiersInfo,
+  public JobCombination(JobCompanyInfo companyInfo,
+                        JobGeographyInfo geographyInfo,
+                        JobCompensationInfo compensationInfo,
+                        JobVisibilityInfo visibilityInfo,
+                        JobPublicationInfo publicationInfo,
+                        JobDescriptionInfo descriptionInfo,
+                        JobIdentifiersInfo identifiersInfo,
                         JobPostInfo jobPostInfo,
-                        RequirementsInfo requirementsInfo,
+                        JobRequirementsInfo requirementsInfo,
                         JobAreasInfo jobAreasInfo,
                         JobRelocationPaidInfo jobRelocationPaidInfo)
   {

@@ -2,7 +2,7 @@ package com.theladders.solid.isp.jobInfo;
 
 import com.theladders.solid.isp.oldjob.stubs.Experience;
 
-public interface Requirements
+public interface JobRequirements
 {
 
   /**

@@ -1,12 +1,12 @@
 package com.theladders.solid.isp.jobInfo;
 
 
-public class DescriptionInfo implements Description
+public class JobDescriptionInfo implements JobDescription
 {
   private String shortDescription;
   private String description;
   
-  public DescriptionInfo(String description, String shortDescription)
+  public JobDescriptionInfo(String description, String shortDescription)
   {
     this.description = description;
     this.shortDescription = shortDescription;

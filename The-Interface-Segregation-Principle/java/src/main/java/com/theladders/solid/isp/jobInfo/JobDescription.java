@@ -1,6 +1,6 @@
 package com.theladders.solid.isp.jobInfo;
 
-public interface Description
+public interface JobDescription
 {
   /**
    * Get this job's short description.

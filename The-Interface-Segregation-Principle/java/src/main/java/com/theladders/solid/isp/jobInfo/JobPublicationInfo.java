@@ -2,13 +2,13 @@ package com.theladders.solid.isp.jobInfo;
 
 import java.util.Date;
 
-public class PublicationInfo implements Publication
+public class JobPublicationInfo implements JobPublication
 {
   private Date   publicationDate;
   private Date   originalPublicationDate;
   private String editorNote;
 
-  public PublicationInfo(String editorNote, Date publicationDate, Date originalPublicationDate)
+  public JobPublicationInfo(String editorNote, Date publicationDate, Date originalPublicationDate)
   {
     this.editorNote = editorNote;
     this.publicationDate = publicationDate;

@@ -3,14 +3,14 @@ package com.theladders.solid.isp.jobInfo;
 import com.theladders.solid.isp.oldjob.stubs.City;
 import com.theladders.solid.isp.oldjob.stubs.Region;
 
-public class GeographyInfo implements Geography
+public class JobGeographyInfo implements JobGeography
 {
   private String location;
   private Region region;
   private City city;
   
   
-  public GeographyInfo(String location, Region region, City city)
+  public JobGeographyInfo(String location, Region region, City city)
   {
     this.location = location;
     this.region = region;
