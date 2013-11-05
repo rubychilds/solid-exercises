@@ -10,10 +10,7 @@ import com.theladders.solid.isp.oldjob.stubs.Region;
 
 public abstract class JobImpl implements JobCommon
 {
-  private String           compensation;
-  private String           compensationBonus;
-  private String           compensationOther;
-  private String           compensationSalary;
+
   private List<Discipline> disciplines;
   private Date             entryDate;
   private Experience       experience;
@@ -30,45 +27,6 @@ public abstract class JobImpl implements JobCommon
   private boolean          reimbursable = false;
   private Date             updateTime   = null;
 
-  public String getCompensation()
-  {
-    return compensation;
-  }
-
-  public void setCompensation(String compensation)
-  {
-    this.compensation = compensation;
-  }
-
-  public String getCompensationBonus()
-  {
-    return compensationBonus;
-  }
-
-  public void setCompensationBonus(String compensationBonus)
-  {
-    this.compensationBonus = compensationBonus;
-  }
-
-  public String getCompensationOther()
-  {
-    return compensationOther;
-  }
-
-  public void setCompensationOther(String compensationOther)
-  {
-    this.compensationOther = compensationOther;
-  }
-
-  public String getCompensationSalary()
-  {
-    return compensationSalary;
-  }
-
-  public void setCompensationSalary(String compensationSalary)
-  {
-    this.compensationSalary = compensationSalary;
-  }
 
   public List<Discipline> getDisciplines()
   {

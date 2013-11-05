@@ -5,9 +5,12 @@ public class App
 
   public static void main(String[] args)
   {
-    LocationInfo location = new LocationInfo();
+
     CompanyInfo company = new CompanyInfo();
-    JobCombination job = new JobCombination(location, company);
+    LocationInfo location = new LocationInfo();
+    CompensationInfo compensationInfo = new CompensationInfo();
+
+    JobCombination job = new JobCombination(company, location, compensationInfo);
 
   }
 
