@@ -48,30 +48,30 @@ public class ApplicationProcess
 
     if (jobApplicationFailed(application))
     {
-      ProvideErrorMessage applicationResult  = ResultFactory.getErrorView();
+      ProvideErrorMessage applicationResult = ResultFactory.getErrorView();
       applicationResult.addError(ErrorFields.UNABLE_TO_PROCESS_APP);
-      return applicationResult ;
+      return applicationResult;
     }
 
     if (jobseekerNeedsProfileCompletion(jobseeker))
     {
-      ApplicationResult applicationResult  = ResultFactory.getResumeCompletionView();
-      setJobVariblesInResult(applicationResult , job);
+      ApplicationResult applicationResult = ResultFactory.getResumeCompletionView();
+      setJobVariblesInResult(applicationResult, job);
       return applicationResult;
     }
 
     ApplicationResult applicationResult = ResultFactory.getSuccessView();
-    setJobVariblesInResult(applicationResult , job);
-    return applicationResult ;
+    setJobVariblesInResult(applicationResult, job);
+    return applicationResult;
   }
 
-  private void setJobVariblesInResult(ApplicationResult view,
+  private void setJobVariblesInResult(ApplicationResult applicationResult,
                                       Job job)
   {
     int jobId = job.getJobId();
     String jobTitle = job.getTitle();
-    view.setJobID(jobId);
-    view.setJobTitle(jobTitle);
+    applicationResult.setJobID(jobId);
+    applicationResult.setJobTitle(jobTitle);
   }
 
   private Resume saveNewOrRetrieveExistingResume(ResumeData resumeData,
