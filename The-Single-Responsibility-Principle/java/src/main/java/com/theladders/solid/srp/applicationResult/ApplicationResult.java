@@ -1,5 +1,8 @@
 package com.theladders.solid.srp.applicationResult;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.theladders.solid.srp.Result;
 import com.theladders.solid.srp.http.HttpResponse;
 
@@ -7,7 +10,8 @@ abstract public class ApplicationResult
 {
   private int      jobId;
   private String   jobTitle;
-  protected Result finalResult;
+  protected Result finalResult = null;
+  protected ArrayList<String> errList = new ArrayList<String>();
 
   public void setJobID(int jobId)
   {
@@ -37,4 +41,14 @@ abstract public class ApplicationResult
 
   public abstract void setResult();
 
+  public Result getResult()
+  {
+    return finalResult;
+  }
+  
+  public List<String> getErrList()
+  {
+    return errList;
+  }
+  
 }

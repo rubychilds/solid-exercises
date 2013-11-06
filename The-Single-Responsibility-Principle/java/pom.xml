@@ -27,10 +27,12 @@
                     <targetClasses>
                         <param>com.theladders.solid.srp.ApplicationProcess</param>
                         <param>com.theladders.solid.srp.ApplyController</param>
+                        <param>com.theladders.solid.srp.ApplicationBuffer</param>
                     </targetClasses>
                     <targetTests>
                         <param>com.theladders.solid.srp.TestApplyProcess</param>
                         <param>com.theladders.solid.srp.TestIt</param>
+                         <param>com.theladders.solid.srp.TestApplicationBuffer</param>
                     </targetTests>
                 </configuration>
             </plugin>

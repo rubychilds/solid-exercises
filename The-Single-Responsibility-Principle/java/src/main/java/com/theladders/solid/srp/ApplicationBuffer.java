@@ -36,22 +36,22 @@ public class ApplicationBuffer
                                    String whichResume)
   {
 
-    ResumeData resumeData = createResumeData(activateResume, whichResume, origFileName);
+    ResumeData resumeData = createResumeData(origFileName, activateResume, whichResume);
 
     Job job = jobSearchService.getJob(jobId);
 
-    ApplicationResult finalView = applicationProcessor.execute(job, jobseeker, resumeData);
+    ApplicationResult finalResult= applicationProcessor.execute(job, jobseeker, resumeData);
 
     if (job == null)
-      finalView.setJobID(jobId);
+      finalResult.setJobID(jobId);
 
-    finalView.setResult();
-    return finalView;
+    finalResult.setResult();
+    return finalResult;
   }
 
-  private ResumeData createResumeData(String activateResume,
-                                      String whichResume,
-                                      String origFileName)
+  private ResumeData createResumeData(String origFileName,
+                                      String activateResume,
+                                      String whichResume)                                     
   {
     return new ResumeData(origFileName, activateResume, whichResume);
   }

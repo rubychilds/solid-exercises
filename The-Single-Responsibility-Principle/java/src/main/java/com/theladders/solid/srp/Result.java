@@ -30,6 +30,12 @@ public class Result
   {
     return type;
   }
+  
+  public List<String> getErrors()
+  {
+    return errorList;
+  }
+  
 
   @Override
   public String toString()
