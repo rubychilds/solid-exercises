@@ -7,21 +7,22 @@ import java.util.Date;
 
 public class SuggestedArticle
 {
-  private Integer     suggestedArticleId;
-  private Integer     subscriberId;
-  private Integer     suggestedArticleSourceId;
-  private String      articleExternalIdentifier;
-  private Integer     suggestedArticleStatusId;
-  private Date        createTime;
-  private Integer     creatorId;
-  private Date        updateTime;
-  private Integer     updaterId;
-  private String      note;
-  private ContentNode content;
+  private Integer suggestedArticleId;
+  private Integer subscriberId;
+  private Integer suggestedArticleSourceId;
+  private String  articleExternalIdentifier;
+  private Integer suggestedArticleStatusId;
+  private Date    createTime;
+  private Integer creatorId;
+  private Date    updateTime;
+  private Integer updaterId;
+  private String  note;
+  private ContentNode    content;
 
-  private Integer     STATUS_UNREAD = 1;
+  private Integer STATUS_UNREAD = 1;
 
-  public SuggestedArticle() {}
+  public SuggestedArticle()
+  {}
 
   public SuggestedArticle(Integer subscriberId,
                           String articleExternalIdentifier,
@@ -152,9 +153,9 @@ public class SuggestedArticle
     return content;
   }
 
-  public void setContent(ContentNode node)
+  public void setContent(ContentNode content2)
   {
-    this.content = node;
+    this.content = content2;
   }
 
   public boolean getIsRead()

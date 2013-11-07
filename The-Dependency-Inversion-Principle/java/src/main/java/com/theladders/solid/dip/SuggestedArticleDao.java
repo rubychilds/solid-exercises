@@ -3,7 +3,7 @@ package com.theladders.solid.dip;
 import java.util.Collections;
 import java.util.List;
 
-public class SuggestedArticleDao
+public class SuggestedArticleDao implements ArticleDao
 {
   public void updateByPrimaryKeySelective(@SuppressWarnings("unused") SuggestedArticle article) {}
 

@@ -1,19 +1,7 @@
 package com.theladders.solid.dip;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class ContentNode
+public interface ContentNode
 {
-  private Map<String, Object> properties = new HashMap<>();
-
-  public Object getProperty(String key)
-  {
-    return properties.get(key);
-  }
-
-  public void addProperty(String key, Object value)
-  {
-    properties.put(key, value);
-  }
+  public Object getProperty(String key);
+  public void addProperty(String key, Object value);
 }

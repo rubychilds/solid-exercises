@@ -2,35 +2,22 @@ package com.theladders.solid.dip;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SubscriberArticleManagerImpl implements SubscriberArticleManager
 {
-  private static final String              IMAGE_PREFIX       = "http://somecdnprodiver.com/static/images/careerAdvice/";
-  private static final Map<String, String> CATEGORY_IMAGE_MAP = new HashMap<>();
+  private static final String     IMAGE_PREFIX = "http://somecdnprodiver.com/static/images/careerAdvice/";
 
-  static
-  {
-    CATEGORY_IMAGE_MAP.put("Interviewing", "interviewing_thumb.jpg");
-    CATEGORY_IMAGE_MAP.put("Job Search", "job_search_thumb.jpg");
-    CATEGORY_IMAGE_MAP.put("Networking", "networking_thumb.jpg");
-    CATEGORY_IMAGE_MAP.put("Personal Branding", "personalBranding_thumb.jpg");
-    CATEGORY_IMAGE_MAP.put("Resume", "resume_thumb.jpg");
-    CATEGORY_IMAGE_MAP.put("Salary", "salary_thumb.jpg");
-    CATEGORY_IMAGE_MAP.put("Assessment", "salary_thumb.jpg");
-    CATEGORY_IMAGE_MAP.put("On the Job", "salary_thumb.jpg");
-  }
+  private ArticleDao     suggestedArticleDao;
+  private NodeFinder              nodeFinder;
+  private static CategoryImageMap categoryImageMap;
 
-  private SuggestedArticleDao              suggestedArticleDao;
-  private RepositoryManager                repositoryManager;
-
-  public SubscriberArticleManagerImpl(SuggestedArticleDao suggestedArticleDao,
-                                      RepositoryManager repositoryManager)
+  public SubscriberArticleManagerImpl(ArticleDao suggestedArticleDao,
+                                      NodeFinder nodeFinder)
   {
     this.suggestedArticleDao = suggestedArticleDao;
-    this.repositoryManager = repositoryManager;
+    this.nodeFinder = nodeFinder;
+    this.categoryImageMap = new CategoryImageMap();
   }
 
   public List<SuggestedArticle> getArticlesbySubscriber(Integer subscriberId)
@@ -38,7 +25,7 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
     SuggestedArticleExample criteria = new SuggestedArticleExample();
     criteria.createCriteria()
             .andSubscriberIdEqualTo(subscriberId)
-            .andSuggestedArticleStatusIdIn(Arrays.asList(1, 2))  // must be New or Viewed
+            .andSuggestedArticleStatusIdIn(Arrays.asList(1, 2))
             .andSuggestedArticleSourceIdEqualTo(1);
 
     criteria.setOrderByClause("create_time desc");
@@ -66,9 +53,8 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
   {
     for (SuggestedArticle article : dbArticles)
     {
-
       // Attempt to fetch the actual content;
-      ContentNode content = this.repositoryManager.getNodeByUuid(article.getArticleExternalIdentifier());
+      ContentNode content = this.nodeFinder.getNodeByUuid(article.getArticleExternalIdentifier());
       if (content != null && ContentUtils.isPublishedAndEnabled(content))
       {
         // Override miniImagePath
@@ -85,11 +71,12 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
     if (path == null || path.length() == 0)
     {
       String category = (String) node.getProperty("primaryTopic");
-      node.addProperty("miniImagePath", IMAGE_PREFIX + CATEGORY_IMAGE_MAP.get(category));
+      node.addProperty("miniImagePath", IMAGE_PREFIX + categoryImageMap.getCategory(category));
     }
   }
 
-  public void updateNote(Integer id, String note)
+  public void updateNote(Integer id,
+                         String note)
   {
     SuggestedArticle article = new SuggestedArticle();
     article.setSuggestedArticleId(id);
