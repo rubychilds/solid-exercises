@@ -1,6 +1,5 @@
 package com.theladders.solid.dip;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +7,7 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
 {
   private static final String     IMAGE_PREFIX = "http://somecdnprodiver.com/static/images/careerAdvice/";
 
-  private ArticleDao     suggestedArticleDao;
+  private ArticleDao              suggestedArticleDao;
   private NodeFinder              nodeFinder;
   private static CategoryImageMap categoryImageMap;
 
@@ -20,24 +19,15 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
     this.categoryImageMap = new CategoryImageMap();
   }
 
-  public List<SuggestedArticle> getArticlesbySubscriber(Integer subscriberId)
+  public List<SuggestedArticleInfo> getArticlesbySubscriber(Integer subscriberId)
   {
-    SuggestedArticleExample criteria = new SuggestedArticleExample();
-    criteria.createCriteria()
-            .andSubscriberIdEqualTo(subscriberId)
-            .andSuggestedArticleStatusIdIn(Arrays.asList(1, 2))
-            .andSuggestedArticleSourceIdEqualTo(1);
-
-    criteria.setOrderByClause("create_time desc");
-    List<SuggestedArticle> dbSuggestions = this.suggestedArticleDao.selectByExampleWithBlobs(criteria);
-
+    List<SuggestedArticleInfo> dbSuggestions = suggestedArticleDao.getArticlesbySubscriber(subscriberId);
     // Fetch content associated with SuggestedArticle (based on externalArticleId)
     resolveArticles(dbSuggestions);
-
     return dbSuggestions;
   }
 
-  public int addSuggestedArticle(SuggestedArticle suggestedArticle)
+  public int addSuggestedArticle(SuggestedArticleInfo suggestedArticle)
   {
     Integer STATUS_UNREAD = 1;
     Integer HTP_CONSULTANT = 1;
@@ -49,9 +39,9 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
     return newId;
   }
 
-  private void resolveArticles(List<SuggestedArticle> dbArticles)
+  private void resolveArticles(List<SuggestedArticleInfo> dbArticles)
   {
-    for (SuggestedArticle article : dbArticles)
+    for (SuggestedArticleInfo article : dbArticles)
     {
       // Attempt to fetch the actual content;
       ContentNode content = this.nodeFinder.getNodeByUuid(article.getArticleExternalIdentifier());
@@ -78,7 +68,7 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
   public void updateNote(Integer id,
                          String note)
   {
-    SuggestedArticle article = new SuggestedArticle();
+    SuggestedArticleInfo article = suggestedArticleDao.getSuggestedArticle();
     article.setSuggestedArticleId(id);
     article.setNote(note);
     suggestedArticleDao.updateByPrimaryKeySelective(article);
@@ -87,7 +77,7 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
   public void markRecomDeleted(Integer id)
   {
     Integer STATUS_DELETED = 4;
-    SuggestedArticle article = new SuggestedArticle();
+    SuggestedArticleInfo article = suggestedArticleDao.getSuggestedArticle();
     article.setSuggestedArticleId(id);
     article.setSuggestedArticleStatusId(STATUS_DELETED);
     suggestedArticleDao.updateByPrimaryKeySelective(article);

@@ -1,19 +1,50 @@
 package com.theladders.solid.dip;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class SuggestedArticleDao implements ArticleDao
 {
-  public void updateByPrimaryKeySelective(@SuppressWarnings("unused") SuggestedArticle article) {}
+  public void updateByPrimaryKeySelective(@SuppressWarnings("unused") SuggestedArticleInfo article)
+  {}
 
-  public int insertReturnId(@SuppressWarnings("unused") SuggestedArticle suggestedArticle)
+  public int insertReturnId(@SuppressWarnings("unused") SuggestedArticleInfo suggestedArticle)
   {
     return 0;
   }
 
-  public List<SuggestedArticle> selectByExampleWithBlobs(@SuppressWarnings("unused") SuggestedArticleExample criteria)
+  public List<SuggestedArticleInfo> selectByExampleWithBlobs(@SuppressWarnings("unused") SuggestedArticleExample criteria)
   {
-    return Collections.singletonList(new SuggestedArticle());
+    List<SuggestedArticleInfo> article = new ArrayList<SuggestedArticleInfo>();
+    article.add(new SuggestedArticle());
+    return article;
   }
+
+
+  public List<SuggestedArticleInfo> getArticlesbySubscriber(Integer subscriberId)
+  {
+    SuggestedArticleExample criteria = new SuggestedArticleExample();
+    criteria.createCriteria()
+            .andSubscriberIdEqualTo(subscriberId)
+            .andSuggestedArticleStatusIdIn(Arrays.asList(1, 2))
+            .andSuggestedArticleSourceIdEqualTo(1);
+
+    criteria.setOrderByClause("create_time desc");
+    return selectByExampleWithBlobs(criteria);
+
+  }
+
+  public SuggestedArticleInfo getSuggestedArticle()
+  {
+    return new SuggestedArticle();
+  }
+
+  public SuggestedArticleExample getSuggestedArticleExample()
+  {
+    return new SuggestedArticleExample();
+  }
+  
+  
 }

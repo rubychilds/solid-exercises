@@ -4,9 +4,14 @@ import java.util.List;
 
 public interface ArticleDao
 {
-  public void updateByPrimaryKeySelective(SuggestedArticle article);
+  public void updateByPrimaryKeySelective(SuggestedArticleInfo article);
 
-  public int insertReturnId(SuggestedArticle suggestedArticle);
+  public int insertReturnId(SuggestedArticleInfo suggestedArticle);
 
-  public List<SuggestedArticle> selectByExampleWithBlobs(SuggestedArticleExample criteria);
+  public List<SuggestedArticleInfo> selectByExampleWithBlobs(SuggestedArticleExample criteria);
+
+  public List<SuggestedArticleInfo> getArticlesbySubscriber(Integer subscriberId);
+
+  public SuggestedArticleInfo getSuggestedArticle();
+
 }

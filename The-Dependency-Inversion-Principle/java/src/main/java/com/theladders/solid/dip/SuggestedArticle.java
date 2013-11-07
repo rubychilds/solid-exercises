@@ -5,7 +5,7 @@ import java.util.Date;
 // A SuggestedArticle is one instance of an article that has been
 // recommended to a particular subscriber.
 
-public class SuggestedArticle
+public class SuggestedArticle implements SuggestedArticleInfo
 {
   private Integer suggestedArticleId;
   private Integer subscriberId;

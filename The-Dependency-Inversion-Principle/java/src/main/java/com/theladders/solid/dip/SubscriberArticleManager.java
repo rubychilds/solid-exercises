@@ -16,7 +16,7 @@ public interface SubscriberArticleManager
    *          ID of this subscriber
    * @return List of all suggested articles whose status is either New or Viewed
    */
-  public List<SuggestedArticle> getArticlesbySubscriber(Integer subscriberId);
+  public List<SuggestedArticleInfo> getArticlesbySubscriber(Integer subscriberId);
 
   /**
    * Add a SuggestedArticle to the database.
@@ -24,7 +24,7 @@ public interface SubscriberArticleManager
    * @param suggestedArticle
    */
 
-  public int addSuggestedArticle(SuggestedArticle suggestedArticle);
+  public int addSuggestedArticle(SuggestedArticleInfo suggestedArticle);
 
   /**
    * Update the note of the Suggested Article(id)
