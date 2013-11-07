@@ -68,18 +68,12 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
   public void updateNote(Integer id,
                          String note)
   {
-    SuggestedArticleInfo article = articleDao.getSuggestedArticle();
-    article.setSuggestedArticleId(id);
-    article.setNote(note);
-    articleDao.updateByPrimaryKeySelective(article);
+    articleDao.updateNote(id, note);
   }
 
   public void markRecomDeleted(Integer id)
   {
     Integer STATUS_DELETED = 4;
-    SuggestedArticleInfo article = articleDao.getSuggestedArticle();
-    article.setSuggestedArticleId(id);
-    article.setSuggestedArticleStatusId(STATUS_DELETED);
-    articleDao.updateByPrimaryKeySelective(article);
+    articleDao.markRecomDeleted(id, STATUS_DELETED);
   }
 }

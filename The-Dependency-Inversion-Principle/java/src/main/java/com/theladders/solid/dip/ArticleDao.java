@@ -12,6 +12,7 @@ public interface ArticleDao
 
   public List<SuggestedArticleInfo> getArticlesbySubscriber(Integer subscriberId);
 
-  public SuggestedArticleInfo getSuggestedArticle();
-
+  public void updateNote(Integer id, String note);
+  
+  public void markRecomDeleted(Integer id, Integer status);
 }

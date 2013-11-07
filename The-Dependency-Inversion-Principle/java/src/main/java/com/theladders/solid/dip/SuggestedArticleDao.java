@@ -36,15 +36,25 @@ public class SuggestedArticleDao implements ArticleDao
 
   }
 
-  public SuggestedArticleInfo getSuggestedArticle()
-  {
-    return new SuggestedArticle();
-  }
-
   public SuggestedArticleExample getSuggestedArticleExample()
   {
     return new SuggestedArticleExample();
   }
   
+  public void updateNote(Integer id, String note)
+  {
+    SuggestedArticleInfo article = new SuggestedArticle();
+    article.setSuggestedArticleId(id);
+    article.setNote(note);
+    updateByPrimaryKeySelective(article);
+  }
+  
+  public void markRecomDeleted(Integer id, Integer status)
+  {
+    SuggestedArticleInfo article = new SuggestedArticle();
+    article.setSuggestedArticleId(id);
+    article.setSuggestedArticleStatusId(status);
+    updateByPrimaryKeySelective(article);
+  }  
   
 }
