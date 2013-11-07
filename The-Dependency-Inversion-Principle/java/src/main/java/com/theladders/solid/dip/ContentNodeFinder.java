@@ -1,6 +1,6 @@
 package com.theladders.solid.dip;
 
-public class ContentNodeFinder
+public class ContentNodeFinder implements NodeFinder
 {
   public ContentNodeProperty getNodeByUuid(String id)
   {

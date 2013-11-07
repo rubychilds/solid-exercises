@@ -18,6 +18,7 @@ import com.theladders.solid.isp.jobInfo.JobPost;
 import com.theladders.solid.isp.jobInfo.JobPostInfo;
 import com.theladders.solid.isp.jobInfo.JobPublication;
 import com.theladders.solid.isp.jobInfo.JobPublicationInfo;
+import com.theladders.solid.isp.jobInfo.JobRelocationPaidInfo;
 import com.theladders.solid.isp.jobInfo.JobRequirements;
 import com.theladders.solid.isp.jobInfo.JobRequirementsInfo;
 import com.theladders.solid.isp.jobInfo.JobSite;

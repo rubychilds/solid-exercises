@@ -7,21 +7,21 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
 {
   private static final String     IMAGE_PREFIX = "http://somecdnprodiver.com/static/images/careerAdvice/";
 
-  private ArticleDao              suggestedArticleDao;
+  private ArticleDao              articleDao;
   private NodeFinder              nodeFinder;
   private static CategoryImageMap categoryImageMap;
 
-  public SubscriberArticleManagerImpl(ArticleDao suggestedArticleDao,
+  public SubscriberArticleManagerImpl(ArticleDao articleDao,
                                       NodeFinder nodeFinder)
   {
-    this.suggestedArticleDao = suggestedArticleDao;
+    this.articleDao = articleDao;
     this.nodeFinder = nodeFinder;
     this.categoryImageMap = new CategoryImageMap();
   }
 
   public List<SuggestedArticleInfo> getArticlesbySubscriber(Integer subscriberId)
   {
-    List<SuggestedArticleInfo> dbSuggestions = suggestedArticleDao.getArticlesbySubscriber(subscriberId);
+    List<SuggestedArticleInfo> dbSuggestions = articleDao.getArticlesbySubscriber(subscriberId);
     // Fetch content associated with SuggestedArticle (based on externalArticleId)
     resolveArticles(dbSuggestions);
     return dbSuggestions;
@@ -35,7 +35,7 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
     suggestedArticle.setSuggestedArticleSourceId(HTP_CONSULTANT);
     suggestedArticle.setCreateTime(new Date()); // current date
     suggestedArticle.setUpdateTime(new Date()); // current date
-    int newId = suggestedArticleDao.insertReturnId(suggestedArticle);
+    int newId = articleDao.insertReturnId(suggestedArticle);
     return newId;
   }
 
@@ -68,18 +68,18 @@ public class SubscriberArticleManagerImpl implements SubscriberArticleManager
   public void updateNote(Integer id,
                          String note)
   {
-    SuggestedArticleInfo article = suggestedArticleDao.getSuggestedArticle();
+    SuggestedArticleInfo article = articleDao.getSuggestedArticle();
     article.setSuggestedArticleId(id);
     article.setNote(note);
-    suggestedArticleDao.updateByPrimaryKeySelective(article);
+    articleDao.updateByPrimaryKeySelective(article);
   }
 
   public void markRecomDeleted(Integer id)
   {
     Integer STATUS_DELETED = 4;
-    SuggestedArticleInfo article = suggestedArticleDao.getSuggestedArticle();
+    SuggestedArticleInfo article = articleDao.getSuggestedArticle();
     article.setSuggestedArticleId(id);
     article.setSuggestedArticleStatusId(STATUS_DELETED);
-    suggestedArticleDao.updateByPrimaryKeySelective(article);
+    articleDao.updateByPrimaryKeySelective(article);
   }
 }

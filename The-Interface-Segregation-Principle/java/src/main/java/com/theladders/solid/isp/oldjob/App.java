@@ -10,6 +10,7 @@ import com.theladders.solid.isp.jobInfo.JobIdentifiersInfo;
 import com.theladders.solid.isp.jobInfo.JobAreasInfo;
 import com.theladders.solid.isp.jobInfo.JobPostInfo;
 import com.theladders.solid.isp.jobInfo.JobPublicationInfo;
+import com.theladders.solid.isp.jobInfo.JobRelocationPaidInfo;
 import com.theladders.solid.isp.jobInfo.JobRequirementsInfo;
 import com.theladders.solid.isp.jobInfo.JobSiteInfo;
 import com.theladders.solid.isp.jobInfo.JobVisibilityInfo;
