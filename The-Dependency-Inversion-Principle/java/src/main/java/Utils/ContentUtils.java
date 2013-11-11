@@ -1,4 +1,6 @@
-package com.theladders.solid.dipnewbie;
+package Utils;
+
+import com.theladders.solid.dipnewbie.ContentNodeInfo;
 
 public class ContentUtils
 {

@@ -1,4 +1,4 @@
-package com.theladders.solid.dipnewbie;
+package com.theladders.solid.subscriber;
 
 public class Subscriber
 {

@@ -1,4 +1,4 @@
-package com.theladders.solid.dipnewbie;
+package Utils;
 
 public @interface Column
 {

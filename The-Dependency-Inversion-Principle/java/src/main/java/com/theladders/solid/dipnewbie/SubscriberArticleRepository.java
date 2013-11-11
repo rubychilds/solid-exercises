@@ -2,6 +2,8 @@ package com.theladders.solid.dipnewbie;
 
 import java.util.List;
 
+import com.theladders.solid.subscriber.Subscriber;
+
 public interface SubscriberArticleRepository
 {
   /**

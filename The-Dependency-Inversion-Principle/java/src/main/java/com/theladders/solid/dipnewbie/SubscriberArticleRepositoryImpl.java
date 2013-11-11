@@ -3,6 +3,12 @@ package com.theladders.solid.dipnewbie;
 import java.util.Date;
 import java.util.List;
 
+import Utils.CategoryImageMap;
+import Utils.ContentUtils;
+
+import com.theladders.solid.subscriber.Subscriber;
+import com.theladders.solid.subscriber.SubscriberId;
+
 public class SubscriberArticleRepositoryImpl implements SubscriberArticleRepository
 {
   private SuggestedArticleDao suggestedArticleDao;
@@ -22,9 +28,8 @@ public class SubscriberArticleRepositoryImpl implements SubscriberArticleReposit
 
     criteria.createCriteria()
             .andSubscriberIdEqualTo(subscriberId.getId())
-            .andSuggestedArticleStatusIdIn(SuggestedArticleStatusId.VIEW_OR_NEW)
-            // must be New or Viewed
-            .andSuggestedArticleSourceIdEqualTo(1);
+            .andSuggestedArticleStatusIdIn(SuggestedArticleStatusId.VIEW_OR_NEW) // must be New or Viewed
+            .andSuggestedArticleSourceIdEqualTo(SuggestedArticleSourceId.HTP_CONSULTANT);
 
     criteria.setOrderByClause("create_time desc");
     List<SuggestedArticle> dbSuggestions = this.suggestedArticleDao.selectByExampleWithBlobs(criteria);
