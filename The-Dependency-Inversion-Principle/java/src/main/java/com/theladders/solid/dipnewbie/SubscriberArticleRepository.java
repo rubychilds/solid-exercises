@@ -2,7 +2,7 @@ package com.theladders.solid.dipnewbie;
 
 import java.util.List;
 
-public interface SubscriberArticleManager
+public interface SubscriberArticleRepository
 {
   /**
    * Get a list of all active suggested articles for a given subscriber.
@@ -16,7 +16,7 @@ public interface SubscriberArticleManager
    *          ID of this subscriber
    * @return List of all suggested articles whose status is either New or Viewed
    */
-  public List<SuggestedArticle> getArticlesbySubscriber(Integer subscriberId);
+  public List<SuggestedArticle> getArticlesbySubscriber(Subscriber subscriber);
 
   /**
    * Add a SuggestedArticle to the database.

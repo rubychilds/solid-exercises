@@ -2,7 +2,7 @@ package com.theladders.solid.dipnewbie;
 
 public class RepositoryManager
 {
-  public ContentNode getNodeByUuid(String id)
+  public ContentNodeInfo getNodeByUuid(String id)
   {
     ContentNode node = new ContentNode();
 

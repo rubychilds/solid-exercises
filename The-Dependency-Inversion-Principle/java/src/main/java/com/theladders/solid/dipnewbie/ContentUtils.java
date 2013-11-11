@@ -2,8 +2,8 @@ package com.theladders.solid.dipnewbie;
 
 public class ContentUtils
 {
-  public static boolean isPublishedAndEnabled(ContentNode node)
+  public static boolean isPublishedAndEnabled(ContentNodeInfo content)
   {
-    return node != null;
+    return content != null;
   }
 }

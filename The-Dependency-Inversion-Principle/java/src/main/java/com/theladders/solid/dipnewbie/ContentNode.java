@@ -3,7 +3,7 @@ package com.theladders.solid.dipnewbie;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ContentNode
+public class ContentNode implements ContentNodeInfo 
 {
   private Map<String, Object> properties = new HashMap<>();
 
