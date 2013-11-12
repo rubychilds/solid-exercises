@@ -7,31 +7,31 @@ import com.theladders.solid.utils.ContentUtils;
 
 public class ArticleResolver implements ArticleResolverInfo
 {
-  private NodeManager nodeManager;
+  private NodeRepository nodeManager;
 
-  public ArticleResolver(NodeManager nodeManager)
+  public ArticleResolver(NodeRepository nodeManager)
   {
     this.nodeManager = nodeManager;
   }
 
-  public List<SuggestedArticle> resolveArticles(List<SuggestedArticle> dbArticles)
+  public List<SuggestedArticle> resolveArticles(List<SuggestedArticle> articles)
   {
-    for (SuggestedArticle article : dbArticles)
+    for (SuggestedArticle article : articles)
     {
       // Attempt to fetch the actual content;
       NodeInfo content = nodeManager.getNodeByUuid(article.getArticleExternalIdentifier());
       if (content != null && ContentUtils.isPublishedAndEnabled(content))
       {
         // Override miniImagePath
-        overrideMiniImagePath(content);
+        content = overrideMiniImagePath(content);
         article.setContent(content);
       }
     }
 
-    return dbArticles;
+    return articles;
   }
 
-  private static void overrideMiniImagePath(NodeInfo node)
+  private static NodeInfo overrideMiniImagePath(NodeInfo node)
   {
     String propertyImagePath = "miniImagePath";
     String path = (String) node.getProperty(propertyImagePath);
@@ -41,5 +41,6 @@ public class ArticleResolver implements ArticleResolverInfo
       String category = (String) node.getProperty("primaryTopic");
       node.addProperty(propertyImagePath, ImagePrefix.IMAGE_PREFIX + CategoryImageMap.getImage(category));
     }
+    return node;
   }
 }

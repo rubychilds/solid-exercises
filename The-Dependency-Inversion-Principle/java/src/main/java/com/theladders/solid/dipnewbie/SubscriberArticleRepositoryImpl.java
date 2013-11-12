@@ -8,19 +8,19 @@ import com.theladders.solid.subscriber.SubscriberId;
 public class SubscriberArticleRepositoryImpl implements SubscriberArticleRepository
 {
   private SuggestedArticleDaoInfo suggestedArticleDao;
-  private NodeManager             NodeManager;
+  private NodeRepository          NodeRepo;
 
   public SubscriberArticleRepositoryImpl(SuggestedArticleDaoInfo suggestedArticleDao,
-                                         NodeManager contentNodeManager)
+                                         NodeRepository contentNodeRepo)
   {
     this.suggestedArticleDao = suggestedArticleDao;
-    this.NodeManager = contentNodeManager;
+    this.NodeRepo = contentNodeRepo;
   }
 
   public List<SuggestedArticle> getArticlesbySubscriber(Subscriber subscriber)
   {
     SubscriberId subscriberId = subscriber.getsubscriberId();
-    ArticleResolverInfo articleResolver = new ArticleResolver(NodeManager);
+    ArticleResolverInfo articleResolver = new ArticleResolver(NodeRepo);
 
     return suggestedArticleDao.filterArticlesBySubscriber(subscriberId,
                                                           SuggestedArticleSourceId.HTP_CONSULTANT,
@@ -42,8 +42,7 @@ public class SubscriberArticleRepositoryImpl implements SubscriberArticleReposit
 
   public void markRecomDeleted(SuggestedArticle article)
   {
-    Integer STATUS_DELETED = 4;
-    article.setSuggestedArticleStatusId(STATUS_DELETED);
+    article.setSuggestedArticleStatusId(SuggestedArticleStatusId.STATUS_DELETED);
     suggestedArticleDao.updateByPrimaryKeySelective(article);
   }
 }

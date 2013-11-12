@@ -1,6 +1,6 @@
 package com.theladders.solid.dipnewbie;
 
-public interface NodeManager
+public interface NodeRepository
 {
   public NodeInfo getNodeByUuid(String id);
 }
