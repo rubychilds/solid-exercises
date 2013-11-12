@@ -19,7 +19,7 @@ public class SuggestedArticle
   private Date               updateTime;
   private Integer            updaterId;
   private String             note;
-  private ContentNodeInfo    content;
+  private NodeInfo    content;
 
   private Integer            STATUS_UNREAD = 1;
 
@@ -150,12 +150,12 @@ public class SuggestedArticle
     this.note = note == null ? null : note.trim();
   }
 
-  public ContentNodeInfo getContent()
+  public NodeInfo getContent()
   {
     return content;
   }
 
-  public void setContent(ContentNodeInfo content)
+  public void setContent(NodeInfo content)
   {
     this.content = content;
   }

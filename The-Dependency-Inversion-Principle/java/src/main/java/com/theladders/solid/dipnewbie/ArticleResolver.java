@@ -5,13 +5,13 @@ import java.util.List;
 import com.theladders.solid.utils.CategoryImageMap;
 import com.theladders.solid.utils.ContentUtils;
 
-public class ArticleResolver
+public class ArticleResolver implements ArticleResolverInfo
 {
-  private ContentNodeManager contentNodeManager;
+  private NodeManager nodeManager;
 
-  public ArticleResolver(ContentNodeManager contentNodeManager)
+  public ArticleResolver(NodeManager nodeManager)
   {
-    this.contentNodeManager = contentNodeManager;
+    this.nodeManager = nodeManager;
   }
 
   public List<SuggestedArticle> resolveArticles(List<SuggestedArticle> dbArticles)
@@ -19,7 +19,7 @@ public class ArticleResolver
     for (SuggestedArticle article : dbArticles)
     {
       // Attempt to fetch the actual content;
-      ContentNodeInfo content = contentNodeManager.getNodeByUuid(article.getArticleExternalIdentifier());
+      NodeInfo content = nodeManager.getNodeByUuid(article.getArticleExternalIdentifier());
       if (content != null && ContentUtils.isPublishedAndEnabled(content))
       {
         // Override miniImagePath
@@ -31,7 +31,7 @@ public class ArticleResolver
     return dbArticles;
   }
 
-  private static void overrideMiniImagePath(ContentNodeInfo node)
+  private static void overrideMiniImagePath(NodeInfo node)
   {
     String propertyImagePath = "miniImagePath";
     String path = (String) node.getProperty(propertyImagePath);

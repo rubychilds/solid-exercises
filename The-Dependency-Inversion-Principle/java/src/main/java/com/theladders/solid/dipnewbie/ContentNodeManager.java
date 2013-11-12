@@ -1,8 +1,8 @@
 package com.theladders.solid.dipnewbie;
 
-public class ContentNodeManager
+public class ContentNodeManager implements NodeManager
 {
-  public ContentNodeInfo getNodeByUuid(String id)
+  public NodeInfo getNodeByUuid(String id)
   {
     ContentNode node = new ContentNode();
     node.addProperty("uuid", id);

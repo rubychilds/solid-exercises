@@ -1,10 +1,10 @@
 package com.theladders.solid.utils;
 
-import com.theladders.solid.dipnewbie.ContentNodeInfo;
+import com.theladders.solid.dipnewbie.NodeInfo;
 
 public class ContentUtils
 {
-  public static boolean isPublishedAndEnabled(ContentNodeInfo content)
+  public static boolean isPublishedAndEnabled(NodeInfo content)
   {
     return content != null;
   }

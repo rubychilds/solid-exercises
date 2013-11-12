@@ -7,20 +7,20 @@ import com.theladders.solid.subscriber.SubscriberId;
 
 public class SubscriberArticleRepositoryImpl implements SubscriberArticleRepository
 {
-  private SuggestedArticleDao suggestedArticleDao;
-  private ContentNodeManager  contentNodeManager;
+  private SuggestedArticleDaoInfo suggestedArticleDao;
+  private NodeManager             NodeManager;
 
-  public SubscriberArticleRepositoryImpl(SuggestedArticleDao suggestedArticleDao,
-                                         ContentNodeManager contentNodeManager)
+  public SubscriberArticleRepositoryImpl(SuggestedArticleDaoInfo suggestedArticleDao,
+                                         NodeManager contentNodeManager)
   {
     this.suggestedArticleDao = suggestedArticleDao;
-    this.contentNodeManager = contentNodeManager;
+    this.NodeManager = contentNodeManager;
   }
 
   public List<SuggestedArticle> getArticlesbySubscriber(Subscriber subscriber)
   {
     SubscriberId subscriberId = subscriber.getsubscriberId();
-    ArticleResolver articleResolver = new ArticleResolver(contentNodeManager);
+    ArticleResolverInfo articleResolver = new ArticleResolver(NodeManager);
 
     return suggestedArticleDao.filterArticlesBySubscriber(subscriberId,
                                                           SuggestedArticleSourceId.HTP_CONSULTANT,

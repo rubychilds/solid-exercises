@@ -1,6 +1,6 @@
 package com.theladders.solid.dipnewbie;
 
-public interface ContentNodeInfo
+public interface NodeInfo
 {
   public Object getProperty(String key);
 
