@@ -1,4 +1,4 @@
-package Utils;
+package com.theladders.solid.utils;
 
 public @interface Column
 {

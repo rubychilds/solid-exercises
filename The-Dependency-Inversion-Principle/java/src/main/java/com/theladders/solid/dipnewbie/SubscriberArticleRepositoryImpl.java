@@ -1,10 +1,6 @@
 package com.theladders.solid.dipnewbie;
 
-import java.util.Date;
 import java.util.List;
-
-import Utils.CategoryImageMap;
-import Utils.ContentUtils;
 
 import com.theladders.solid.subscriber.Subscriber;
 import com.theladders.solid.subscriber.SubscriberId;
@@ -12,68 +8,29 @@ import com.theladders.solid.subscriber.SubscriberId;
 public class SubscriberArticleRepositoryImpl implements SubscriberArticleRepository
 {
   private SuggestedArticleDao suggestedArticleDao;
-  private RepositoryManager   repositoryManager;
+  private ContentNodeManager  contentNodeManager;
 
   public SubscriberArticleRepositoryImpl(SuggestedArticleDao suggestedArticleDao,
-                                         RepositoryManager repositoryManager)
+                                         ContentNodeManager contentNodeManager)
   {
     this.suggestedArticleDao = suggestedArticleDao;
-    this.repositoryManager = repositoryManager;
+    this.contentNodeManager = contentNodeManager;
   }
 
   public List<SuggestedArticle> getArticlesbySubscriber(Subscriber subscriber)
   {
-    SuggestedArticleExample criteria = new SuggestedArticleExample();
     SubscriberId subscriberId = subscriber.getsubscriberId();
+    ArticleResolver articleResolver = new ArticleResolver(contentNodeManager);
 
-    criteria.createCriteria()
-            .andSubscriberIdEqualTo(subscriberId.getId())
-            .andSuggestedArticleStatusIdIn(SuggestedArticleStatusId.VIEW_OR_NEW) // must be New or Viewed
-            .andSuggestedArticleSourceIdEqualTo(SuggestedArticleSourceId.HTP_CONSULTANT);
-
-    criteria.setOrderByClause("create_time desc");
-    List<SuggestedArticle> dbSuggestions = this.suggestedArticleDao.selectByExampleWithBlobs(criteria);
-
-    // Fetch content associated with SuggestedArticle (based on externalArticleId)
-    resolveArticles(dbSuggestions);
-
-    return dbSuggestions;
+    return suggestedArticleDao.filterArticlesBySubscriber(subscriberId,
+                                                          SuggestedArticleSourceId.HTP_CONSULTANT,
+                                                          SuggestedArticleStatusId.VIEW_OR_NEW,
+                                                          articleResolver);
   }
 
   public SuggestedArticleId addSuggestedArticle(SuggestedArticle suggestedArticle)
   {
-    suggestedArticle.setSuggestedArticleStatusId(SuggestedArticleStatusId.STATUS_UNREAD);
-    suggestedArticle.setSuggestedArticleSourceId(SuggestedArticleSourceId.HTP_CONSULTANT);
-    suggestedArticle.setCreateTime(new Date()); // current date
-    suggestedArticle.setUpdateTime(new Date()); // current date
-
-    return suggestedArticleDao.insertReturnId(suggestedArticle);
-  }
-
-  private void resolveArticles(List<SuggestedArticle> dbArticles)
-  {
-    for (SuggestedArticle article : dbArticles)
-    {
-      // Attempt to fetch the actual content;
-      ContentNodeInfo content = this.repositoryManager.getNodeByUuid(article.getArticleExternalIdentifier());
-      if (content != null && ContentUtils.isPublishedAndEnabled(content))
-      {
-        // Override miniImagePath
-        overrideMiniImagePath(content);
-        article.setContent(content);
-      }
-    }
-  }
-
-  private static void overrideMiniImagePath(ContentNodeInfo node)
-  {
-    String path = (String) node.getProperty("miniImagePath");
-
-    if (path == null || path.length() == 0)
-    {
-      String category = (String) node.getProperty("primaryTopic");
-      node.addProperty("miniImagePath", ImagePrefix.IMAGE_PREFIX + CategoryImageMap.getImage(category));
-    }
+    return suggestedArticleDao.addSuggestedArticle(suggestedArticle);
   }
 
   public void updateNote(SuggestedArticle article,

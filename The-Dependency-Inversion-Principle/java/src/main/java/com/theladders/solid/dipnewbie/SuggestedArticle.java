@@ -2,7 +2,7 @@ package com.theladders.solid.dipnewbie;
 
 import java.util.Date;
 
-import Utils.Column;
+import com.theladders.solid.utils.Column;
 
 // A SuggestedArticle is one instance of an article that has been
 // recommended to a particular subscriber.

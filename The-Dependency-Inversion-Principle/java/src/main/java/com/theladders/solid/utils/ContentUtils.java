@@ -1,4 +1,4 @@
-package Utils;
+package com.theladders.solid.utils;
 
 import com.theladders.solid.dipnewbie.ContentNodeInfo;
 
