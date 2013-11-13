@@ -2,9 +2,9 @@ package com.theladders.solid.dipnewbie;
 
 public class ContentNodeRepository implements NodeRepository
 {
-  public NodeInfo getNodeByUuid(String id)
+  public NodeProperty getNodeByUuid(String id)
   {
-    ContentNode node = new ContentNode();
+    ContentNodeProperty node = new ContentNodeProperty();
     node.addProperty("uuid", id);
     return node;
   }

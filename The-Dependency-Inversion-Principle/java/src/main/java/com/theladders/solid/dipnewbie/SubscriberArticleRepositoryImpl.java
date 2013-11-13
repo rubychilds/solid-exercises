@@ -1,5 +1,6 @@
 package com.theladders.solid.dipnewbie;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.theladders.solid.subscriber.Subscriber;
@@ -7,10 +8,10 @@ import com.theladders.solid.subscriber.SubscriberId;
 
 public class SubscriberArticleRepositoryImpl implements SubscriberArticleRepository
 {
-  private SuggestedArticleDaoInfo suggestedArticleDao;
-  private NodeRepository          NodeRepo;
+  private ArticleDao     suggestedArticleDao;
+  private NodeRepository NodeRepo;
 
-  public SubscriberArticleRepositoryImpl(SuggestedArticleDaoInfo suggestedArticleDao,
+  public SubscriberArticleRepositoryImpl(ArticleDao suggestedArticleDao,
                                          NodeRepository contentNodeRepo)
   {
     this.suggestedArticleDao = suggestedArticleDao;
@@ -20,12 +21,17 @@ public class SubscriberArticleRepositoryImpl implements SubscriberArticleReposit
   public List<SuggestedArticle> getArticlesbySubscriber(Subscriber subscriber)
   {
     SubscriberId subscriberId = subscriber.getsubscriberId();
-    ArticleResolverInfo articleResolver = new ArticleResolver(NodeRepo);
+    
+    ArticleResolver articleResolver = new SuggestedArticleResolver(NodeRepo);
 
-    return suggestedArticleDao.filterArticlesBySubscriber(subscriberId,
-                                                          SuggestedArticleSourceId.HTP_CONSULTANT,
-                                                          SuggestedArticleStatusId.VIEW_OR_NEW,
-                                                          articleResolver);
+    List<Integer> view_or_new = Arrays.asList(SuggestedArticleStatusId.VIEW, SuggestedArticleStatusId.NEW);
+
+    List<SuggestedArticle> articles = suggestedArticleDao.filterArticlesBySubscriber(subscriberId,
+                                                                                     SuggestedArticleSourceId.HTP_CONSULTANT,
+                                                                                     view_or_new);
+
+    return articleResolver.resolveArticles(articles);
+
   }
 
   public SuggestedArticleId addSuggestedArticle(SuggestedArticle suggestedArticle)
@@ -33,10 +39,8 @@ public class SubscriberArticleRepositoryImpl implements SubscriberArticleReposit
     return suggestedArticleDao.addSuggestedArticle(suggestedArticle);
   }
 
-  public void updateNote(SuggestedArticle article,
-                         String note)
+  public void updateNote(SuggestedArticle article)
   {
-    article.setNote(note);
     suggestedArticleDao.updateByPrimaryKeySelective(article);
   }
 

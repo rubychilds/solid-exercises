@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.theladders.solid.subscriber.SubscriberId;
 
-public class SuggestedArticleDao implements SuggestedArticleDaoInfo
+public class SuggestedArticleDao implements ArticleDao
 {
   public void updateByPrimaryKeySelective(@SuppressWarnings("unused") SuggestedArticle article)
   {}
@@ -23,8 +23,7 @@ public class SuggestedArticleDao implements SuggestedArticleDaoInfo
 
   public List<SuggestedArticle> filterArticlesBySubscriber(SubscriberId subscriberId,
                                                            Integer suggestedArticleSourceId,
-                                                           List<Integer> suggestedArticleStatusId,
-                                                           ArticleResolverInfo articleResolver)
+                                                           List<Integer> suggestedArticleStatusId)
   {
 
     SuggestedArticleExample criteria = new SuggestedArticleExample();
@@ -41,9 +40,6 @@ public class SuggestedArticleDao implements SuggestedArticleDaoInfo
 
   public SuggestedArticleId addSuggestedArticle(SuggestedArticle suggestedArticle)
   {
-
-    suggestedArticle.setSuggestedArticleStatusId(SuggestedArticleStatusId.STATUS_UNREAD);
-    suggestedArticle.setSuggestedArticleSourceId(SuggestedArticleSourceId.HTP_CONSULTANT);
     suggestedArticle.setCreateTime(new Date()); // current date
     suggestedArticle.setUpdateTime(new Date()); // current date
 

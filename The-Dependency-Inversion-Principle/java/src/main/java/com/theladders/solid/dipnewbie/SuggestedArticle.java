@@ -19,7 +19,7 @@ public class SuggestedArticle
   private Date               updateTime;
   private Integer            updaterId;
   private String             note;
-  private NodeInfo    content;
+  private NodeProperty       content;
 
   private Integer            STATUS_UNREAD = 1;
 
@@ -150,12 +150,12 @@ public class SuggestedArticle
     this.note = note == null ? null : note.trim();
   }
 
-  public NodeInfo getContent()
+  public NodeProperty getContent()
   {
     return content;
   }
 
-  public void setContent(NodeInfo content)
+  public void setContent(NodeProperty content)
   {
     this.content = content;
   }
@@ -180,6 +180,12 @@ public class SuggestedArticle
     {
       this.setSuggestedArticleStatusId(1);
     }
+  }
+
+  public NodeProperty retrieveContentFrom(NodeRepository contentRepo)
+  {
+    return contentRepo.getNodeByUuid(articleExternalIdentifier);
+
   }
 
 }

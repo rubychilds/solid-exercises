@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.theladders.solid.subscriber.SubscriberId;
 
-public interface SuggestedArticleDaoInfo
+public interface ArticleDao
 {
   public void updateByPrimaryKeySelective(SuggestedArticle article);
 
@@ -12,8 +12,7 @@ public interface SuggestedArticleDaoInfo
 
   public List<SuggestedArticle> filterArticlesBySubscriber(SubscriberId subscriberId,
                                                            Integer suggestedArticleSourceId,
-                                                           List<Integer> suggestedArticleStatusId,
-                                                           ArticleResolverInfo articleResolver);
+                                                           List<Integer> suggestedArticleStatusId);
 
   public SuggestedArticleId addSuggestedArticle(SuggestedArticle suggestedArticle);
 }

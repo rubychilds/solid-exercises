@@ -33,7 +33,7 @@ public interface SubscriberArticleRepository
    *  with the note passed in.
    *
    */
-  public void updateNote(SuggestedArticle article, String note);
+  public void updateNote(SuggestedArticle article);
 
   /**
    * Mark as deleted the Suggested Article(id)
